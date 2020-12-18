@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Activity&amp;Fragment生命周期详解 | Flukey 小站</title>
+  
+  
+
+  
+  <link rel="alternate" href="/atom.xml" title="Flukey 小站" type="application/atom+xml">
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4b242b5838e013c0b305bf13edd4f329";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Flueky Tech-site</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="搜索" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-home fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/donate/"
+            
+              rel="nofollow"
+            
+            
+            id="donate">
+            <i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Flukey 小站
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-home fa-fw'></i>&nbsp;主页
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/categories/"
+                
+                  rel="nofollow"
+                
+                
+                id="categories">
+								<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/tags/"
+                
+                  rel="nofollow"
+                
+                
+                id="tags">
+								<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/donate/"
+                
+                  rel="nofollow"
+                
+                
+                id="donate">
+								<i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" target="_blank" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow noopener"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2016-06-04/">
+        Activity&Fragment生命周期详解
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://flueky.github.io" rel="nofollow">
+        
+          <img src="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+        
+        <p>Flueky</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2016-06-04</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+        
+          <div>
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">2k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">7分</span>
+      </span>
+    </span>
+</div>
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（<strong>两者之间还是有很大的关联</strong>），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。</p>
+<a id="more"></a>
+
+<h1 id="Activity生命周期介绍"><a href="#Activity生命周期介绍" class="headerlink" title="Activity生命周期介绍"></a>Activity生命周期介绍</h1><p>Activity生命周期共有7个，可以按照3+1的模式去记忆。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/1.png" width="300">
+
+<p>这是一张标准的生命周期示意图，从上图中可以看出，onCreate&lt;–&gt;onDestory，onStart&lt;–&gt;onStop，onResume&lt;–&gt;onPause 3对，多出一个onRestart。</p>
+<ol>
+<li><p>启动一个Activity，会依次执行onCreate（<strong>创建一个Activity时调用，可通常在此处指定Activity的布局或动态设置Activity主题</strong>）、onStart（<strong>启动这个Activity时调用，此时Activity已经可以见，但是未获得焦点不能响应用户事件</strong>）、onResume（<strong>Activity获取焦点时调用，此时可以响应用户事件</strong>）方法。</p>
+</li>
+<li><p>通常调用onPause（<strong>Activity停止响应用户事件，在切换Activity、锁屏、弹出dialog，<em>准确说是Dialog风格的Activity，普通的dialog是属于Activity的，生命周期不变化</em>、按下Home键时调用</strong>）方法之后，很快就会调用onStop（<strong>Activity不可见，已经停止时调用，Activity再次恢复可见状态时，需要重新调用onRestart方法</strong>）方法。当调转一个dialog 主题的Activity时，前一个Activity只会进入pause状态，而不会触发onStop。</p>
+</li>
+<li><p>执行onStop方法之后，若需要再使该Activity可用，先调用onRestart（<strong>重新启动Activity，该Activity实例占用的内存还未被释放，无须重走onCreate方法</strong>）再调用onStart、onResume。</p>
+</li>
+<li><p>Activity被销毁时，会执行onDestory（释放Activity实例占用的内存，等待系统回收。或强制中断APP进程时调用。），此时标志这个这个Activity生命周期完整的结束。</p>
+</li>
+</ol>
+<p>综上，Activity生命周期又可以分为三类：</p>
+<ol>
+<li>onCreate—&gt;onDestory，整体生命周期</li>
+<li>onStart—&gt;onStop，可视生命周期</li>
+<li>onResume—&gt;onPause，焦点生命周期</li>
+</ol>
+<h1 id="切换Activity时生命的周期变化"><a href="#切换Activity时生命的周期变化" class="headerlink" title="切换Activity时生命的周期变化"></a>切换Activity时生命的周期变化</h1><h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/2.png" width="300">
+
+<p>相同颜色表示同一个Activity。跳转到下一个Activity或返回到上一个Activity时，都会使当前Activity失去焦点（onPause）。当前Activity获取焦点时（onResume），再去处理上一个Activity的onStop方法，是否调用onDestory方法由Activity栈、或系统根据此时内存情况决定。</p>
+<h2 id="按返回（Back）键"><a href="#按返回（Back）键" class="headerlink" title="按返回（Back）键"></a>按返回（Back）键</h2><p>按返回键，会调用Activity的finish方法，首先会执行onPause，如果Activity栈中还有activity，就执行这个activity的onRestart方法，若没有则继续执行onStop–&gt;onDestory。</p>
+<h2 id="按home键"><a href="#按home键" class="headerlink" title="按home键"></a>按home键</h2><p>按下home键，通常会将应用切到后台，执行onPause–&gt;onStop方法。当内存不够时，系统会根据一定策略选择杀死一个应用进程，或者用户手动杀死这个应用进行都会导致之前的activity执行了onDestory方法。</p>
+<p><strong>实际开发中，是无法通过onKeyDown 捕获Home键按下的事件（<em>捕获Back键是可以的</em>），经过上述分析得知，按下Home键和返回键不同的地方是在于有没有调用finish方法。因此在执行onStop方法时，可以通过判断是否执行了finish方法，进而判断按下的是否是home键。此处注意区分按下锁屏键效果同按下Home键。</strong></p>
+<h1 id="Fragment生命周期介绍"><a href="#Fragment生命周期介绍" class="headerlink" title="Fragment生命周期介绍"></a>Fragment生命周期介绍</h1><img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/3.png" width="300">
+
+<p>这依旧是一张经典的fragment生命周期示意图。相比Activity中，7个生命周期的方法，fragment生命周期共涉及到11个方法，记忆和理解起来有一定的难度。此处推荐4+4+3记忆方式。先看下图：</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/4.png" width="400">
+
+<p>这张图凸显出，Activity和Fragment之间生命周期的关联。在弄懂Activity生命周期的前提上，去理解Fragment生命周期有着事半功倍的效果。</p>
+<ol>
+<li><p>启动Activity时，如果Activity中已绑定了Fragment，那么也会同步创建Fragment。创建Fragment时，会连续执行4个生命周期方法：onAttach（同Activity绑定），onCreate（创建Fragment实例），onCreateView（创建Fragment视图），onActivityCreated（Activity创建完成）。</p>
+</li>
+<li><p>接下来的4个生命周期将和Activity的四个同名生命周期交替执行。如：先执行Fragment的onStart 再执行Activity 的onStart，继续执行Activity的onResume 到Fragment 的onResume，自此Activity已经完成启动过程，绑定的fragment也已经显示，并能够获取到焦点响应用户事件。切换Activity：先执行Fragment的onPause到Activity的onPause再执行Fragment的onStop到Activity的onStop。此时，Activity连同Fragment已经失去焦点且已经不可见。</p>
+</li>
+<li><p>结束Activity时，会连续执行Fragment的三个生命周期：onDestoryView（销毁Fragment视图），onDestory（销毁Fragment实例），onDetach（与Activity解绑）。最后执行Activity的onDestory，表示Activity已经销毁。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>上述中，若Activity绑定多个Fragment，那么多个Fragment的相同生命周期一定是交替执行了，除了虚线框内标记的是连续执行。</strong></p>
+</blockquote>
+<h1 id="切换Fragment时生命周期的变化"><a href="#切换Fragment时生命周期的变化" class="headerlink" title="切换Fragment时生命周期的变化"></a>切换Fragment时生命周期的变化</h1><p>加载fragment有两种方式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 方式一 --&gt;</span></span><br><span class="line">&lt;fragment</span><br><span class="line">    android:id=&quot;@+id/top_fragment&quot;</span><br><span class="line">    android:name=&quot;com.flueky.frameworktest.fragment.TopFragment&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;0dp&quot;</span><br><span class="line">    android:layout_weight=&quot;1&quot; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 方式二 --&gt;</span></span><br><span class="line">&lt;FrameLayout</span><br><span class="line">    android:id=&quot;@id/fragment_contain&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;0dp&quot;</span><br><span class="line">    android:layout_weight=&quot;1&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>方式一类似于添加一个控件，程序运行时不可以动态修改。其中，name属性是用户定义fragment类完整的类名（包括包名），id或tag属性则是在代码中通过findFragmentById或findFragmentByTag获取到fragment对象。并且，该fragment生命周期同其所在的Activity生命周期绑定。</p>
+<p>方式二指定一个fragment容器，程序运行时可以通过replace 或add 方法动态加载指定的fragment。动态加载fragment，需要考虑到fragment切换时，fragment生命周期的变化。只要不切换Activity，fragment生命周期改变时，Activity生命周一直处于onResume状态。</p>
+</blockquote>
+<p>切换fragment 可以通过replace 或add方式，与此同时，考虑到是否将fragment 入栈管理，所以切换fragment共有四种场景。当不入栈时，replace 和add 生命周期变化很相似，因此放在一起讨论。</p>
+<h2 id="replace-add-fragment-不入栈"><a href="#replace-add-fragment-不入栈" class="headerlink" title="replace/add fragment 不入栈"></a>replace/add fragment 不入栈</h2><p>不入栈时，表示切换fragment之后，并不保存之前fragment 实例的引用。因此也就无法再操作之前的fragment。add 和replace 的却别是，replace会将之前的fragment移除，重新添加一个fragment，add 则在之前fragment之上再添加一个fragment，倘若被add fragment的背景是透明的，依然会看见之前fragment的样式。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/5.png" width="400">
+
+<p>通过上图的周期流程图中，不难发现replace 和add 的区别。</p>
+<h2 id="replace-fragment-入栈"><a href="#replace-fragment-入栈" class="headerlink" title="replace fragment 入栈"></a>replace fragment 入栈</h2><p>此时替换fragment时，首先会移除当前fragment的视图（onDestoryView），但是没有删除当前fragment的实例（没有调用onDestory和onDetach），因为该fragment已经入栈（依然保留着fragment实例的引用）。然后再添加新的fragment，直到新fragment获取到焦点（执行到onResume）截止。若按下返回键，会移除栈顶的fragment，也就是当前可见的fragment，使下一层fragment可见。但是需要再次初始化页面（执行onCreateView）。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/6.png" width="400">
+
+<h2 id="add-fragment-入栈"><a href="#add-fragment-入栈" class="headerlink" title="add fragment 入栈"></a>add fragment 入栈</h2><p>这种场景最简单，切换fragment后，新的fragment在栈顶，点击返回时，将栈顶的fragment出栈，使下面的fragment可见。因为add方式是叠加的，所以之前的fragment依旧是可见的，生命周期没有任何变化。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/221/7.png" width="400">
+
+<h2 id="replace-和-add-fragment-入栈的异同点"><a href="#replace-和-add-fragment-入栈的异同点" class="headerlink" title="replace 和 add fragment 入栈的异同点"></a>replace 和 add fragment 入栈的异同点</h2><p>相同点：由于入栈是可返回的，因此切换和返回就完整的执行了一个fragment的全部生命周期。</p>
+<p>不同点：replace方式会消除之前fragment的视图，当之前的fragment再次回到栈顶，会再次调用onCreateView，初始化页面，包括所有用户数据。</p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-12-15T18:29:59+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Dec 15, 2020</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://flueky.github.io/blog/2016-06-04/&title=Activity&Fragment生命周期详解 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://flueky.github.io/blog/2016-06-04/&title=Activity&Fragment生命周期详解 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://flueky.github.io/blog/2016-06-04/&title=Activity&Fragment生命周期详解 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/blog/2016-09-30/" rel="prev" title="数据结构（一）——顺序表（C语言实现）">
+                                
+                                    数据结构（一）——顺序表（C语言实现）
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 顺序表</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/blog/2016-05-27/" rel="prev" title="指针与引用">
+                                  
+                                      指针与引用
+                                  
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;Comments</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'Activity&Fragment生命周期详解',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.gif'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:flueky@sina.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/flueky"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://weibo.com/u/2094177960"
+              class="social fab fa-weibo flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://twitter.com/flueky"
+              class="social fab fa-twitter flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=12143853"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%8B%E7%BB%8D"><span class="toc-text">Activity生命周期介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%8D%A2Activity%E6%97%B6%E7%94%9F%E5%91%BD%E7%9A%84%E5%91%A8%E6%9C%9F%E5%8F%98%E5%8C%96"><span class="toc-text">切换Activity时生命的周期变化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E8%BF%94%E5%9B%9E%EF%BC%88Back%EF%BC%89%E9%94%AE"><span class="toc-text">按返回（Back）键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89home%E9%94%AE"><span class="toc-text">按home键</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%8B%E7%BB%8D"><span class="toc-text">Fragment生命周期介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%8D%A2Fragment%E6%97%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-text">切换Fragment时生命周期的变化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-add-fragment-%E4%B8%8D%E5%85%A5%E6%A0%88"><span class="toc-text">replace&#x2F;add fragment 不入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-fragment-%E5%85%A5%E6%A0%88"><span class="toc-text">replace fragment 入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add-fragment-%E5%85%A5%E6%A0%88"><span class="toc-text">add fragment 入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-%E5%92%8C-add-fragment-%E5%85%A5%E6%A0%88%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9"><span class="toc-text">replace 和 add fragment 入栈的异同点</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:flueky@sina.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/flueky"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://weibo.com/u/2094177960"
+            class="social fab fa-weibo flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/flueky"
+            class="social fab fa-twitter flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=12143853"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <br>
+  <div><p>Blog content follows the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+<script>
+  var now = new Date(); 
+  function createtime() { 
+      var grt= new Date("11/03/2019 14:42:00");//在此处修改你的建站时间
+      now.setTime(now.getTime()+250); 
+      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+      document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+  } 
+  setInterval("createtime()",250);
+</script>
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "1416d3692a6b876e4a4b",
+      clientSecret: "54e9449ba586fe6b964251503045fad57f0af16c",
+      repo: "flueky.github.io",
+      owner: "flueky",
+      admin: "flueky",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+  <!-- 单击显示文字 -->
+  <script type="text/javascript" src="/js/click_show_text.js"></script>
+  <!-- 单击烟花爆炸效果 -->
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+  <script type="text/javascript" src="/js/fireworks.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+  <!--动态线条背景，线条颜色 220,220,220 可以换成喜欢的-->
+  <script type="text/javascript" color="92,210,245" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> 
+  <!-- 样式一（鼠标点击更换样式） -->
+  <!-- <script src="https://g.joyinshare.com/hc/ribbon.min.js" type="text/javascript"></script> -->
+  <!-- 样式二（飘动的彩带） -->
+  <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script>
+</body>
+</html>

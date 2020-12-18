@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>使用Android Profiler 做性能分析及优化 | Flukey 小站</title>
+  
+  
+
+  
+  <link rel="alternate" href="/atom.xml" title="Flukey 小站" type="application/atom+xml">
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4b242b5838e013c0b305bf13edd4f329";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Flueky Tech-site</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="搜索" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-home fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/donate/"
+            
+              rel="nofollow"
+            
+            
+            id="donate">
+            <i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Flukey 小站
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-home fa-fw'></i>&nbsp;主页
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/categories/"
+                
+                  rel="nofollow"
+                
+                
+                id="categories">
+								<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/tags/"
+                
+                  rel="nofollow"
+                
+                
+                id="tags">
+								<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/donate/"
+                
+                  rel="nofollow"
+                
+                
+                id="donate">
+								<i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" target="_blank" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow noopener"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2019-01-05/">
+        使用Android Profiler 做性能分析及优化
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://flueky.github.io" rel="nofollow">
+        
+          <img src="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+        
+        <p>Flueky</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-01-05</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>开发工具&nbsp;/&nbsp;Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+        
+          <div>
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.7k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">5分</span>
+      </span>
+    </span>
+</div>
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>做Android开发五年，开发工具从最初的<code>eclipse+ADT</code>插件到<code>AndroidStduio</code>。Google更是在新版的<code>AndroidStudio</code>中集成了<code>Android</code>应用性能分析利器——**<code>Profile</code>**。</p>
+<a id="more"></a>
+
+<p>本文基于<code>AndroidStudio 3.2.1</code> 正式版进行分析并定位问题原因。附上下载地址：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://dl.google.com/dl/android/studio/install/3.2.1.0/android-studio-ide-181.5056338-windows.exe">Windows版下载</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.google.com/dl/android/studio/install/3.2.1.0/android-studio-ide-181.5056338-mac.dmg">Mac版下载</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.google.com/dl/android/studio/ide-zips/3.2.1.0/android-studio-ide-181.5056338-linux.zip">Linux版下载</a></li>
+</ol>
+<h2 id="1-概览"><a href="#1-概览" class="headerlink" title="1 概览"></a>1 概览</h2><img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/1.png" width="800"/>
+
+<p>在<code>AndroidStudio</code>中<code>run</code>项目，即可在底部选项卡中找到<code>Profile</code>，打开后会默认显示当前<code>run</code>的应用的信息。可以点击<code>Profile</code>页面右上加号选择连接的设备以及其他可以调试的应用进程。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/2.png" width="500"/>
+
+<p>图中可以看出，Profile可以监控选择的应用的 CPU、内存、网络、电量使用情况并通过波形图、柱形图、折线图实时的展示出来。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/3.png" width="300"/>
+
+<p>点击左上角的红色方形或者在监控的会话中右键弹出选项框结束当前应用的监控或删除监控会话。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/6.png" width="800"/>
+
+<p>顶部工具栏依次是：</p>
+<ol>
+<li>添加需要监控的进程。</li>
+<li>结束当前监控会话。</li>
+<li>显示/隐藏侧边栏。</li>
+<li>缩小监控视图。</li>
+<li>放大监控视图。</li>
+<li>重置监控视图。</li>
+<li>显示采集区间。</li>
+</ol>
+<h2 id="2-CPU分析"><a href="#2-CPU分析" class="headerlink" title="2 CPU分析"></a>2 CPU分析</h2><p>在概览图中，点击CPU模块，进入CPU使用分析页面。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/9.png" width="300"/>
+
+<p>图中三个菜单依次是：</p>
+<ol>
+<li>可切换至内存、网络、电量监控。</li>
+<li>切换不同监控目标。分别是<code>Sampled Java</code>、<code>Instrumented Java</code>、<code>Sampled Java</code>、<code>System Trace</code>。</li>
+<li>Record 按键，点击开始采集CPU使用信息。</li>
+</ol>
+<p>点击<code>Record</code>按钮开始采集CPU使用数据，点击<code>Stop</code>按钮停止采集数据。采集完成之后的样子如图，</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/4.png" width="500"/>
+
+<p>图中深色部分表示采集区间，可以放大监控视图，然后缩小记录区间，选择一个线程，可以详细看见线程中执行的方法。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/5.png" width="500"/>
+
+<p>Profile支持四种方式显示执行的方法。</p>
+<ol>
+<li>Call Chart:通过执行的顺序显示，见上图。</li>
+<li>Flame Chart:通过火焰图显示。</li>
+<li>Top Down:自顶向下调用显示。</li>
+<li>Bottom Up:自底向上调用显示。</li>
+</ol>
+<p>通过分析CPU使用的视图，可以大致定位下面的问题。</p>
+<ol>
+<li>采集五六分钟的CPU使用信息，缩放视图至最小，全局观察CPU在监控过程中的使用情况。</li>
+<li>Profile会同步记录用户的触摸事件及页面跳转等事件。对比CPU的瞬时使用情况找出问题代码。</li>
+<li>选择记录一段时间片，重点分析这段时间片中各线程中的方法执行情况。</li>
+</ol>
+<p>上图展示了<code>ImageLoader</code>加载图片所使用的CPU资源。能够得出的结论是，<code>ImageLoader</code>相关的代码被反复执行，本身就是一件异常的情况。</p>
+<p>宏观分析观察CPU使用情况的波形图，发现存在周期性的CPU使用峰值。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/7.png" width="300"/>
+
+<p>再附上优化后的CPU使用情况波形图，已消除CPU使用峰值。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/8.png" width="300"/>
+
+<p>出现峰值的原因，单凭监控线程的方法调用不容易定位问题，除非在特别熟悉代码的情况下。通常还需要结合内存使用和网络使用情况综合分析，进而定位问题。</p>
+<h2 id="3-内存分析"><a href="#3-内存分析" class="headerlink" title="3 内存分析"></a>3 内存分析</h2><p>切换至内存分析页面。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/10.png" width="200"/>
+
+<p>图中三个菜单依次是：</p>
+<ol>
+<li>可切换至CPU、网络、电量监控。</li>
+<li>手动执行GC，释放内存。</li>
+<li>dump内存使用数据，可保存至文本数据。</li>
+</ol>
+<p>内存使用，同样可以从宏观和微观的角度分析。Profile将不同类型的数据占用的内存用不同颜色表示。有：<code>Java</code>、<code>Native</code>、<code>Graphics</code>、<code>Stack</code>、<code>Code</code>、<code>Others</code>。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/11.png" width="500"/>
+
+<p>如图，内存持续增长，直至系统释放内存资源，因此宏观内存波形图呈锯齿状。而且可以看出主要是Native空间占用的内存持续增加。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/12.png" width="500"/>
+
+<p>从微观上看，放大显示区间，点击dump按键开始记录，选择分析区间，查看内存中，各类型数据所占用的空间。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/13.png" width="300"/>
+
+<ol>
+<li>区分两种内存分配。<code>Live Allocation</code> 和 <code>Heap Dump</code>。</li>
+<li>支持查看四种heap的内存分配。<code>image heap</code> 、<code>zygote heap</code> 、<code>app heap</code> 、<code>JNI heap</code>。</li>
+<li>支持三种类的实例查看排序：<code>Arrange by class</code> 、<code>Arrange by package</code> 、<code>Arrange by callstack</code>。</li>
+</ol>
+<p>图中是优化后的内存监控图，内存占用已经趋于平稳。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/14.png" width="500"/>
+
+<h2 id="4-网络分析"><a href="#4-网络分析" class="headerlink" title="4 网络分析"></a>4 网络分析</h2><p>网络分析工具比较简单，图中折线图一个峰值表示一次网络连接。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/15.png" width="500"/>
+
+<p>通过选中一次网络连接可以查看到连接请求地址以及发送和接收的数据。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/19.png" width="500"/>
+
+<p>最后附上优化后的网络监控。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/16.png" width="500"/>
+
+<h2 id="5-耗电监控"><a href="#5-耗电监控" class="headerlink" title="5 耗电监控"></a>5 耗电监控</h2><p>耗电监控，通常检测不到任何问题，一般只是用来衡量应用的耗电情况。遇到耗电异常的应用，在CPU、内存、网络监控中都能发现问题。如：网络连接过程发送和接收数据需要使用网卡模块、推送功能需要保持的长连接、GC内存、定位功能都需要电量支持。附上图中优化前后的对比，注意看Light基线中电量使用的柱形图。应用耗电问题得到明显改善。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/17.png" width="500"/>
+
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/007/18.png" width="500"/>
+
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6 总结"></a>6 总结</h2><p>上面只是大概介绍了内存分析工具四个模块的简单使用。可能读者对优化前后的对比处于懵懂的状态。下面解读下，笔者待测试应用中存在的问题。</p>
+<p>应用详情：</p>
+<ol>
+<li>测试应用中使用了图片轮播模块，每2~3s显示一张图片。</li>
+<li>使用ImageLoader加载图片。</li>
+</ol>
+<p>正常情况下，ImageLoader支持三级缓存，根据LRU算法，轮播图片应该会保存在内存中，并且复用。不会出发网络连接以及内存的持续增长。</p>
+<p>问题详情：</p>
+<ol>
+<li>轮播图一共两张图片，其中一张图片资源是空。因此ImageLoader每次都会尝试发起网络连接下载此图片。</li>
+<li>ImageLoader初始化时，使用了禁止内存缓存的配置以及全局内存缓存空间只有2M。而后管配置的图片加载在内存中需要3M的空间，致使内存缓存失效。</li>
+</ol>
+<p>综上，被测试应用总会发起网络请求以及内存资源占用持续增长导致出发系统GC。间接的导致了应用耗电。有兴趣的童鞋可以验证下，耗电峰值、网络连接、内存GC和CPU使用峰值之间的关联。他们四者之间的关系很微妙哟。</p>
+<p>考虑到篇幅，暂时介绍至这里。后续可能会针对四个模块精讲。敬请期待。</p>
+<p><strong>觉得有用？那打赏一个呗。[去打赏](/donate/)</strong></p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-12-15T18:29:59+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Dec 15, 2020</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/AndroidStudio/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>AndroidStudio</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://flueky.github.io/blog/2019-01-05/&title=使用Android Profiler 做性能分析及优化 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=做Android开发五年，开发工具从最初的eclipse+ADT插件到AndroidStduio。Google更是在新版的AndroidStudio中集成了Android应用性能分析利器——**Profile**。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://flueky.github.io/blog/2019-01-05/&title=使用Android Profiler 做性能分析及优化 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=做Android开发五年，开发工具从最初的eclipse+ADT插件到AndroidStduio。Google更是在新版的AndroidStudio中集成了Android应用性能分析利器——**Profile**。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://flueky.github.io/blog/2019-01-05/&title=使用Android Profiler 做性能分析及优化 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=做Android开发五年，开发工具从最初的eclipse+ADT插件到AndroidStduio。Google更是在新版的AndroidStudio中集成了Android应用性能分析利器——**Profile**。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/blog/2019-01-12/" rel="prev" title="NDK开发入门终极教程">
+                                
+                                    NDK开发入门终极教程
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/JNI/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> JNI</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/blog/2018-12-05/" rel="prev" title="使用PlantUML绘制类图">
+                                  
+                                      使用PlantUML绘制类图
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/PlantUML/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> PlantUML</a> <a class="tag" href="/tags/UML/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> UML</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;Comments</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '使用Android Profiler 做性能分析及优化',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.gif'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:flueky@sina.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/flueky"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://weibo.com/u/2094177960"
+              class="social fab fa-weibo flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://twitter.com/flueky"
+              class="social fab fa-twitter flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=12143853"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%A7%88"><span class="toc-text">1 概览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-CPU%E5%88%86%E6%9E%90"><span class="toc-text">2 CPU分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90"><span class="toc-text">3 内存分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90"><span class="toc-text">4 网络分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%80%97%E7%94%B5%E7%9B%91%E6%8E%A7"><span class="toc-text">5 耗电监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6 总结</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:flueky@sina.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/flueky"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://weibo.com/u/2094177960"
+            class="social fab fa-weibo flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/flueky"
+            class="social fab fa-twitter flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=12143853"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <br>
+  <div><p>Blog content follows the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+<script>
+  var now = new Date(); 
+  function createtime() { 
+      var grt= new Date("11/03/2019 14:42:00");//在此处修改你的建站时间
+      now.setTime(now.getTime()+250); 
+      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+      document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+  } 
+  setInterval("createtime()",250);
+</script>
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "1416d3692a6b876e4a4b",
+      clientSecret: "54e9449ba586fe6b964251503045fad57f0af16c",
+      repo: "flueky.github.io",
+      owner: "flueky",
+      admin: "flueky",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+  <!-- 单击显示文字 -->
+  <script type="text/javascript" src="/js/click_show_text.js"></script>
+  <!-- 单击烟花爆炸效果 -->
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+  <script type="text/javascript" src="/js/fireworks.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+  <!--动态线条背景，线条颜色 220,220,220 可以换成喜欢的-->
+  <script type="text/javascript" color="92,210,245" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> 
+  <!-- 样式一（鼠标点击更换样式） -->
+  <!-- <script src="https://g.joyinshare.com/hc/ribbon.min.js" type="text/javascript"></script> -->
+  <!-- 样式二（飘动的彩带） -->
+  <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>C++面向对象（一）——类与对象 | Flukey 小站</title>
+  
+  
+
+  
+  <link rel="alternate" href="/atom.xml" title="Flukey 小站" type="application/atom+xml">
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4b242b5838e013c0b305bf13edd4f329";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Flueky Tech-site</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="搜索" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-home fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/donate/"
+            
+              rel="nofollow"
+            
+            
+            id="donate">
+            <i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Flukey 小站
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-home fa-fw'></i>&nbsp;主页
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/categories/"
+                
+                  rel="nofollow"
+                
+                
+                id="categories">
+								<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/tags/"
+                
+                  rel="nofollow"
+                
+                
+                id="tags">
+								<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/donate/"
+                
+                  rel="nofollow"
+                
+                
+                id="donate">
+								<i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" target="_blank" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow noopener"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/blog/2016-04-28/">
+        C++面向对象（一）——类与对象
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://flueky.github.io" rel="nofollow">
+        
+          <img src="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+        
+        <p>Flueky</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2016-04-28</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/C-C/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>C/C++</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+        
+          <div>
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">3.2k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">14分</span>
+      </span>
+    </span>
+</div>
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <h1 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h1><p>关键字class开头，后跟类的名称。类的主体被包在花括号中。类定义后必须跟着一个分号或列表。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="定义对象"><a href="#定义对象" class="headerlink" title="定义对象"></a>定义对象</h1><p>声明类的对象，就像声明基本类型的变量一样。<strong>注意区分普通变量和引用变量的区别。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Line line1 ;<span class="comment">//声明普通变量</span></span><br><span class="line"></span><br><span class="line">Line* line2 = <span class="keyword">new</span> Line;<span class="comment">//声明指针变量</span></span><br><span class="line"><span class="keyword">delete</span> line2;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>普通变量的内存占用由编译器去管理 。指针变量的内存占用由开发人员手动管理</p>
+</blockquote>
+<h1 id="访问数据成员"><a href="#访问数据成员" class="headerlink" title="访问数据成员"></a>访问数据成员</h1><p>普通变量和指针变量访问数据成员的方式不一样，都只能访问公共成员变量和函数——用public 声明。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Line line1 ;</span><br><span class="line">Line* line2 = <span class="keyword">new</span> Line;</span><br><span class="line">	</span><br><span class="line">line1.setLength(<span class="number">10.0</span>);</span><br><span class="line">line2-&gt;setLength(<span class="number">11.1</span>);</span><br><span class="line">	</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line1 &quot;</span>&lt;&lt;line1.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line2 &quot;</span>&lt;&lt;line2-&gt;getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">delete</span> line2;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>普通变量的公共成员用运算符（.）访问。指针变量的公共成员用运算符（-&gt;）访问。</p>
+</blockquote>
+<h1 id="类成员函数"><a href="#类成员函数" class="headerlink" title="类成员函数"></a>类成员函数</h1><p>类的成员函数是指那些把定义和原型写在类定义内部的函数，就像类定义中的其他变量一样。类成员函数是类的一个成员，它可以操作类的任意对象，可以访问对象中的所有成员。</p>
+<blockquote>
+<p>成员函数可以定义在类定义内部，或者单独使用范围解析运算符（::）来定义。在类定义中定义的成员函数把函数声明为<strong>内联</strong>的，即便没有使用 inline 标识符。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;<span class="comment">//定义在类内部，也就是内联函数</span></span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by print&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *类的外部使用范围解析运算符 :: 定义该函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Line::setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>&#123;</span><br><span class="line">	length = len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Line::getLength</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h1><p>内联函数从源代码层看，有函数的结构，而在编译后，却不具备函数的性质。内联函数不是在调用时发生控制转移，而是在编译时将函数体嵌入在每一个调用处。编译时，类似宏替换，使用函数体替换调用处的函数名。一般在代码中用inline修饰，但是能否形成内联函数，需要看编译器对该函数定义的具体处理。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用关键字inline定义内联函数</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">printLine</span><span class="params">(Line line)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;line.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by printLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="构造函数与析构函数"><a href="#构造函数与析构函数" class="headerlink" title="构造函数与析构函数"></a>构造函数与析构函数</h1><p><strong>构造函数</strong>是一种特殊的成员函数，会在每次创建类的新对象时执行。<strong>析构函数</strong>函数则在每次删除所创建的对象时执行。</p>
+<table>
+<thead>
+<tr>
+<th align="center">特征</th>
+<th align="left">构造函数</th>
+<th align="left">析构函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">名称</td>
+<td align="left">类名</td>
+<td align="left">~类名</td>
+</tr>
+<tr>
+<td align="center">返回类型</td>
+<td align="left">无</td>
+<td align="left">无</td>
+</tr>
+<tr>
+<td align="center">参数</td>
+<td align="left">可以有参数</td>
+<td align="left">不可以有参数</td>
+</tr>
+<tr>
+<td align="center">用途</td>
+<td align="left">为某些成员变量设置初始值</td>
+<td align="left">在跳出程序前释放资源</td>
+</tr>
+<tr>
+<td align="center">其他</td>
+<td align="left">能够重载</td>
+<td align="left">不能够重载</td>
+</tr>
+</tbody></table>
+<p>关于函数重载将在后后续博文中介绍</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by print&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Line();<span class="comment">//没有参数的构造函数</span></span><br><span class="line">		Line(<span class="keyword">double</span> len);<span class="comment">//带有参数的构造函数</span></span><br><span class="line">		~Line();<span class="comment">//析构函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Line::Line()&#123;</span><br><span class="line">	length=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is created &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Line::Line(<span class="keyword">double</span> len)&#123;</span><br><span class="line">	length = len;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is created &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Line::~Line()&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is deleted&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function">Line <span class="title">line1</span><span class="params">(<span class="number">12</span>)</span> </span>;<span class="comment">//调用有参数的构造函数</span></span><br><span class="line">	Line* line2 = <span class="keyword">new</span> Line;<span class="comment">//调用无参数的构造函数</span></span><br><span class="line">	</span><br><span class="line">	line1.setLength(<span class="number">10.0</span>);</span><br><span class="line">	line2-&gt;setLength(<span class="number">11.1</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line1 &quot;</span>&lt;&lt;line1.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line2 &quot;</span>&lt;&lt;line2-&gt;getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">delete</span> line2;<span class="comment">//调用析构函数。程序结束时编译器自动释放line1 的资源，再次调用析构函数一次</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<pre><code>object is created 12
+object is created 0
+line1 10
+line2 11.1
+object is deleted
+object is deleted</code></pre>
+<blockquote>
+<p>分析运行结果得知，定义两个变量，构造函数和析构函数各调用两次。其中，指针变量需要手动<code>delete</code>才能调用析构函数。<strong>有兴趣的可以自行验证</strong>。</p>
+</blockquote>
+<h1 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h1><p>一种特殊的构造函数，它在创建对象时，是使用同一类中之前创建的对象来初始化新创建的对象。<br>拷贝构造函数通常用于：</p>
+<ol>
+<li>通过使用另一个同类型的对象来初始化新创建的对象。</li>
+<li>复制对象，把它作为参数传递给函数。</li>
+<li>复制对象，并从函数返回这个对象</li>
+</ol>
+<blockquote>
+<p>如果在类中没有定义拷贝构造函数，编译器会自行定义一个。<strong>如果类带有指针变量，并有动态内存分配，则它必须有一个拷贝构造函数。</strong>定义拷贝构造函数，参照如下形式：</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">classname (<span class="keyword">const</span> classname &amp;obj) &#123;</span><br><span class="line">	<span class="comment">// 构造函数的主体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给Line类添加上拷贝构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by print&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Line();<span class="comment">//没有参数的构造函数</span></span><br><span class="line">		Line(<span class="keyword">double</span> len);<span class="comment">//带有参数的构造函数</span></span><br><span class="line">		~Line();<span class="comment">//析构函数</span></span><br><span class="line">		Line(<span class="keyword">const</span> Line &amp;obj);<span class="comment">//拷贝构造函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Line::Line(<span class="keyword">const</span> Line &amp;obj)&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;copy Line&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	length = obj.length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function">Line <span class="title">line1</span><span class="params">(<span class="number">12</span>)</span> </span>;<span class="comment">//调用有参数的构造函数</span></span><br><span class="line">	Line* line2 = <span class="keyword">new</span> Line;<span class="comment">//调用无参数的构造函数</span></span><br><span class="line">	</span><br><span class="line">	line1.setLength(<span class="number">10.0</span>);</span><br><span class="line">	line2-&gt;setLength(<span class="number">11.1</span>);</span><br><span class="line">	</span><br><span class="line">	printLine(line1);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line1 &quot;</span>&lt;&lt;line1.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line2 &quot;</span>&lt;&lt;line2-&gt;getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">delete</span> line2;<span class="comment">//调用析构函数。程序结束时编译器自动释放line1 的资源，再次调用析构函数一次</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>object is created 12
+object is created 0
+copy Line
+line&#39;s length is 10
+called by printLine
+object is deleted
+line1 10
+line2 11.1
+object is deleted
+object is deleted</code></pre>
+<blockquote>
+<p>眼尖的伙伴也许发现了这里调用了三次析构函数。分析第三行到第6行的输出，调用函数<code>printLine</code>首先会调用拷贝构造函数给形参复初始化，再执行<code>printLine</code>的函数体，最后释放形参暂用的资源。</p>
+</blockquote>
+<h1 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h1><ul>
+<li>友元可以是一个函数，该函数被称为友元函数。友元也可以是一个类，该类被成为友元类。在这种情况下，整个类及其所有成员都是友元。</li>
+<li>友元函数是定义在类的外部却可以访问类的内部成员（private 和protected）。友元函数的原型在类的内部定义，但是不是类的成员函数。通常用关键字 friend 修饰声明的函数为一个类的友元。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by print&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Line();<span class="comment">//没有参数的构造函数</span></span><br><span class="line">		Line(<span class="keyword">double</span> len);<span class="comment">//带有参数的构造函数</span></span><br><span class="line">		~Line();<span class="comment">//析构函数</span></span><br><span class="line">		Line(<span class="keyword">const</span> Line &amp;obj);<span class="comment">//拷贝构造函数</span></span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Line line)</span></span>;<span class="comment">//定义为line类的友元函数</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">printLine</span><span class="params">(Line line)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;line.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by printLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//printf不是任何类的成员函数，因此不需要修饰符::</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printf</span><span class="params">(Line line)</span></span>&#123;</span><br><span class="line">	<span class="comment">//友元函数可以直接访问该类的任何成员</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;line.length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by printLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对比友元函数、内联函数、成员函数的定义。成员函数和友元函数可以访问类的内部成员。但是友元函数必须基于类的对象访问类的内部成员。友元函数和内联函数不需要范围解析运算符，因为他们不属于类的成员函数。</p>
+</blockquote>
+<h1 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h1><p>每一个对象都能通过 this 指针来访问自己的地址。this 指针是所有成员函数的隐含参数。因此，在成员函数内部，它可以用来指向调用对象。</p>
+<p><strong>友元函数没有 this 指针，因为友元不是类的成员。只有成员函数才有 this 指针。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Line <span class="title">Line::changeLine</span><span class="params">(<span class="keyword">double</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;length = length;<span class="comment">//第一个length是类的成员变量，第二个length是形参</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;<span class="keyword">this</span>-&gt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by changeLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;<span class="comment">//返回自己的地址</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function">Line <span class="title">line1</span><span class="params">(<span class="number">12</span>)</span> </span>;<span class="comment">//调用有参数的构造函数</span></span><br><span class="line">	Line* line2 = <span class="keyword">new</span> Line;<span class="comment">//调用无参数的构造函数</span></span><br><span class="line">	</span><br><span class="line">	line1.setLength(<span class="number">10.0</span>);</span><br><span class="line">	line2-&gt;setLength(<span class="number">11.1</span>);</span><br><span class="line"></span><br><span class="line">	printLine(line1);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line1 &quot;</span>&lt;&lt;line1.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line2 &quot;</span>&lt;&lt;line2-&gt;getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	Line line3 = line2-&gt;changeLine(<span class="number">23</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line3 &quot;</span>&lt;&lt;line3.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">delete</span> line2;<span class="comment">//调用析构函数。程序结束时编译器自动释放line1,line3的资源，再次调用析构函数两次</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>object is created 12
+object is created 0
+copy Line
+line&#39;s length is 10
+called by printLine
+object is deleted
+line1 10
+line2 11.1
+line&#39;s length is 23
+called by changeLine
+copy Line
+line3 23
+object is deleted
+object is deleted
+object is deleted</code></pre>
+<blockquote>
+<p>分析第9~13行的输出，<code>return *this;</code>会再次生成一个line对象。因此后续会依次释放line1、line2、line3 的资源。</p>
+</blockquote>
+<h1 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h1><p>在类的定义中，用static 关键字把类的成员定义为静态的。无论创建多少个对象，静态成员都只有一个副本。访问静态成员的方式：classname :: staticmember。静态成员可以是成员变量也可以是成员函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//完整版Line类</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> length;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">int</span> objcount;<span class="comment">//声明静态成员变量</span></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">double</span> <span class="title">getLength</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by print&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Line();<span class="comment">//没有参数的构造函数</span></span><br><span class="line">		Line(<span class="keyword">double</span> len);<span class="comment">//带有参数的构造函数</span></span><br><span class="line">		~Line();<span class="comment">//析构函数</span></span><br><span class="line">		Line(<span class="keyword">const</span> Line &amp;obj);<span class="comment">//拷贝构造函数</span></span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Line line)</span></span>;<span class="comment">//定义为line类的友元函数</span></span><br><span class="line">		</span><br><span class="line">		<span class="function">Line <span class="title">changeLine</span><span class="params">(<span class="keyword">double</span> length)</span></span>;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Line::objcount = <span class="number">0</span>;<span class="comment">//定义并初始化静态成员变量</span></span><br><span class="line"></span><br><span class="line">Line::Line()&#123;</span><br><span class="line">	length=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is created &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	objcount++;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;objcount&lt;&lt;<span class="string">&quot; objects left&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">double</span> len)&#123;</span><br><span class="line">	length = len;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is created &quot;</span>&lt;&lt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	objcount++;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;objcount&lt;&lt;<span class="string">&quot; objects left&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Line::~Line()&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;object is deleted&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	objcount--;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;objcount&lt;&lt;<span class="string">&quot; objects left&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Line::getCount</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> objcount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Line::Line(<span class="keyword">const</span> Line &amp;obj)&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;copy Line&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	length = obj.length;</span><br><span class="line">	objcount++;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;objcount&lt;&lt;<span class="string">&quot; objects left&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Line::setLength</span><span class="params">(<span class="keyword">double</span> len)</span></span>&#123;</span><br><span class="line">	length = len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Line::getLength</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">printLine</span><span class="params">(Line line)</span></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;line.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by printLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//printf不是任何类的成员函数，因此不需要修饰符::</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(Line line)</span></span>&#123;</span><br><span class="line">	<span class="comment">//友元函数可以直接访问该类的任何成员</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;line.length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by printLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Line <span class="title">Line::changeLine</span><span class="params">(<span class="keyword">double</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;length = length;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line&#x27;s length is &quot;</span>&lt;&lt;<span class="keyword">this</span>-&gt;length&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;called by changeLine&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function">Line <span class="title">line1</span><span class="params">(<span class="number">12</span>)</span> </span>;<span class="comment">//调用有参数的构造函数</span></span><br><span class="line">	Line* line2 = <span class="keyword">new</span> Line;<span class="comment">//调用无参数的构造函数</span></span><br><span class="line">	</span><br><span class="line">	line1.setLength(<span class="number">10.0</span>);</span><br><span class="line">	line2-&gt;setLength(<span class="number">11.1</span>);</span><br><span class="line"></span><br><span class="line">	printLine(line1);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line1 &quot;</span>&lt;&lt;line1.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line2 &quot;</span>&lt;&lt;line2-&gt;getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	Line line3 = line2-&gt;changeLine(<span class="number">23</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;line3 &quot;</span>&lt;&lt;line3.getLength()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;obj count is &quot;</span>&lt;&lt;Line::getCount()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> line2;<span class="comment">//调用析构函数。程序结束时编译器自动释放line1 的资源，再次调用析构函数一次</span></span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>object is created 12
+1 objects left
+object is created 0
+2 objects left
+copy Line
+3 objects left
+line&#39;s length is 10
+called by printLine
+object is deleted
+2 objects left
+line1 10
+line2 11.1
+line&#39;s length is 23
+called by changeLine
+copy Line
+3 objects left
+line3 23
+obj count is 3
+object is deleted
+2 objects left
+object is deleted
+1 objects left
+object is deleted
+0 objects left</code></pre>
+<p>最后，自行分析程序运行结果。</p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-21T16:46:00+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>updated at Aug 21, 2020</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://flueky.github.io/blog/2016-04-28/&title=C++面向对象（一）——类与对象 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://flueky.github.io/blog/2016-04-28/&title=C++面向对象（一）——类与对象 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://flueky.github.io/blog/2016-04-28/&title=C++面向对象（一）——类与对象 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;Previous</h6>
+                          <h4>
+                              <a href="/blog/2016-04-29/" rel="prev" title="C++面向对象（二）——继承">
+                                
+                                    C++面向对象（二）——继承
+                                
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>Next&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/blog/2016-04-26/" rel="prev" title="Android平台的跨进程通信——AIDL（上）">
+                                  
+                                      Android平台的跨进程通信——AIDL（上）
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/AIDL/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> AIDL</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;Comments</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'C++面向对象（一）——类与对象',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.gif'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:flueky@sina.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/flueky"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://weibo.com/u/2094177960"
+              class="social fab fa-weibo flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://twitter.com/flueky"
+              class="social fab fa-twitter flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=12143853"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;TOC</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="toc-text">定义类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1"><span class="toc-text">定义对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-text">访问数据成员</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-text">类成员函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="toc-text">内联函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">构造函数与析构函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">拷贝构造函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-text">友元函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this%E6%8C%87%E9%92%88"><span class="toc-text">this指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-text">静态成员</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:flueky@sina.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/flueky"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://weibo.com/u/2094177960"
+            class="social fab fa-weibo flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/flueky"
+            class="social fab fa-twitter flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=12143853"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <br>
+  <div><p>Blog content follows the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+</div>
+  <div>
+    Use
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    as theme
+    
+      , 
+      total visits
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      times
+    
+    . 
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+<script>
+  var now = new Date(); 
+  function createtime() { 
+      var grt= new Date("11/03/2019 14:42:00");//在此处修改你的建站时间
+      now.setTime(now.getTime()+250); 
+      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+      document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+  } 
+  setInterval("createtime()",250);
+</script>
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "1416d3692a6b876e4a4b",
+      clientSecret: "54e9449ba586fe6b964251503045fad57f0af16c",
+      repo: "flueky.github.io",
+      owner: "flueky",
+      admin: "flueky",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "Copied";
+  let COPY_FAILURE = "Copy failed";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+  <!-- 单击显示文字 -->
+  <script type="text/javascript" src="/js/click_show_text.js"></script>
+  <!-- 单击烟花爆炸效果 -->
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+  <script type="text/javascript" src="/js/fireworks.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+  <!--动态线条背景，线条颜色 220,220,220 可以换成喜欢的-->
+  <script type="text/javascript" color="92,210,245" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> 
+  <!-- 样式一（鼠标点击更换样式） -->
+  <!-- <script src="https://g.joyinshare.com/hc/ribbon.min.js" type="text/javascript"></script> -->
+  <!-- 样式二（飘动的彩带） -->
+  <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script>
+</body>
+</html>
