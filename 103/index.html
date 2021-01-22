@@ -423,7 +423,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">7分</span>
+        <span class="post-count">8分</span>
       </span>
     </span>
 </div>
@@ -444,7 +444,7 @@
 <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><h2 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h2><h3 id="引导模式"><a href="#引导模式" class="headerlink" title="引导模式"></a>引导模式</h3><p>在真机上装 Arch ，尤其是准备装双系统，建议了解下自己主板兼容的引导模式。开机时 按下 F2 键，进入主板系统界面。</p>
 <img src="https://gitee.com/flueky/Blog-Picture/raw/master/103/014.jpg"/>
 
-<p>如图示的主板信息，支持 Legacy （传统模式，记BIOS）和 UEFI 模式。不同的模式，在后续分区操作、安装引导程序时略有区别。如需安装爽系统，建议使用 UEFI 模式。</p>
+<p>如图示的主板信息，支持 Legacy （传统模式，记BIOS）和 UEFI 模式。不同的模式，在后续分区操作、安装引导程序时略有区别。如需安装双系统，建议使用 UEFI 模式。</p>
 <h3 id="制作启动盘"><a href="#制作启动盘" class="headerlink" title="制作启动盘"></a>制作启动盘</h3><p>Arch 系统镜像比较小，约 700MB 。官方<a target="_blank" rel="noopener" href="https://archlinux.org/download/">下载地址</a>，通常比较慢，建议使用国内镜像下载地址：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/2021.01.01/">清华镜像</a>，<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/archlinux/iso/2021.01.01/">中科大镜像</a>。</p>
 <p>使用 <a target="_blank" rel="noopener" href="https://cn.ultraiso.net/">UtraIso</a> 工具将下载下来的 ios 文件写入 U 盘中。具体破解方式和制作启动盘的方式百度有很多。</p>
 <p>最后在开机时，按住 F12 出现如下页面，选择从 U 盘启动。</p>
@@ -557,10 +557,11 @@
 
 <h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -G wheel -s /bin/bash zkf #用户名，做开发 首字母</span><br><span class="line">passwd zkf # 设置 zkf 用户密码 ，需要输入两次 </span><br><span class="line"><span class="meta">#</span><span class="bash"> 提权操作，默认的 zkf 账户，无法获取 root 权限</span></span><br><span class="line">pacman -S vi sudo # 安装必备程序</span><br><span class="line">visudo            # 编辑提权文件</span><br><span class="line"><span class="meta">#</span><span class="bash"> 同 vim 的操作，删除 %wheel ALL=(ALL) ALL 或其下面一行之前的井号。下面使用 sudo 命令不需要密码</span></span><br><span class="line">    /wheel        </span><br><span class="line">    :wq </span><br></pre></td></tr></table></figure>
 <h2 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim # 安装 vim，之前可以用 vim 是安装包附带的，新系统需要重新安装</span><br><span class="line">vim /etc/locale.gen # 修改本地化配置文件</span><br><span class="line"><span class="meta">#</span><span class="bash"> 打开 en_US.UTF-8 ,zh_CN.UTF-8前的井号</span></span><br><span class="line">locale-gen # 生成配置</span><br></pre></td></tr></table></figure>
-<img src="https://gitee.com/flueky/Blog-Picture/raw/master/103/026.png"/>
 
 <p>至此，Arch 系统即安装配置完成。后续还会有图形化系统安装和桌面美化。</p>
 <p>下次开机时，即可登录刚创建的 zkf 账户。或者输入 exit 退出 root ，直接登录 zkf 也可以。</p>
+<p>最后两个命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">poweroff # 关机 </span><br><span class="line">restart  # 重启</span><br></pre></td></tr></table></figure>
 
       </div>
       
@@ -572,7 +573,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-01-22T22:37:46+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-01-22T22:57:28+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
     <p>更新于 2021年1月22日</p>
