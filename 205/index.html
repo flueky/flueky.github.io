@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Android事件分发机制 | Flukey 小站</title>
+  
+  
+
+  
+  <link rel="alternate" href="/atom.xml" title="Flukey 小站" type="application/atom+xml">
+  
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type='image/x-icon' href="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+  
+
+  
+    
+<link rel="stylesheet" href="/style.css">
+
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4b242b5838e013c0b305bf13edd4f329";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Flueky Tech-site</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="搜索" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-home fa-fw'></i>&nbsp;主页
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/donate/"
+            
+              rel="nofollow"
+            
+            
+            id="donate">
+            <i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Flukey 小站
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="categories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="tags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="archives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-home fa-fw'></i>&nbsp;主页
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="archives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/categories/"
+                
+                  rel="nofollow"
+                
+                
+                id="categories">
+								<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/tags/"
+                
+                  rel="nofollow"
+                
+                
+                id="tags">
+								<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/donate/"
+                
+                  rel="nofollow"
+                
+                
+                id="donate">
+								<i class='fas fa-thumbs-up fa-fw'></i>&nbsp;赞赏
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" target="_blank" href="https://xaoxuu.com/wiki/material-x/"
+                
+                  rel="nofollow noopener"
+                
+                
+                id="https:xaoxuu.comwikimaterial-x">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/205/">
+        Android事件分发机制
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://flueky.github.io" rel="nofollow">
+        
+          <img src="https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png">
+        
+        <p>Flueky</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2016-04-01</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/Android/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>Android</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+        
+          <div>
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">2.5k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">12分</span>
+      </span>
+    </span>
+</div>
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>在安卓四大组件中（<code>Activity</code>、<code>Service</code>、<code>BroadCast</code>、<code>ContentProvider</code>），最常用的当是<code>Activity</code>。因为<code>Activity</code>负责提供直观的页面并响应用户操作。在<code>Activity</code>的布局文件中，通过最外层的<code>ViewGroup</code>（布局）一层层嵌套、布局直至<code>View</code>（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：你想点击的某个布局或控件，发现响应的是另一个布局或控件）的问题。呵呵，怎么办呢？由此引入我们接下来讨论的问题。</p>
+<a id="more"></a>
+
+<h1 id="事件分发阐述"><a href="#事件分发阐述" class="headerlink" title="事件分发阐述"></a>事件分发阐述</h1><p>手机在响应用户的点击操作时，从<code>Activity</code>入口，遵循着一定的规则将对应的事件交由指定的<code>ViewGroup</code>或者<code>View</code>去响应（消费这个事件）。只有找出了各中规则，日后再次处理这类事件问题时，必定会得心应手。从程序的角度来看，<code>Android</code>提供三个方法处理事件问题<code>dispatchTouchEvent</code>（<strong>分发点击事件</strong>）、<code>onInterceptTouchEvent</code>（<strong>拦截点击事件</strong>），<code>onTouchEvent</code>（<strong>处理点击事件</strong>）。每个方法返回<code>true</code>或<code>false</code>表示是否处理它对应的职责。比如说，如果我拦截了事件，就表示自身要处理该事件，不让别的控件再能接收到事件信号。除了返回<code>true</code>或<code>false</code>之外，还能通过调用父类的方法执行父类的逻辑。简而言之，<code>Activity</code>、<code>ViewGroup</code>、<code>View</code>三个类处理事件，相关的方法依次是<code>dispatchTouchEvent</code>、<code>onInterceptTouchEvent</code>、<code>onTouchEvent</code>以及每个方法的返回可以是<code>true</code>、<code>false</code>和<code>super</code>。其中注意：<code>Activity</code>和<code>View</code>没有拦截事件方法。</p>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>编写一个测试demo，布局文件中用<code>LinearLayout</code>嵌套<code>RelativeLayout</code>，最后在<code>RelativeLayout</code>中包含一个<code>Button</code>按钮。依次在每个事件处理方法中，输出log日志。点击按钮测试，通过日志信息分析事件分发流程。下图是布局效果。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/1.png" width="250">
+
+<p>为方便描述，定制命名规则：<code>Activity</code>简写<strong>A</strong>，<code>LinearLayout</code>简写<strong>L</strong>，<code>RelativeLayout</code>简写<strong>R</strong>，<code>Button</code>简写<strong>B</strong>，<code>dispatchTouchEvent</code>简写<strong>D</strong>，<code>onInterceptTouchEvent</code>简写<strong>I</strong>，<code>onTouchEvent</code>简写<strong>T</strong>，返回<code>true</code>简写<strong>T</strong>，返回<code>false</code>简写<strong>F</strong>，返回<code>super</code>简写<strong>S</strong>。如：<strong>ADS</strong>表示<code>Activity</code>中<code>dispatchTouchEvent</code>方法 <code>return super</code>。</p>
+<h2 id="测试方案一"><a href="#测试方案一" class="headerlink" title="测试方案一"></a>测试方案一</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDS/BTS</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">04-01 12:44:44.402: D/Activity(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyLinearLayout(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyLinearLayout(1234): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyRelativeLayout(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyRelativeLayout(1234): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyButton(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyButton(1234): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.506: D/Activity(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyLinearLayout(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyLinearLayout(1234): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyRelativeLayout(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyRelativeLayout(1234): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyButton(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyButton(1234): onTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/Button(1234): 点击</span><br></pre></td></tr></table></figure>
+<p>整理出如下示意图：三色箭头实线，表示对应方法返回一个值会跳转到下一个方法。其中Button 返回true和返回super都会消费事件，只是返回true就不在就不再响应button的点击事件。</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/2.png" width="600">
+
+<h2 id="测试方案二"><a href="#测试方案二" class="headerlink" title="测试方案二"></a>测试方案二</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDS/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:00:54.970: D/Activity(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyButton(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyButton(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/Activity(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:55.066: D/Activity(1387): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:00:55.066: D/Activity(1387): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/3.png" width="600">
+
+<p>说明：Button 的onTouchEvent return false时，点击事件会返回到上一层视图。如果一直都没有控件处理这个事件就会交给Activitiy 的onTouchEvent消费。当再传入事件时，不会再按照之前的流程，每个空间均处理一次，而是直接给 Activity 的onTouchEvent消费。就是虚线所指。</p>
+<h2 id="测试方案三"><a href="#测试方案三" class="headerlink" title="测试方案三"></a>测试方案三</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDT/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:12:47.918: D/Activity(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyLinearLayout(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyLinearLayout(1444): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyRelativeLayout(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyRelativeLayout(1444): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyButton(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:48.030: D/Activity(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyLinearLayout(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyLinearLayout(1444): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyRelativeLayout(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyRelativeLayout(1444): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyButton(1444): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/4.png" width="600">
+
+
+<p>说明：Button dispatchTouchEvent方法返回true，表示自身需要消费该事件。且不传递给onTouchEvent方法。</p>
+<h2 id="测试方案四"><a href="#测试方案四" class="headerlink" title="测试方案四"></a>测试方案四</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:19:40.014: D/Activity(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyButton(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/Activity(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.022: D/Activity(1502): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:19:40.022: D/Activity(1502): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/5.png" width="600">
+
+<p>说明：Button dispatchTouchEvent方法返回false，事件传递给父控件onTouchEvent方法。</p>
+<h2 id="测试方案五"><a href="#测试方案五" class="headerlink" title="测试方案五"></a>测试方案五</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTT、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:26:03.306: D/Activity(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyLinearLayout(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyLinearLayout(1561): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyButton(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.366: D/Activity(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyLinearLayout(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyLinearLayout(1561): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyRelativeLayout(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyRelativeLayout(1561): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/6.png" width="600">
+
+<p>说明：RelativeLayout 的onTouchEvent方法return true 消费了事件，下次事件生成时，就不传递给Button，直接交由RelativeLayout 的onTouchEvent方法处理。</p>
+<h2 id="测试方案六"><a href="#测试方案六" class="headerlink" title="测试方案六"></a>测试方案六</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTF、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:39:20.794: D/Activity(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyButton(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/Activity(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.874: D/Activity(1644): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:39:20.874: D/Activity(1644): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/7.png" width="600">
+
+<p>说明：RelativeLayout return false，就会将事件传递到上一层控件消费。其中，RelativeLayout onInterceptTouchEvent return false 表示事件也会分发到Button处理。</p>
+<h2 id="测试方案七"><a href="#测试方案七" class="headerlink" title="测试方案七"></a>测试方案七</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIT/RTF、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:02:41.594: D/Activity(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/Activity(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.714: D/Activity(1739): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:02:41.714: D/Activity(1739): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/8.png" width="600">
+
+<p>说明：RelativeLayout onInterceptTouchEvent 返回true，表示RelativeLayout 拦截事件信息，Button不会响应事件，事件交由RelativeLayout onTouchEvent处理。</p>
+<h2 id="测试方案八"><a href="#测试方案八" class="headerlink" title="测试方案八"></a>测试方案八</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDT/RIT/RTF、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:27:17.002: D/Activity(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyLinearLayout(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyLinearLayout(1907): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyRelativeLayout(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.058: D/Activity(1907): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyLinearLayout(1907): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyLinearLayout(1907): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyRelativeLayout(1907): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/9.png" width="600">
+
+<p>说明：RelativeLayout dispatchTouchEvent return true 表示自己消费事件，不再进行传递</p>
+<h2 id="测试方案九"><a href="#测试方案九" class="headerlink" title="测试方案九"></a>测试方案九</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:32:12.138: D/Activity(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyRelativeLayout(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/Activity(1965): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.250: D/Activity(1965): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:32:12.250: D/Activity(1965): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/10.png" width="600">
+
+<p>说明：RelativeLayout dispatchTouchEvent return false 表示不处理事件，交给上层页面处理。</p>
+<h2 id="测试方案十"><a href="#测试方案十" class="headerlink" title="测试方案十"></a>测试方案十</h2><pre><code>ADT/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:43:24.558: D/Activity(2023): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:43:24.686: D/Activity(2023): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/11.png" width="600">
+
+<p>说明：同ViewGroup和View的 dispatchTouchEvent 方法一样，return true 表示自己消费事件。不同的是，Activity 的dispatchTouchEvent方法return false 也表示自己消费事件。</p>
+<h2 id="测试方案十一"><a href="#测试方案十一" class="headerlink" title="测试方案十一"></a>测试方案十一</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF</code></pre>
+<p>日志说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:56:51.486: D/Activity(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyRelativeLayout(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/Activity(2149): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.490: D/Activity(2149): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:56:51.490: D/Activity(2149): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/12.png" width="600">
+
+<p>说明：其实，最终只要传递到Activity的onTouchEvent 方法，都会交由它处理事件。</p>
+<p>参照之前理解的思路，将整个示意图完善如下：</p>
+<img src="https://gitee.com/flueky/Blog-Picture/raw/master/205/13.png" width="600">
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li> <code>Activity</code>的<code>dispatchTouchEvent</code>方法，执行父类<code>dispatchTouchEvent</code>方法时，会将事件分发至<code>ViewGroup</code>，否则自身消费事件。</li>
+<li> 当事件再次传递到<code>Activity</code>的<code>onTouchEvent</code>方法，表示页面中所有控件都不响应事件，由<code>Activity</code>处理。</li>
+<li> <code>ViewGroup</code>和<code>View</code>的<code>dispatchTouchEvent</code>方法，<code>return true</code>表示不分发事件，自身处理。<code>return false</code>就将事件传递给上层控件的<code>onTouchEvent</code>方法，并且不再响应上层控件传递过来的事件。</li>
+<li> <code>ViewGroup</code>的<code>onInterceptTouchEvent</code>方法<code>return true</code>表示拦截事件，将事件传递给自身的<code>onTouchEvent</code>方法处理。</li>
+<li> <code>View</code>的<code>onTouchEvent</code>方法<code>return false</code>表示不消费事件，将事件传递给上层控件的<code>onTouchEvent</code>方法。否则，消费事件。</li>
+<li> <code>ViewGroup</code>的<code>onTouchEvent</code>方法<code>return true</code>表示消费事件，否则将事件传递给上层控件或<code>Activity</code>的<code>onTouchEvent</code>方法处理。</li>
+<li> 当控件没有处理事件时，就不再接收下一个事件消息，虚线所示。</li>
+</ol>
+<p><strong><font color="red" size="12">最后，祝各位程序猿/媛、码农、攻城狮们愚人节快乐。</font></strong></p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-12-18T10:35:45+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2020年12月18日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://flueky.github.io/205/&title=Android事件分发机制 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=在安卓四大组件中（Activity、Service、BroadCast、ContentProvider），最常用的当是Activity。因为Activity负责提供直观的页面并响应用户操作。在Activity的布局文件中，通过最外层的ViewGroup（布局）一层层嵌套、布局直至View（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：你想点击的某个布局或控件，发现响应的是另一个布局或控件）的问题。呵呵，怎么办呢？由此引入我们接下来讨论的问题。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://flueky.github.io/205/&title=Android事件分发机制 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=在安卓四大组件中（Activity、Service、BroadCast、ContentProvider），最常用的当是Activity。因为Activity负责提供直观的页面并响应用户操作。在Activity的布局文件中，通过最外层的ViewGroup（布局）一层层嵌套、布局直至View（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：你想点击的某个布局或控件，发现响应的是另一个布局或控件）的问题。呵呵，怎么办呢？由此引入我们接下来讨论的问题。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://flueky.github.io/205/&title=Android事件分发机制 | Flukey 小站&pics=https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.png&summary=在安卓四大组件中（Activity、Service、BroadCast、ContentProvider），最常用的当是Activity。因为Activity负责提供直观的页面并响应用户操作。在Activity的布局文件中，通过最外层的ViewGroup（布局）一层层嵌套、布局直至View（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：你想点击的某个布局或控件，发现响应的是另一个布局或控件）的问题。呵呵，怎么办呢？由此引入我们接下来讨论的问题。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                          <h4>
+                              <a href="/206/" rel="prev" title="浅谈动态规划算法设计">
+                                
+                                    浅谈动态规划算法设计
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> 动态规划</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/204/" rel="prev" title="C语言编程之你不知道的事——回调函数">
+                                  
+                                      C语言编程之你不知道的事——回调函数
+                                  
+                              </a>
+                          </h4>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'Android事件分发机制',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://gitee.com/flueky/Blog-Picture/raw/master/img/user_icon.gif'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="mailto:flueky@sina.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/flueky"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://weibo.com/u/2094177960"
+              class="social fab fa-weibo flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://twitter.com/flueky"
+              class="social fab fa-twitter flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=12143853"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E9%98%90%E8%BF%B0"><span class="toc-text">事件分发阐述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-text">验证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%80"><span class="toc-text">测试方案一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="toc-text">测试方案二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%89"><span class="toc-text">测试方案三</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%9B%9B"><span class="toc-text">测试方案四</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%BA%94"><span class="toc-text">测试方案五</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%85%AD"><span class="toc-text">测试方案六</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%83"><span class="toc-text">测试方案七</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%85%AB"><span class="toc-text">测试方案八</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B9%9D"><span class="toc-text">测试方案九</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%8D%81"><span class="toc-text">测试方案十</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%8D%81%E4%B8%80"><span class="toc-text">测试方案十一</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="mailto:flueky@sina.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/flueky"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://weibo.com/u/2094177960"
+            class="social fab fa-weibo flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/flueky"
+            class="social fab fa-twitter flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=12143853"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+  <br>
+  <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+    本站使用
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
+    作为主题
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+<script>
+  var now = new Date(); 
+  function createtime() { 
+      var grt= new Date("11/03/2019 14:42:00");//在此处修改你的建站时间
+      now.setTime(now.getTime()+250); 
+      days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+      if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+      mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+      snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+      document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+      document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+  } 
+  setInterval("createtime()",250);
+</script>
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/29/91197b04c13f512f734a76d4ac422d89dbe229.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "1416d3692a6b876e4a4b",
+      clientSecret: "54e9449ba586fe6b964251503045fad57f0af16c",
+      repo: "flueky.github.io",
+      owner: "flueky",
+      admin: "flueky",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+  <!-- 单击显示文字 -->
+  <script type="text/javascript" src="/js/click_show_text.js"></script>
+  <!-- 单击烟花爆炸效果 -->
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+  <script type="text/javascript" src="/js/fireworks.js"></script>
+  <!-- 雪花特效 -->
+  <script type="text/javascript" src="\js\snow.js"></script>
+  <!--动态线条背景，线条颜色 220,220,220 可以换成喜欢的-->
+  <script type="text/javascript" color="92,210,245" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script> 
+  <!-- 样式一（鼠标点击更换样式） -->
+  <!-- <script src="https://g.joyinshare.com/hc/ribbon.min.js" type="text/javascript"></script> -->
+  <!-- 样式二（飘动的彩带） -->
+  <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script>
+</body>
+</html>

@@ -191,7 +191,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="Search" />
+						<input type="text" class="input u-search-input" placeholder="搜索" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -364,7 +364,7 @@
       
         
   <h2 class="title">
-    <a href="/blog/2019-10-20/">
+    <a href="/025/">
       自建 Maven 仓库
     </a>
   </h2>
@@ -452,9 +452,9 @@
       <p>自从公司使用 Maven 仓库管理代码后，一直想着有一个自己的代码仓库。虽然写的代码不多，但是不影响 Get 一项新技能。</p>
       
         <div class="readmore">
-          <a href="/blog/2019-10-20/" class="flat-box">
+          <a href="/025/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -485,7 +485,7 @@
       
         
   <h2 class="title">
-    <a href="/blog/2019-10-18/">
+    <a href="/024/">
       使用 Gradle 配置 Android 工程
     </a>
   </h2>
@@ -526,9 +526,9 @@
             
   
   <div class='new-meta-item category'>
-    <a href='/categories/Android/' rel="nofollow">
+    <a href='/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/' rel="nofollow">
       <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>开发工具&nbsp;/&nbsp;Android</p>
+      <p>Android&nbsp;/&nbsp;开发工具</p>
     </a>
   </div>
 
@@ -573,9 +573,9 @@
       <p>自从将 Android 开发工具从 eclipse 迁移到 AndroidStudio 中之后，Android 工程构建越来越方便。见过很多项目中各式各样的 Gradle 配置语法，懵懵懂懂。遂花费近两周时间将官方文档通读一遍并整理出常用 Gradle 配置 Demo，以此博客作为说明。</p>
       
         <div class="readmore">
-          <a href="/blog/2019-10-18/" class="flat-box">
+          <a href="/024/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -1000,7 +1000,7 @@
   <section class='widget category'>
     
 <header class='pure'>
-  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
   
     <a class="rightBtn"
     
@@ -1017,6 +1017,8 @@
       <ul class="entry">
         
           <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(27)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/Arch/" href="/categories/Arch/"><div class='name'>Arch</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box" title="/categories/C-C/" href="/categories/C-C/"><div class='name'>C/C++</div><div class='badge'>(13)</div></a></li>
         
@@ -1078,7 +1080,7 @@
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
   
     <a class="rightBtn"
     
@@ -1169,19 +1171,19 @@
   
   <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
   <br>
-  <div><p>Blog content follows the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
 </div>
   <div>
-    Use
+    本站使用
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
-    as theme
+    作为主题
     
-      , 
-      total visits
+      ，
+      总访问量为
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      times
+      次
     
-    . 
+    。
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -1314,15 +1316,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "Copied";
-  let COPY_FAILURE = "Copy failed";
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {

@@ -191,7 +191,7 @@
 			
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
-						<input type="text" class="input u-search-input" placeholder="Search" />
+						<input type="text" class="input u-search-input" placeholder="搜索" />
 						<i class="icon fas fa-search fa-fw"></i>
 					</form>
 				</div>
@@ -349,7 +349,7 @@
       
         
   <h2 class="title">
-    <a href="/blog/2019-05-09/">
+    <a href="/019/">
       探索文件加解密
     </a>
   </h2>
@@ -437,9 +437,9 @@
       <p>这篇文章主要介绍加密算法的另一使用场景——文件加解密。事实上，已于 16 年实现过加密文件的功能并用于公司的项目中。确保安全的前提下，此次分享只介绍些简单的加密方法和实现过程。更高级深入的研究还请自行解决。</p>
       
         <div class="readmore">
-          <a href="/blog/2019-05-09/" class="flat-box">
+          <a href="/019/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -464,7 +464,7 @@
       
         
   <h2 class="title">
-    <a href="/blog/2019-04-30/">
+    <a href="/018/">
       编码、摘要和加密（三）——数据加密
     </a>
   </h2>
@@ -558,9 +558,9 @@
 <p>接下来，将针对几个常见的加密算法：<code>DES</code>、<code>3DES</code>、<code>AES</code>、<code>RSA</code> 的 Java 实现及其相关进行介绍，由于之前实现过 <code>DES</code> 和 <code>AES</code> 算法，因此具体算法说明，后续有空会写到。</p>
       
         <div class="readmore">
-          <a href="/blog/2019-04-30/" class="flat-box">
+          <a href="/018/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            Read More
+            阅读全文
           </a>
         </div>
       
@@ -993,7 +993,7 @@
   <section class='widget category'>
     
 <header class='pure'>
-  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Categories</div>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
   
     <a class="rightBtn"
     
@@ -1010,6 +1010,8 @@
       <ul class="entry">
         
           <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(27)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/Arch/" href="/categories/Arch/"><div class='name'>Arch</div><div class='badge'>(1)</div></a></li>
         
           <li><a class="flat-box" title="/categories/C-C/" href="/categories/C-C/"><div class='name'>C/C++</div><div class='badge'>(13)</div></a></li>
         
@@ -1071,7 +1073,7 @@
   <section class='widget tagcloud'>
     
 <header class='pure'>
-  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Hot Tags</div>
+  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
   
     <a class="rightBtn"
     
@@ -1162,19 +1164,19 @@
   
   <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
   <br>
-  <div><p>Blog content follows the <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
 </div>
   <div>
-    Use
+    本站使用
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a>
-    as theme
+    作为主题
     
-      , 
-      total visits
+      ，
+      总访问量为
       <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      times
+      次
     
-    . 
+    。
   </div>
 </footer>
 <script>setLoadingBarProgress(80);</script>
@@ -1299,15 +1301,15 @@
 <!-- 复制 -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
-  let COPY_SUCCESS = "Copied";
-  let COPY_FAILURE = "Copy failed";
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
   /*页面载入完成后，创建复制按钮*/
   !function (e, t, a) {
     /* code */
     var initCopyCode = function(){
       var copyHtml = '';
       copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '  <i class="fa fa-copy"></i><span>Copy</span>';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
       copyHtml += '</button>';
       $(".highlight .code pre").before(copyHtml);
       var clipboard = new ClipboardJS('.btn-copy', {
