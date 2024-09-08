@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Broadcast 专讲 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最近遇到一个问题，在做培训时，屡试不爽的广播消息竟然存在接收不到广播的情况。经了解后发现，Android O 已对隐式广播添加限制。so，下面总结下 Android 中广播相关。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Broadcast 专讲">
+<meta property="og:url" content="https://flueky.github.io/023/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="最近遇到一个问题，在做培训时，屡试不爽的广播消息竟然存在接收不到广播的情况。经了解后发现，Android O 已对隐式广播添加限制。so，下面总结下 Android 中广播相关。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2019-09-27T08:17:10.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:24:55.499Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/023/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Broadcast 专讲',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:24:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Broadcast 专讲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2019-09-27T08:17:10.000Z" title="Created 2019-09-27 16:17:10">2019-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:24:55.499Z" title="Updated 2024-09-08 18:24:55">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Broadcast 专讲"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>最近遇到一个问题，在做培训时，屡试不爽的广播消息竟然存在接收不到广播的情况。经了解后发现，<strong>Android O</strong> 已对隐式广播添加限制。so，下面总结下 Android 中广播相关。</p>
+<span id="more"></span>
+
+<h2 id="1-广播注册"><a href="#1-广播注册" class="headerlink" title="1. 广播注册"></a>1. 广播注册</h2><p>广播注册分为静态注册和动态注册，静态注册的广播，可以在程序没被启动时，接收到全局广播消息。而动态注册广播，只有在程序启动后接收广播消息。</p>
+<h3 id="1-1-静态注册"><a href="#1-1-静态注册" class="headerlink" title="1.1 静态注册"></a>1.1 静态注册</h3><p>定义好广播消息后，在 <strong>AndroidManife.xml</strong> 中注册即可，示例中，添加多个 Action。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">receiver</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.DemoReceiver&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span> <span class="attr">android:priority</span>=<span class="string">&quot;999&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.TEST_RECEIVER1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.TEST_RECEIVER2&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-动态注册"><a href="#1-2-动态注册" class="headerlink" title="1.2 动态注册"></a>1.2 动态注册</h3><p>动态注册指在 Activity 或 Service  中注册，并在 Activity 或 Service 销毁时，需要注销。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册广播</span></span><br><span class="line">registerReceiver(testReceiver, <span class="keyword">new</span> <span class="title class_">IntentFilter</span>(<span class="string">&quot;com.flueky.demo.TEST_RECEIVER1&quot;</span>));</span><br><span class="line"><span class="comment">// 注销广播</span></span><br><span class="line">unregisterReceiver(testReceiver);</span><br></pre></td></tr></table></figure>
+
+<p><strong>由于动态注册的广播可以通过定义内部类的方式实现，因此，动态 注册的广播可以同宿主 Activity 或 Service 进行交互。</strong></p>
+<h2 id="2-广播分类"><a href="#2-广播分类" class="headerlink" title="2. 广播分类"></a>2. 广播分类</h2><h3 id="2-1-无序广播"><a href="#2-1-无序广播" class="headerlink" title="2.1 无序广播"></a>2.1 无序广播</h3><p>应用发出广播后，所有注册了广播 Action 接收到广播的先后顺序是未知的，则叫发送了无序广播。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span>);</span><br><span class="line">sendBroadcast(intent, <span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-有序广播"><a href="#2-2-有序广播" class="headerlink" title="2.2 有序广播"></a>2.2 有序广播</h3><p>应用发出广播后，所有注册了广播 Action 接收到广播的先后顺序是固定的，则叫发送了无序广播。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span>);</span><br><span class="line">sendOrderedBroadcast(intent, <span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>发送有序广播需要指定一个权限。</li>
+<li>优先级高的接收器，优先接收到消息，并可以像优先级低的广播传递数据，还可以终止广播继续传递。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--定义优先级--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span> <span class="attr">android:priority</span>=<span class="string">&quot;999&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有序广播接收器中传递消息和终止广播如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//非有序广播，不不做下面的操作</span></span><br><span class="line"><span class="keyword">if</span> (!isOrderedBroadcast())</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"><span class="comment">// 获取前一个广播传递的消息 </span></span><br><span class="line"><span class="type">Bundle</span> <span class="variable">bundle</span> <span class="operator">=</span> getResultExtras(<span class="literal">true</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">received</span> <span class="operator">=</span> bundle.getString(<span class="string">&quot;received&quot;</span>);</span><br><span class="line"></span><br><span class="line">Log.d(TAG, <span class="string">&quot;onReceive: 广播发送 &quot;</span>+(received==<span class="literal">null</span>?<span class="string">&quot;null&quot;</span>:received));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将消息传递给下一个待接收的广播。</span></span><br><span class="line">bundle.putString(<span class="string">&quot;received&quot;</span>,<span class="string">&quot;已被 send 接收&quot;</span>);</span><br><span class="line">setResultExtras(bundle);</span><br><span class="line"><span class="comment">// 终止广播</span></span><br><span class="line">abortBroadcast();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-本地广播"><a href="#2-3-本地广播" class="headerlink" title="2.3 本地广播"></a>2.3 本地广播</h3><p>发送有序广播和无序广播后，设备中的其他应用只需要注册了接收广播的 Action ，都可以接收到广播消息。为了只在自己应用中接收到广播消息，Google 先后给出了两种方案。其中一种是本地广播，通过 v4 包提供了 <strong>LocalBroadcastManager</strong> 类，注册、注销和发送广播。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册本地广播</span></span><br><span class="line">LocalBroadcastManager.getInstance(<span class="built_in">this</span>).registerReceiver(testReceiver, <span class="keyword">new</span> <span class="title class_">IntentFilter</span>(<span class="string">&quot;com.flueky.demo.TEST_RECEIVER2&quot;</span>));</span><br><span class="line"><span class="comment">// 发送本地广播</span></span><br><span class="line">LocalBroadcastManager.getInstance(<span class="built_in">this</span>).sendBr</span><br><span class="line"><span class="title function_">oadcast</span><span class="params">(new Intent(<span class="string">&quot;com.flueky.demo.TEST_RECEIVER2&quot;</span>)</span>);</span><br><span class="line"><span class="comment">// 注销本地广播</span></span><br><span class="line">LocalBroadcastManager.getInstance(<span class="built_in">this</span>).unregisterReceiver(testReceiver);</span><br></pre></td></tr></table></figure>
+
+<p><strong>本地广播只能通过动态注册的方式，而且由 LocalBroadcastManager 注册的广播只能接收 LocalBroadcastManager 发送的广播。</strong></p>
+<h2 id="3-自定义权限"><a href="#3-自定义权限" class="headerlink" title="3. 自定义权限"></a>3. 自定义权限</h2><p>在 Android 8.0 以上，使用全局广播必须给广播接收器添加上权限。发送广播时需要使用广播接收器申明的权限，而且，发送广播的应用需要在 <strong>AndroidManifest.xml</strong> 中申明权限。</p>
+<p>具体做法是：发送广播的应用清单文件类容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--定义一个权限--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">permission</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:protectionLevel</span>=<span class="string">&quot;signature&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--申明使用这个权限--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送带权限的广播，有序广播和无序广播都行。</span></span><br><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span>);</span><br><span class="line">sendBroadcast(intent, <span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>接收广播应用的清单文件如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--使用自定义的权限，包括下面注册广播时，使用的 permission 属性。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">receiver</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.demo.DemoReceiver&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">&quot;com.flueky.demo.permission.Demo_Receiver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span> <span class="attr">android:priority</span>=<span class="string">&quot;1000&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.app.Demo_Receiver&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>最后，发送广播和接收广播的应用必须使用同一个签名文件。因为自定义权限的安全级别是 <em>signature</em></strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/flueky/Flueky-Sample/tree/master/broadcast-sample">源码地址</a>。</p>
+<p><strong>觉得有用？那打赏一个呗。[去打赏](&#x2F;donate&#x2F;)</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/023/">https://flueky.github.io/023/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/024/" title="使用 Gradle 配置 Android 工程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">使用 Gradle 配置 Android 工程</div></div></a></div><div class="next-post pull-right"><a href="/022/" title="告诫某类猿，抄博客真的好么"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">告诫某类猿，抄博客真的好么</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B9%BF%E6%92%AD%E6%B3%A8%E5%86%8C"><span class="toc-number">1.</span> <span class="toc-text">1. 广播注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 静态注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 动态注册</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B9%BF%E6%92%AD%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">2. 广播分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%97%A0%E5%BA%8F%E5%B9%BF%E6%92%AD"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 无序广播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%9C%89%E5%BA%8F%E5%B9%BF%E6%92%AD"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 有序广播</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%9C%AC%E5%9C%B0%E5%B9%BF%E6%92%AD"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 本地广播</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9D%83%E9%99%90"><span class="toc-number">3.</span> <span class="toc-text">3. 自定义权限</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

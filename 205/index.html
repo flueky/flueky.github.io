@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Android事件分发机制 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在安卓四大组件中（Activity、Service、BroadCast、ContentProvider），最常用的当是Activity。因为Activity负责提供直观的页面并响应用户操作。在Activity的布局文件中，通过最外层的ViewGroup（布局）一层层嵌套、布局直至View（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android事件分发机制">
+<meta property="og:url" content="https://flueky.github.io/205/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="在安卓四大组件中（Activity、Service、BroadCast、ContentProvider），最常用的当是Activity。因为Activity负责提供直观的页面并响应用户操作。在Activity的布局文件中，通过最外层的ViewGroup（布局）一层层嵌套、布局直至View（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2016-04-01T03:35:57.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:33:04.560Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/205/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Android事件分发机制',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:33:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android事件分发机制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2016-04-01T03:35:57.000Z" title="Created 2016-04-01 11:35:57">2016-04-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:33:04.560Z" title="Updated 2024-09-08 18:33:04">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android事件分发机制"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在安卓四大组件中（<code>Activity</code>、<code>Service</code>、<code>BroadCast</code>、<code>ContentProvider</code>），最常用的当是<code>Activity</code>。因为<code>Activity</code>负责提供直观的页面并响应用户操作。在<code>Activity</code>的布局文件中，通过最外层的<code>ViewGroup</code>（布局）一层层嵌套、布局直至<code>View</code>（控件），组成了丰富多彩的用户页面。如QQ、微信等等。在开发这些页面过程中，难免会遇到一些事件冲突（说人话就是：你想点击的某个布局或控件，发现响应的是另一个布局或控件）的问题。呵呵，怎么办呢？由此引入我们接下来讨论的问题。</p>
+<span id="more"></span>
+
+<h1 id="事件分发阐述"><a href="#事件分发阐述" class="headerlink" title="事件分发阐述"></a>事件分发阐述</h1><p>手机在响应用户的点击操作时，从<code>Activity</code>入口，遵循着一定的规则将对应的事件交由指定的<code>ViewGroup</code>或者<code>View</code>去响应（消费这个事件）。只有找出了各中规则，日后再次处理这类事件问题时，必定会得心应手。从程序的角度来看，<code>Android</code>提供三个方法处理事件问题<code>dispatchTouchEvent</code>（<strong>分发点击事件</strong>）、<code>onInterceptTouchEvent</code>（<strong>拦截点击事件</strong>），<code>onTouchEvent</code>（<strong>处理点击事件</strong>）。每个方法返回<code>true</code>或<code>false</code>表示是否处理它对应的职责。比如说，如果我拦截了事件，就表示自身要处理该事件，不让别的控件再能接收到事件信号。除了返回<code>true</code>或<code>false</code>之外，还能通过调用父类的方法执行父类的逻辑。简而言之，<code>Activity</code>、<code>ViewGroup</code>、<code>View</code>三个类处理事件，相关的方法依次是<code>dispatchTouchEvent</code>、<code>onInterceptTouchEvent</code>、<code>onTouchEvent</code>以及每个方法的返回可以是<code>true</code>、<code>false</code>和<code>super</code>。其中注意：<code>Activity</code>和<code>View</code>没有拦截事件方法。</p>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>编写一个测试demo，布局文件中用<code>LinearLayout</code>嵌套<code>RelativeLayout</code>，最后在<code>RelativeLayout</code>中包含一个<code>Button</code>按钮。依次在每个事件处理方法中，输出log日志。点击按钮测试，通过日志信息分析事件分发流程。下图是布局效果。</p>
+<img src="../pic/205/1.png" width="250">
+
+<p>为方便描述，定制命名规则：<code>Activity</code>简写<strong>A</strong>，<code>LinearLayout</code>简写<strong>L</strong>，<code>RelativeLayout</code>简写<strong>R</strong>，<code>Button</code>简写<strong>B</strong>，<code>dispatchTouchEvent</code>简写<strong>D</strong>，<code>onInterceptTouchEvent</code>简写<strong>I</strong>，<code>onTouchEvent</code>简写<strong>T</strong>，返回<code>true</code>简写<strong>T</strong>，返回<code>false</code>简写<strong>F</strong>，返回<code>super</code>简写<strong>S</strong>。如：<strong>ADS</strong>表示<code>Activity</code>中<code>dispatchTouchEvent</code>方法 <code>return super</code>。</p>
+<h2 id="测试方案一"><a href="#测试方案一" class="headerlink" title="测试方案一"></a>测试方案一</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDS/BTS
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">04-01 12:44:44.402: D/Activity(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyLinearLayout(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyLinearLayout(1234): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyRelativeLayout(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyRelativeLayout(1234): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyButton(1234): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.402: D/MyButton(1234): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 12:44:44.506: D/Activity(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyLinearLayout(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyLinearLayout(1234): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyRelativeLayout(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyRelativeLayout(1234): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyButton(1234): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/MyButton(1234): onTouchEvent ACTION_UP</span><br><span class="line">04-01 12:44:44.506: D/Button(1234): 点击</span><br></pre></td></tr></table></figure>
+
+<p>整理出如下示意图：三色箭头实线，表示对应方法返回一个值会跳转到下一个方法。其中Button 返回true和返回super都会消费事件，只是返回true就不在就不再响应button的点击事件。</p>
+<img src="../pic/205/2.png" width="600">
+
+<h2 id="测试方案二"><a href="#测试方案二" class="headerlink" title="测试方案二"></a>测试方案二</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDS/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:00:54.970: D/Activity(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyButton(1387): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyButton(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyRelativeLayout(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/MyLinearLayout(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:54.970: D/Activity(1387): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:00:55.066: D/Activity(1387): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:00:55.066: D/Activity(1387): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/3.png" width="600">
+
+<p>说明：Button 的onTouchEvent return false时，点击事件会返回到上一层视图。如果一直都没有控件处理这个事件就会交给Activitiy 的onTouchEvent消费。当再传入事件时，不会再按照之前的流程，每个空间均处理一次，而是直接给 Activity 的onTouchEvent消费。就是虚线所指。</p>
+<h2 id="测试方案三"><a href="#测试方案三" class="headerlink" title="测试方案三"></a>测试方案三</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDT/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:12:47.918: D/Activity(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyLinearLayout(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyLinearLayout(1444): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyRelativeLayout(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyRelativeLayout(1444): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:47.918: D/MyButton(1444): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:12:48.030: D/Activity(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyLinearLayout(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyLinearLayout(1444): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyRelativeLayout(1444): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyRelativeLayout(1444): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:12:48.030: D/MyButton(1444): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/4.png" width="600">
+
+
+<p>说明：Button dispatchTouchEvent方法返回true，表示自身需要消费该事件。且不传递给onTouchEvent方法。</p>
+<h2 id="测试方案四"><a href="#测试方案四" class="headerlink" title="测试方案四"></a>测试方案四</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTS、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:19:40.014: D/Activity(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyButton(1502): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyRelativeLayout(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/MyLinearLayout(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.014: D/Activity(1502): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:19:40.022: D/Activity(1502): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:19:40.022: D/Activity(1502): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/5.png" width="600">
+
+<p>说明：Button dispatchTouchEvent方法返回false，事件传递给父控件onTouchEvent方法。</p>
+<h2 id="测试方案五"><a href="#测试方案五" class="headerlink" title="测试方案五"></a>测试方案五</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTT、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:26:03.306: D/Activity(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyLinearLayout(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyLinearLayout(1561): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyButton(1561): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.306: D/MyRelativeLayout(1561): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:26:03.366: D/Activity(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyLinearLayout(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyLinearLayout(1561): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyRelativeLayout(1561): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:26:03.366: D/MyRelativeLayout(1561): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/6.png" width="600">
+
+<p>说明：RelativeLayout 的onTouchEvent方法return true 消费了事件，下次事件生成时，就不传递给Button，直接交由RelativeLayout 的onTouchEvent方法处理。</p>
+<h2 id="测试方案六"><a href="#测试方案六" class="headerlink" title="测试方案六"></a>测试方案六</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIS/RTF、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">04-01 14:39:20.794: D/Activity(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyButton(1644): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyRelativeLayout(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/MyLinearLayout(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.798: D/Activity(1644): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 14:39:20.874: D/Activity(1644): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 14:39:20.874: D/Activity(1644): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/7.png" width="600">
+
+<p>说明：RelativeLayout return false，就会将事件传递到上一层控件消费。其中，RelativeLayout onInterceptTouchEvent return false 表示事件也会分发到Button处理。</p>
+<h2 id="测试方案七"><a href="#测试方案七" class="headerlink" title="测试方案七"></a>测试方案七</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDS/RIT/RTF、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:02:41.594: D/Activity(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyRelativeLayout(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/MyLinearLayout(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.594: D/Activity(1739): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:02:41.714: D/Activity(1739): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:02:41.714: D/Activity(1739): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/8.png" width="600">
+
+<p>说明：RelativeLayout onInterceptTouchEvent 返回true，表示RelativeLayout 拦截事件信息，Button不会响应事件，事件交由RelativeLayout onTouchEvent处理。</p>
+<h2 id="测试方案八"><a href="#测试方案八" class="headerlink" title="测试方案八"></a>测试方案八</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDT/RIT/RTF、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:27:17.002: D/Activity(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyLinearLayout(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyLinearLayout(1907): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.002: D/MyRelativeLayout(1907): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:27:17.058: D/Activity(1907): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyLinearLayout(1907): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyLinearLayout(1907): onInterceptTouchEvent ACTION_UP</span><br><span class="line">04-01 15:27:17.058: D/MyRelativeLayout(1907): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/9.png" width="600">
+
+<p>说明：RelativeLayout dispatchTouchEvent return true 表示自己消费事件，不再进行传递</p>
+<h2 id="测试方案九"><a href="#测试方案九" class="headerlink" title="测试方案九"></a>测试方案九</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:32:12.138: D/Activity(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyRelativeLayout(1965): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/MyLinearLayout(1965): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.138: D/Activity(1965): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:32:12.250: D/Activity(1965): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:32:12.250: D/Activity(1965): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/10.png" width="600">
+
+<p>说明：RelativeLayout dispatchTouchEvent return false 表示不处理事件，交给上层页面处理。</p>
+<h2 id="测试方案十"><a href="#测试方案十" class="headerlink" title="测试方案十"></a>测试方案十</h2><pre><code>ADT/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF
+</code></pre>
+<p>日志说明 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:43:24.558: D/Activity(2023): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:43:24.686: D/Activity(2023): dispatchTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/11.png" width="600">
+
+<p>说明：同ViewGroup和View的 dispatchTouchEvent 方法一样，return true 表示自己消费事件。不同的是，Activity 的dispatchTouchEvent方法return false 也表示自己消费事件。</p>
+<h2 id="测试方案十一"><a href="#测试方案十一" class="headerlink" title="测试方案十一"></a>测试方案十一</h2><pre><code>ADS/ATS、LDS/LIS/LTS、RDF/RIT/RTF、BDF/BTF
+</code></pre>
+<p>日志说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">04-01 15:56:51.486: D/Activity(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): onInterceptTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyRelativeLayout(2149): dispatchTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/MyLinearLayout(2149): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.486: D/Activity(2149): onTouchEvent ACTION_DOWN</span><br><span class="line">04-01 15:56:51.490: D/Activity(2149): dispatchTouchEvent ACTION_UP</span><br><span class="line">04-01 15:56:51.490: D/Activity(2149): onTouchEvent ACTION_UP</span><br></pre></td></tr></table></figure>
+
+<img src="../pic/205/12.png" width="600">
+
+<p>说明：其实，最终只要传递到Activity的onTouchEvent 方法，都会交由它处理事件。</p>
+<p>参照之前理解的思路，将整个示意图完善如下：</p>
+<img src="../pic/205/13.png" width="600">
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li><code>Activity</code>的<code>dispatchTouchEvent</code>方法，执行父类<code>dispatchTouchEvent</code>方法时，会将事件分发至<code>ViewGroup</code>，否则自身消费事件。</li>
+<li>当事件再次传递到<code>Activity</code>的<code>onTouchEvent</code>方法，表示页面中所有控件都不响应事件，由<code>Activity</code>处理。</li>
+<li><code>ViewGroup</code>和<code>View</code>的<code>dispatchTouchEvent</code>方法，<code>return true</code>表示不分发事件，自身处理。<code>return false</code>就将事件传递给上层控件的<code>onTouchEvent</code>方法，并且不再响应上层控件传递过来的事件。</li>
+<li><code>ViewGroup</code>的<code>onInterceptTouchEvent</code>方法<code>return true</code>表示拦截事件，将事件传递给自身的<code>onTouchEvent</code>方法处理。</li>
+<li><code>View</code>的<code>onTouchEvent</code>方法<code>return false</code>表示不消费事件，将事件传递给上层控件的<code>onTouchEvent</code>方法。否则，消费事件。</li>
+<li><code>ViewGroup</code>的<code>onTouchEvent</code>方法<code>return true</code>表示消费事件，否则将事件传递给上层控件或<code>Activity</code>的<code>onTouchEvent</code>方法处理。</li>
+<li>当控件没有处理事件时，就不再接收下一个事件消息，虚线所示。</li>
+</ol>
+<p><strong><font color="red" size="12">最后，祝各位程序猿&#x2F;媛、码农、攻城狮们愚人节快乐。</font></strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/205/">https://flueky.github.io/205/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/206/" title="浅谈动态规划算法设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">浅谈动态规划算法设计</div></div></a></div><div class="next-post pull-right"><a href="/204/" title="C语言编程之你不知道的事——回调函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">C语言编程之你不知道的事——回调函数</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E9%98%90%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">事件分发阐述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">验证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%80"><span class="toc-number">2.1.</span> <span class="toc-text">测试方案一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="toc-number">2.2.</span> <span class="toc-text">测试方案二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%89"><span class="toc-number">2.3.</span> <span class="toc-text">测试方案三</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%9B%9B"><span class="toc-number">2.4.</span> <span class="toc-text">测试方案四</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%BA%94"><span class="toc-number">2.5.</span> <span class="toc-text">测试方案五</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%85%AD"><span class="toc-number">2.6.</span> <span class="toc-text">测试方案六</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B8%83"><span class="toc-number">2.7.</span> <span class="toc-text">测试方案七</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%85%AB"><span class="toc-number">2.8.</span> <span class="toc-text">测试方案八</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E4%B9%9D"><span class="toc-number">2.9.</span> <span class="toc-text">测试方案九</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%8D%81"><span class="toc-number">2.10.</span> <span class="toc-text">测试方案十</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%A1%88%E5%8D%81%E4%B8%80"><span class="toc-number">2.11.</span> <span class="toc-text">测试方案十一</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
