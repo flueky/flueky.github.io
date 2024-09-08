@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="Flueky 技术小站">
+<meta property="og:url" content="https://flueky.github.io/page/3/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Flueky 技术小站',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-08 19:05:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Flueky 技术小站</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/013/" title="Android数据存储——SQLite"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android数据存储——SQLite"></a></div><div class="recent-post-info"><a class="article-title" href="/013/" title="Android数据存储——SQLite">Android数据存储——SQLite</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-28T14:28:59.000Z" title="Created 2019-01-28 22:28:59">2019-01-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">SQLite，是一款轻型的数据库，是遵守ACID的关系型数据库管理系统，它包含在一个相对小的C库中。它是D.RichardHipp建立的公有领域项目。它的设计目标是嵌入式的，而且目前已经在很多嵌入式产品中使用了它，它占用资源非常的低，在嵌入式设备中，可能只需要几百K的内存就够了。它能够支持Windows&#x2F;Linux&#x2F;Unix等等主流的操作系统，同时能够跟很多程序语言相结合，比如 Tcl、C#、PHP、Java等，还有ODBC接口，同样比起Mysql、PostgreSQL这两款开源的世界著名数据库管理系统来讲，它的处理速度比他们都快。（摘自百度百科）
+
+
+鉴于 SQLite 具备如此优秀的业务处理能力，Android 平台自然使用它作为内置的数据库存储模块。存储在 SD 卡上，只是一个文件的形式，可以方便的备份、移植。有兴趣的小伙伴，可以至SQLite官网下载 C 源码研究研究。
+另外 Android 平台提供了一整套的 SQLite 操作 API。可以方便快速的创建表、更新表、对表数据进行增删改查。
+1 创建数据库创建数据库方法，分四类。
+
+create&#x2F; ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/012/" title="第一个Android工程——HelloWord"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="第一个Android工程——HelloWord"></a></div><div class="recent-post-info"><a class="article-title" href="/012/" title="第一个Android工程——HelloWord">第一个Android工程——HelloWord</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-24T00:51:41.000Z" title="Created 2019-01-24 08:51:41">2019-01-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">1 创建工程打开AndroidStudio程序，首页如下图：
+
+
+
+创建新的 AndroidStudio 工程。
+打开已有的 AndroidStudio 工程。
+从版本控制器导出工程。
+分析或调试 APK。
+从 Gradle/Eclipse 工程导入。
+导入 Android 代码示例。
+
+选择创建新的工程：
+
+
+支持创建手机、平板、穿戴设备、电视等多个平台的工程。入门阶段选择第一个就好。 任意选一个Activity模板，例如：BasicActivity。
+
+
+输入项目名称，包名，保存的位置以及兼容的最低系统版本，图中是 API 15，Android 4.0.3 版本。支持 Java 和 Kotlin 两种编程语言。
+完成之后，会下载部分依赖的组件，如图：
+
+
+最后，进入工程页面，图中正在下载 gradle 4.10.1 版本。
+
+
+如果在下载 gradle 的时候遇到等了很久却下载失败的情况。
+
+
+可以复制下载的地址，使用浏览器或迅雷等工具下载。下载成功之后，将 zip 文件复制到到相同版本名称的目录下，请忽略随机串。
+
+
+图中是正确配置的结果，需要手动 解压 zip 文件，并删除 p ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/011/" title="ADB 命令总结"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ADB 命令总结"></a></div><div class="recent-post-info"><a class="article-title" href="/011/" title="ADB 命令总结">ADB 命令总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-23T15:28:41.000Z" title="Created 2019-01-23 23:28:41">2019-01-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">adb 命令全称 Android Debug Bridge。顾名思义，即 Android 开发中调试的桥梁。尽管 AndroidStudio 已经集成了很多功能，以及包括 adb 命令的常用用法，如：安装 apk 文件，查看日志等。但是，掌握下面的常用命令，可以让您在开发过程中起到事半功倍的效果。
+
+
+1 准备工作1.1 下载 sdk如果，没打算在电脑上安装完整的 Android 开发环境，只需下载 SDK Tools 。
+附上下载地址：
+
+sdk-tools-windows-4333796
+
+sdk-tools-darwin-4333796
+
+sdk-tools-linux-4333796
+
+
+如果需要安装完整 Android 开发环境，参照 [安装 AndroidStudio ](&#x2F;blog&#x2F;2018-08-02)。
+如果已经安装完整 Android 开发环境，建议跳过此步骤。
+下载完成后，目录结构截图如下：（以Mac版本为例，目录结构差异不大）
+
+
+通常下载下来的sdk只集成了基础的开发工具，如：模拟器、点9作图工具、ddms。看日志需要的adb工具在plat ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/009/" title="使用OpenGrok阅读源码"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用OpenGrok阅读源码"></a></div><div class="recent-post-info"><a class="article-title" href="/009/" title="使用OpenGrok阅读源码">使用OpenGrok阅读源码</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-20T02:52:46.000Z" title="Created 2019-01-20 10:52:46">2019-01-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></span></div><div class="content">本想本周再写一篇关于Android的文章， 却忘了带工作电脑的充电器。上周主要从事了安卓源码的阅读工作，那么今天就来分享下Android源码的阅读总结。不要天真的以为这是篇介绍安卓源码的文章，毕竟一周的时间不足以产生更多的心得体会，而是介绍一种阅读源码的利器——OpenGrok。工欲善其事必先利其器！！！
+
+
+其实在开发过程中，通常遇到一些阅读源码的工作。只不过由于代码量少的原因，使用IDE，如：AndroidStudio,和VSCode等文本编辑工具。但由于 AOSP (Android Open Source Project)的代码体系巨大，使用上述工具显得力不从心，那么请使用OpenGrok。
+1 准备工作1.1 Java 环境这是每个使用Java语言开发者必须安装的开发环境，如果你是c/c++等其他语言的开发者，请参阅[安装Java环境](&#x2F;blog&#x2F;2018-08-01)。
+1.2 Tomcat 服务Tomcat 服务器是一个免费的开放源代码的 Web 应用服务器，属于轻量级应用服务器。
+下载地址：
+
+windows&#x2F;mac&#x2F;linux  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/008/" title="NDK开发入门终极教程"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NDK开发入门终极教程"></a></div><div class="recent-post-info"><a class="article-title" href="/008/" title="NDK开发入门终极教程">NDK开发入门终极教程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-12T14:47:04.000Z" title="Created 2019-01-12 22:47:04">2019-01-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">同NDK技术的渊源始于3年前，使用so文件的时候了解到NDK技术，并且C语言一直是强项，就鼓捣起NDK开发。在AndroidStduio还没推广的年代，基于eclipse搭建NDK开发环境需要安全依赖开发工具，并且调试起来具备难度。随后AndroidStudio也先后支持nkd-build和cmake使用NDK开发。
+
+
+参见之前的博客：
+[eclipse下使用NDK开发so库](&#x2F;blog&#x2F;2016-03-23)
+[AndroidStudio配置NDK开发环境](&#x2F;blog&#x2F;2016-04-09)
+1 准备工作1.1 下载 NDK当前 NDK 稳定版已经 发布到 r15c 。附上各个平台的下载地址：
+
+android-ndk-r15c-windows-x86
+
+android-ndk-r15c-windows-x86_64
+
+android-ndk-r15c-darwin-x86_64
+
+android-ndk-r15c-linux-x86_64
+
+
+1.2 添加NDK依赖解压下载好的文件在本地，在 AndroidStudio 工程配置（注意不 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/007/" title="使用Android Profiler 做性能分析及优化"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Android Profiler 做性能分析及优化"></a></div><div class="recent-post-info"><a class="article-title" href="/007/" title="使用Android Profiler 做性能分析及优化">使用Android Profiler 做性能分析及优化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-01-05T06:33:04.000Z" title="Created 2019-01-05 14:33:04">2019-01-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">做Android开发五年，开发工具从最初的eclipse+ADT插件到AndroidStduio。Google更是在新版的AndroidStudio中集成了Android应用性能分析利器——**Profile**。
+
+
+本文基于AndroidStudio 3.2.1 正式版进行分析并定位问题原因。附上下载地址：
+
+Windows版下载
+Mac版下载
+Linux版下载
+
+1 概览
+
+在AndroidStudio中run项目，即可在底部选项卡中找到Profile，打开后会默认显示当前run的应用的信息。可以点击Profile页面右上加号选择连接的设备以及其他可以调试的应用进程。
+
+
+图中可以看出，Profile可以监控选择的应用的 CPU、内存、网络、电量使用情况并通过波形图、柱形图、折线图实时的展示出来。
+
+
+点击左上角的红色方形或者在监控的会话中右键弹出选项框结束当前应用的监控或删除监控会话。
+
+
+顶部工具栏依次是：
+
+添加需要监控的进程。
+结束当前监控会话。
+显示&#x2F;隐藏侧边栏。
+缩小监控视图。
+放大监控视图。
+重置监控视图。
+显示采集区间。
+
+2 CPU分析在概览图中，点击 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/005/" title="使用PlantUML绘制类图"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用PlantUML绘制类图"></a></div><div class="recent-post-info"><a class="article-title" href="/005/" title="使用PlantUML绘制类图">使用PlantUML绘制类图</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2018-12-05T01:03:37.000Z" title="Created 2018-12-05 09:03:37">2018-12-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></span></div><div class="content">本文基于sublime的PlantUML插件绘制类图。如需了解插件安装，请点击[Sublime安装PlantUML插件](&#x2F;004)
+
+
+1 类的UML表示使用UML表示一个类，主要由三部分组成。类名、属性、方法。其中属性和方法的访问修饰符用 - 、# 、+ 表示 private、protected、public。
+
+
+如图所示，表示A类有一个private属性，protected 构造函数和public方法。
+12345678910@startumlclass A&#123;	- String field	+ A()	# void method()&#125;note right: 这是测试类 A@enduml
+
+2 类的关系在面向对象语言中，类的关系有很多种，可以概括为三类：泛化、依赖、关联。
+2.1 泛化泛化指父类跟子类的关系,表示is-a的关系。如父类是抽象类或普通类，则这种关系叫继承。如，父类是接口，则这种关系叫实现。UML中，继承和实现由不同的标记表示。
+2.1.1 继承PlantUML用 --|&gt; 表示继承关系。实线和三角形的抽象表示，指向谁，即继承谁。
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/004/" title="Sublime安装PlantUML插件"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sublime安装PlantUML插件"></a></div><div class="recent-post-info"><a class="article-title" href="/004/" title="Sublime安装PlantUML插件">Sublime安装PlantUML插件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2018-12-04T09:39:37.000Z" title="Created 2018-12-04 17:39:37">2018-12-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></span></div><div class="content">1 安装 graphvizGraphviz的是AT&amp;T Labs Research开发的图形绘制工具,他可以很方便的用来绘制结构化的图形网络,支持多种格式输出,生成图片的质量和速度都不错。（摘自百度百科）
+Mac 安装 graphviz只需一条命令。
+brew install graphviz
+
+2 安装Sublime Text笔者使用的文本编辑工具比较多。VScode、Atom、Sublime、UltraEdit。其实都没有掌握太高深的用法，只觉得哪个好用就用哪个。
+下载地址见官网。
+3 安装PlantUml这其实是一个支持安装Sublime的插件,支持VScode等其他文本编辑工具。
+打开Package Control，输入install
+
+
+选中Install Package后，在新页面输入plantuml。
+
+
+点击PlantUMLDiagrams进行安装。
+4 配置快捷键安装后，配置好快捷键，按照图中步骤，配置默认快捷键。
+
+
+粘贴以下内容，将可以使用command+m快捷键显示UML图片。
+[ 
+&#123;&quot;keys&quot;: [&quot;supe ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/003/" title="给AndroidStudio工程添加依赖"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="给AndroidStudio工程添加依赖"></a></div><div class="recent-post-info"><a class="article-title" href="/003/" title="给AndroidStudio工程添加依赖">给AndroidStudio工程添加依赖</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2018-12-01T02:40:04.000Z" title="Created 2018-12-01 10:40:04">2018-12-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">前一篇博客详细讲了怎样创建一个安卓工程，见[从零构建Android工程](&#x2F;001)，今天在它的基础上演示怎样对主工程添加依赖。
+
+
+进入主题之前，先声明下，build版本3.x以上已不在支持compile指令，使用implementation或api。假设有两个 module A 和 B，并且 A 依赖 B。如果在 B 中使用implementation依赖了jar、aar或module，那么 A 中无法获取到被依赖库的 api。因此，api 指令诞生了。
+1 依赖jar在app目录下新建libs文件夹，并将需要的jar文件拷贝到libs目录下。
+方式一：
+逐个jar文件添加依赖。
+1implementation files(&#x27;libs/json_simple-1.1.jar&#x27;)
+
+方式二：
+依赖整个libs目录
+1implementation fileTree(include: &#x27;*.jar&#x27;, dir: &#x27;libs&#x27;)
+
+两种方式可以共存。如果被依赖的module中有jar要传递依赖，则可以单独使用api指令声 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/002/" title="Git常用命令"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git常用命令"></a></div><div class="recent-post-info"><a class="article-title" href="/002/" title="Git常用命令">Git常用命令</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2018-11-30T01:08:04.000Z" title="Created 2018-11-30 09:08:04">2018-11-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></span></div><div class="content">init毫无疑问，这是学习git使用的第一个命令。在本地初始化git仓库。
+12cd Demogit init
+
+表示切换到Demo目录并在该目录初始化git仓库。会生成.git文件夹。
+
+
+如图，是一个Android初始工程目录，创建git仓库后多出.git文件夹。
+status查看仓库中文件状态。
+1git status
+
+
+
+图中表示全部文件均未添加至仓库，无需要提交至仓库文件。
+有些不需要提交至仓库的文件，可以添加到.gitignore文件中。
+
+
+.gitignore文件内容：
+.idea
+.gradle
+gradle
+gradlew
+gradlew.bat
+local.properties
+build
+*.iml
+
+add添加文件至仓库。
+1234git add &lt;file&gt; # 添加一个文件至仓库git add &lt;file1&gt; &lt;file2&gt;... # 添加多个文件至仓库git add . # 添加全部文件至仓库git add -f &lt;file&gt; # 强制将已忽略的文件添加至仓库
+
+
+
+可以每次只添加一个文件（夹），也可以 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/105/" title="Arch 编译 Android 11 源码"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 编译 Android 11 源码"/></a><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/104/" title="Arch 定制化安装与美化"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 定制化安装与美化"/></a><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/103/" title="Arch 安装教程"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 安装教程"/></a><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/030/" title="重新认识 Android 图片适配"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重新认识 Android 图片适配"/></a><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/029/" title="Android 线程间通信"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 线程间通信"/></a><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">27</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Arch/"><span class="card-category-list-name">Arch</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C-C/"><span class="card-category-list-name">C/C++</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Shell/"><span class="card-category-list-name">Shell</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%8A%A0%E5%AF%86/"><span class="card-category-list-name">加密</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%97%E8%8A%82%E5%A4%84%E7%90%86/"><span class="card-category-list-name">字节处理</span><span class="card-category-list-count">3</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Gradle/" style="font-size: 1.23em; color: #999ea6">Gradle</a> <a href="/tags/Sublime/" style="font-size: 1.1em; color: #999">Sublime</a> <a href="/tags/AIDL/" style="font-size: 1.1em; color: #999">AIDL</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 1.1em; color: #999">动态规划</a> <a href="/tags/svn/" style="font-size: 1.1em; color: #999">svn</a> <a href="/tags/rsa/" style="font-size: 1.1em; color: #999">rsa</a> <a href="/tags/AndroidStudio/" style="font-size: 1.5em; color: #99a9bf">AndroidStudio</a> <a href="/tags/Maven/" style="font-size: 1.1em; color: #999">Maven</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 1.1em; color: #999">链表</a> <a href="/tags/md5/" style="font-size: 1.1em; color: #999">md5</a> <a href="/tags/aes/" style="font-size: 1.1em; color: #999">aes</a> <a href="/tags/JNI/" style="font-size: 1.37em; color: #99a4b2">JNI</a> <a href="/tags/3des/" style="font-size: 1.1em; color: #999">3des</a> <a href="/tags/eclipse/" style="font-size: 1.23em; color: #999ea6">eclipse</a> <a href="/tags/sha1/" style="font-size: 1.1em; color: #999">sha1</a> <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 1.1em; color: #999">二叉树</a> <a href="/tags/Sqlite/" style="font-size: 1.1em; color: #999">Sqlite</a> <a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.1em; color: #999">策略模式</a> <a href="/tags/base64/" style="font-size: 1.1em; color: #999">base64</a> <a href="/tags/%E6%A0%88/" style="font-size: 1.1em; color: #999">栈</a> <a href="/tags/16%E8%BF%9B%E5%88%B6/" style="font-size: 1.1em; color: #999">16进制</a> <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 1.23em; color: #999ea6">自定义View</a> <a href="/tags/PlantUML/" style="font-size: 1.23em; color: #999ea6">PlantUML</a> <a href="/tags/Json/" style="font-size: 1.1em; color: #999">Json</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 1.1em; color: #999">队列</a> <a href="/tags/OpenGrok/" style="font-size: 1.1em; color: #999">OpenGrok</a> <a href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/" style="font-size: 1.1em; color: #999">顺序表</a> <a href="/tags/des/" style="font-size: 1.1em; color: #999">des</a> <a href="/tags/sha256/" style="font-size: 1.1em; color: #999">sha256</a> <a href="/tags/UML/" style="font-size: 1.1em; color: #999">UML</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E6%B3%95/" style="font-size: 1.1em; color: #999">回溯法</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="View More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">January 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/11/"><span class="card-archive-list-date">November 2019</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/10/"><span class="card-archive-list-date">October 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/09/"><span class="card-archive-list-date">September 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">August 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">June 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">May 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/04/"><span class="card-archive-list-date">April 2019</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">71</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-08T11:05:02.741Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

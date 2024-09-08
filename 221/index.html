@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Activity&amp;Fragment生命周期详解 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity&amp;Fragment生命周期详解">
+<meta property="og:url" content="https://flueky.github.io/221/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2016-06-03T18:06:29.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:33:04.560Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/221/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Activity&Fragment生命周期详解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:33:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Activity&amp;Fragment生命周期详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2016-06-03T18:06:29.000Z" title="Created 2016-06-04 02:06:29">2016-06-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:33:04.560Z" title="Updated 2024-09-08 18:33:04">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Activity&amp;Fragment生命周期详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（<strong>两者之间还是有很大的关联</strong>），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。</p>
+<span id="more"></span>
+
+<h1 id="Activity生命周期介绍"><a href="#Activity生命周期介绍" class="headerlink" title="Activity生命周期介绍"></a>Activity生命周期介绍</h1><p>Activity生命周期共有7个，可以按照3+1的模式去记忆。</p>
+<img src="../pic/221/1.png" width="300">
+
+<p>这是一张标准的生命周期示意图，从上图中可以看出，onCreate&lt;–&gt;onDestory，onStart&lt;–&gt;onStop，onResume&lt;–&gt;onPause 3对，多出一个onRestart。</p>
+<ol>
+<li><p>启动一个Activity，会依次执行onCreate（<strong>创建一个Activity时调用，可通常在此处指定Activity的布局或动态设置Activity主题</strong>）、onStart（<strong>启动这个Activity时调用，此时Activity已经可以见，但是未获得焦点不能响应用户事件</strong>）、onResume（<strong>Activity获取焦点时调用，此时可以响应用户事件</strong>）方法。</p>
+</li>
+<li><p>通常调用onPause（<strong>Activity停止响应用户事件，在切换Activity、锁屏、弹出dialog，<em>准确说是Dialog风格的Activity，普通的dialog是属于Activity的，生命周期不变化</em>、按下Home键时调用</strong>）方法之后，很快就会调用onStop（<strong>Activity不可见，已经停止时调用，Activity再次恢复可见状态时，需要重新调用onRestart方法</strong>）方法。当调转一个dialog 主题的Activity时，前一个Activity只会进入pause状态，而不会触发onStop。</p>
+</li>
+<li><p>执行onStop方法之后，若需要再使该Activity可用，先调用onRestart（<strong>重新启动Activity，该Activity实例占用的内存还未被释放，无须重走onCreate方法</strong>）再调用onStart、onResume。</p>
+</li>
+<li><p>Activity被销毁时，会执行onDestory（释放Activity实例占用的内存，等待系统回收。或强制中断APP进程时调用。），此时标志这个这个Activity生命周期完整的结束。</p>
+</li>
+</ol>
+<p>综上，Activity生命周期又可以分为三类：</p>
+<ol>
+<li>onCreate—&gt;onDestory，整体生命周期</li>
+<li>onStart—&gt;onStop，可视生命周期</li>
+<li>onResume—&gt;onPause，焦点生命周期</li>
+</ol>
+<h1 id="切换Activity时生命的周期变化"><a href="#切换Activity时生命的周期变化" class="headerlink" title="切换Activity时生命的周期变化"></a>切换Activity时生命的周期变化</h1><h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><img src="../pic/221/2.png" width="300">
+
+<p>相同颜色表示同一个Activity。跳转到下一个Activity或返回到上一个Activity时，都会使当前Activity失去焦点（onPause）。当前Activity获取焦点时（onResume），再去处理上一个Activity的onStop方法，是否调用onDestory方法由Activity栈、或系统根据此时内存情况决定。</p>
+<h2 id="按返回（Back）键"><a href="#按返回（Back）键" class="headerlink" title="按返回（Back）键"></a>按返回（Back）键</h2><p>按返回键，会调用Activity的finish方法，首先会执行onPause，如果Activity栈中还有activity，就执行这个activity的onRestart方法，若没有则继续执行onStop–&gt;onDestory。</p>
+<h2 id="按home键"><a href="#按home键" class="headerlink" title="按home键"></a>按home键</h2><p>按下home键，通常会将应用切到后台，执行onPause–&gt;onStop方法。当内存不够时，系统会根据一定策略选择杀死一个应用进程，或者用户手动杀死这个应用进行都会导致之前的activity执行了onDestory方法。</p>
+<p><strong>实际开发中，是无法通过onKeyDown 捕获Home键按下的事件（<em>捕获Back键是可以的</em>），经过上述分析得知，按下Home键和返回键不同的地方是在于有没有调用finish方法。因此在执行onStop方法时，可以通过判断是否执行了finish方法，进而判断按下的是否是home键。此处注意区分按下锁屏键效果同按下Home键。</strong></p>
+<h1 id="Fragment生命周期介绍"><a href="#Fragment生命周期介绍" class="headerlink" title="Fragment生命周期介绍"></a>Fragment生命周期介绍</h1><img src="../pic/221/3.png" width="300">
+
+<p>这依旧是一张经典的fragment生命周期示意图。相比Activity中，7个生命周期的方法，fragment生命周期共涉及到11个方法，记忆和理解起来有一定的难度。此处推荐4+4+3记忆方式。先看下图：</p>
+<img src="../pic/221/4.png" width="400">
+
+<p>这张图凸显出，Activity和Fragment之间生命周期的关联。在弄懂Activity生命周期的前提上，去理解Fragment生命周期有着事半功倍的效果。</p>
+<ol>
+<li><p>启动Activity时，如果Activity中已绑定了Fragment，那么也会同步创建Fragment。创建Fragment时，会连续执行4个生命周期方法：onAttach（同Activity绑定），onCreate（创建Fragment实例），onCreateView（创建Fragment视图），onActivityCreated（Activity创建完成）。</p>
+</li>
+<li><p>接下来的4个生命周期将和Activity的四个同名生命周期交替执行。如：先执行Fragment的onStart 再执行Activity 的onStart，继续执行Activity的onResume 到Fragment 的onResume，自此Activity已经完成启动过程，绑定的fragment也已经显示，并能够获取到焦点响应用户事件。切换Activity：先执行Fragment的onPause到Activity的onPause再执行Fragment的onStop到Activity的onStop。此时，Activity连同Fragment已经失去焦点且已经不可见。</p>
+</li>
+<li><p>结束Activity时，会连续执行Fragment的三个生命周期：onDestoryView（销毁Fragment视图），onDestory（销毁Fragment实例），onDetach（与Activity解绑）。最后执行Activity的onDestory，表示Activity已经销毁。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>上述中，若Activity绑定多个Fragment，那么多个Fragment的相同生命周期一定是交替执行了，除了虚线框内标记的是连续执行。</strong></p>
+</blockquote>
+<h1 id="切换Fragment时生命周期的变化"><a href="#切换Fragment时生命周期的变化" class="headerlink" title="切换Fragment时生命周期的变化"></a>切换Fragment时生命周期的变化</h1><p>加载fragment有两种方式</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 方式一 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/top_fragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.flueky.frameworktest.fragment.TopFragment&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;0dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_weight</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 方式二 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@id/fragment_contain&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;0dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_weight</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>方式一类似于添加一个控件，程序运行时不可以动态修改。其中，name属性是用户定义fragment类完整的类名（包括包名），id或tag属性则是在代码中通过findFragmentById或findFragmentByTag获取到fragment对象。并且，该fragment生命周期同其所在的Activity生命周期绑定。</p>
+<p>方式二指定一个fragment容器，程序运行时可以通过replace 或add 方法动态加载指定的fragment。动态加载fragment，需要考虑到fragment切换时，fragment生命周期的变化。只要不切换Activity，fragment生命周期改变时，Activity生命周一直处于onResume状态。</p>
+</blockquote>
+<p>切换fragment 可以通过replace 或add方式，与此同时，考虑到是否将fragment 入栈管理，所以切换fragment共有四种场景。当不入栈时，replace 和add 生命周期变化很相似，因此放在一起讨论。</p>
+<h2 id="replace-add-fragment-不入栈"><a href="#replace-add-fragment-不入栈" class="headerlink" title="replace&#x2F;add fragment 不入栈"></a>replace&#x2F;add fragment 不入栈</h2><p>不入栈时，表示切换fragment之后，并不保存之前fragment 实例的引用。因此也就无法再操作之前的fragment。add 和replace 的却别是，replace会将之前的fragment移除，重新添加一个fragment，add 则在之前fragment之上再添加一个fragment，倘若被add fragment的背景是透明的，依然会看见之前fragment的样式。</p>
+<img src="../pic/221/5.png" width="400">
+
+<p>通过上图的周期流程图中，不难发现replace 和add 的区别。</p>
+<h2 id="replace-fragment-入栈"><a href="#replace-fragment-入栈" class="headerlink" title="replace fragment 入栈"></a>replace fragment 入栈</h2><p>此时替换fragment时，首先会移除当前fragment的视图（onDestoryView），但是没有删除当前fragment的实例（没有调用onDestory和onDetach），因为该fragment已经入栈（依然保留着fragment实例的引用）。然后再添加新的fragment，直到新fragment获取到焦点（执行到onResume）截止。若按下返回键，会移除栈顶的fragment，也就是当前可见的fragment，使下一层fragment可见。但是需要再次初始化页面（执行onCreateView）。</p>
+<img src="../pic/221/6.png" width="400">
+
+<h2 id="add-fragment-入栈"><a href="#add-fragment-入栈" class="headerlink" title="add fragment 入栈"></a>add fragment 入栈</h2><p>这种场景最简单，切换fragment后，新的fragment在栈顶，点击返回时，将栈顶的fragment出栈，使下面的fragment可见。因为add方式是叠加的，所以之前的fragment依旧是可见的，生命周期没有任何变化。</p>
+<img src="../pic/221/7.png" width="400">
+
+<h2 id="replace-和-add-fragment-入栈的异同点"><a href="#replace-和-add-fragment-入栈的异同点" class="headerlink" title="replace 和 add fragment 入栈的异同点"></a>replace 和 add fragment 入栈的异同点</h2><p>相同点：由于入栈是可返回的，因此切换和返回就完整的执行了一个fragment的全部生命周期。</p>
+<p>不同点：replace方式会消除之前fragment的视图，当之前的fragment再次回到栈顶，会再次调用onCreateView，初始化页面，包括所有用户数据。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/221/">https://flueky.github.io/221/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/222/" title="数据结构（一）——顺序表（C语言实现）"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">数据结构（一）——顺序表（C语言实现）</div></div></a></div><div class="next-post pull-right"><a href="/220/" title="指针与引用"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">指针与引用</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Activity生命周期介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%8D%A2Activity%E6%97%B6%E7%94%9F%E5%91%BD%E7%9A%84%E5%91%A8%E6%9C%9F%E5%8F%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">切换Activity时生命的周期变化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-number">2.1.</span> <span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E8%BF%94%E5%9B%9E%EF%BC%88Back%EF%BC%89%E9%94%AE"><span class="toc-number">2.2.</span> <span class="toc-text">按返回（Back）键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89home%E9%94%AE"><span class="toc-number">2.3.</span> <span class="toc-text">按home键</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">Fragment生命周期介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%8D%A2Fragment%E6%97%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">切换Fragment时生命周期的变化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-add-fragment-%E4%B8%8D%E5%85%A5%E6%A0%88"><span class="toc-number">4.1.</span> <span class="toc-text">replace&#x2F;add fragment 不入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-fragment-%E5%85%A5%E6%A0%88"><span class="toc-number">4.2.</span> <span class="toc-text">replace fragment 入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add-fragment-%E5%85%A5%E6%A0%88"><span class="toc-number">4.3.</span> <span class="toc-text">add fragment 入栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#replace-%E5%92%8C-add-fragment-%E5%85%A5%E6%A0%88%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9"><span class="toc-number">4.4.</span> <span class="toc-text">replace 和 add fragment 入栈的异同点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/105/" title="Arch 编译 Android 11 源码"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 编译 Android 11 源码"/></a><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/104/" title="Arch 定制化安装与美化"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 定制化安装与美化"/></a><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/103/" title="Arch 安装教程"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 安装教程"/></a><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/030/" title="重新认识 Android 图片适配"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重新认识 Android 图片适配"/></a><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/029/" title="Android 线程间通信"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 线程间通信"/></a><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

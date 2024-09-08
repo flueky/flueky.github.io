@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="Flueky 技术小站">
+<meta property="og:url" content="https://flueky.github.io/page/6/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/page/6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Flueky 技术小站',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-08 19:05:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Flueky 技术小站</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/222/" title="数据结构（一）——顺序表（C语言实现）"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构（一）——顺序表（C语言实现）"></a></div><div class="recent-post-info"><a class="article-title" href="/222/" title="数据结构（一）——顺序表（C语言实现）">数据结构（一）——顺序表（C语言实现）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-09-30T10:00:37.000Z" title="Created 2016-09-30 18:00:37">2016-09-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="content">定义数据结构是相互之间存在一种或多种特定关系的数据元素的集合。根据数据元素之间关系的不同特性，通常有如下4类基本结构:
+
+   集合：结构中的数据元素之间除了“同属于一个集合”的关系外，别无其他的关系。如：广义表。
+   线性结构：结构中的数据元素之间存在一个对一个的关系。如：链表。
+   树形结构：结构中的数据元素之间存在一个对多个的关系。如：二叉树。
+   图（网）状结构：结构中的数据元素之间存在多个对多个的关系。如：图。
+
+在线性结构中，根据存储方式分为顺序表、链表，根据对表的操作限制，分为栈和队列。
+顺序表的特征是，在内存中占用连续的存储单元，可以简单的理解为顺序表就是数组。只是根据需要，在实际应用中动态分配顺序表占用的内存单元。而数组是在编译的时候，预分配了指定大小的内存单元，因此如下代码段会在编译的时候报错。
+12int len = 10;char arr[len];
+
+但是顺序表又会有数据全部的特点：可以根据下标直接访问、不方便插入和删除元素（因为需要移动后续的元素）。
+实现定义结构1234567typedef int SeqType; //存储单元类型typedef s ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/221/" title="Activity&amp;Fragment生命周期详解"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Activity&amp;Fragment生命周期详解"></a></div><div class="recent-post-info"><a class="article-title" href="/221/" title="Activity&amp;Fragment生命周期详解">Activity&amp;Fragment生命周期详解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-06-03T18:06:29.000Z" title="Created 2016-06-04 02:06:29">2016-06-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">生命周期，是初学Android必须要掌握的一个知识点，也是面试时最常问的知识点。最近突然发现，公司架构中关于fragment使用的代码还不够完美。因此先决定先巩固一遍Fragment生命周期，连带着Activity生命周期（两者之间还是有很大的关联），再尝试改善现有代码。关于生命周期的概念，个人觉得，设计Android的工程师们，很大程度上参考了IOS。
+
+
+Activity生命周期介绍Activity生命周期共有7个，可以按照3+1的模式去记忆。
+
+
+这是一张标准的生命周期示意图，从上图中可以看出，onCreate&lt;–&gt;onDestory，onStart&lt;–&gt;onStop，onResume&lt;–&gt;onPause 3对，多出一个onRestart。
+
+启动一个Activity，会依次执行onCreate（创建一个Activity时调用，可通常在此处指定Activity的布局或动态设置Activity主题）、onStart（启动这个Activity时调用，此时Activity已经可以见，但是未获得焦点不能响应用户事件）、onResume（Activity ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/220/" title="指针与引用"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="指针与引用"></a></div><div class="recent-post-info"><a class="article-title" href="/220/" title="指针与引用">指针与引用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-05-27T06:27:59.000Z" title="Created 2016-05-27 14:27:59">2016-05-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a></span></div><div class="content">初学者分析指针和引用最常用的方式是写一个swap函数，分析传值还是传址的交换。
+普通变量交换12345678910111213int main(int argc, const char * argv[]) &#123;        int a = 1;    int b = 2;    	printf(&quot;交换前:%d %d\n&quot;,a,b);	    int temp = a;    a = b;    b = temp;        printf(&quot;交换后:%d %d\n&quot;,a,b);&#125;
+
+程序输出
+
+交换前:1 2 交换后:2 1 
+
+这里没什么好分析的。
+指针交换正确交换：
+123456789101112131415161718int main(int argc, const char * argv[]) &#123;        int a = 1;    int b = 2;        int* p = &amp;a;    int* q = &amp;b;        printf(&quot;交换前:%d %d\ ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/219s/" title="分分钟修改Android keystore"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分分钟修改Android keystore"></a></div><div class="recent-post-info"><a class="article-title" href="/219s/" title="分分钟修改Android keystore">分分钟修改Android keystore</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-05-15T15:45:54.000Z" title="Created 2016-05-15 23:45:54">2016-05-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">之前写过一篇博客[Android开发必备技能——修改debug签名](&#x2F;blog&#x2F;2016-05-04&#x2F;)，感觉对不习惯使用Linux命令的小伙伴而言，简直是噩梦。因此奉上简单实用的Java代码。
+
+
+关于命令这里关于keystore主要使用四个命令：
+
+显示签名文件信息
+修改签名文件密码
+修改别名
+修改别名密码
+
+在Java中表示如下：
+1234private final String SHOW_COMMAND = &quot;keytool -list -v -keystore %s -storepass %s&quot;;// 显示签名文件信息摘要private final String STOREPASSWD_COMMAND = &quot;keytool -storepasswd -keystore %s -storepass %s -new %s&quot;;// 修改签名文件密码private final String CHANGEALIAS_COMMAND = &quot;keytool -changealias -keystore %s  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/218/" title="Android开发必备技能——修改debug签名"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android开发必备技能——修改debug签名"></a></div><div class="recent-post-info"><a class="article-title" href="/218/" title="Android开发必备技能——修改debug签名">Android开发必备技能——修改debug签名</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-05-04T06:16:29.000Z" title="Created 2016-05-04 14:16:29">2016-05-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Android/">Android</a></span></div><div class="content">从事Android开发的小伙伴们，想必都会遇到这样的问题。当你的应用中需要集成百度地图、极光推送等第三方平台时，会去申请一个叫做AppKey的东西。与此同时，你得提供下应用签名信息的MD5或SHA1。然后就悲催的发现，只有用指定的签名文件打包时，该功能才能正常使用。如果你用的是开发工具的debug keystore签名信息，直接run一下就好，如果你用的是APP发布时候的keystore，每次测试时都得export 一个apk。心中一万只草泥马在奔腾的有木有？
+
+
+楼主之前的小伎俩就是，去申请两个AppKey，分别对应debug keystore 和 release keystore。然后在心中默默地为自己的机智点个赞。然而一些比楼主更聪明的小伙伴发现，eclipse里面可以替换签名文件。于是满怀欣喜的去指定一个keystore，期待这样的画面（注意我此处的md5和sha1）：
+
+
+然而看到的是这样的：
+
+
+小伙伴的内心应该是崩溃的。
+签名文件（keystore）在生成签名文件时候，输入的最重要的三条信息是：store password、key alias、key password。有 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/217/" title="JSON格式数据解析（Java版）"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JSON格式数据解析（Java版）"></a></div><div class="recent-post-info"><a class="article-title" href="/217/" title="JSON格式数据解析（Java版）">JSON格式数据解析（Java版）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-05-03T14:42:12.000Z" title="Created 2016-05-03 22:42:12">2016-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java/">Java</a></span></div><div class="content">JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。它基于ECMAScript的一个子集。 JSON采用完全独立于语言的文本格式，但是也使用了类似于C语言家族的习惯（包括C、C++、C#、Java、JavaScript、Perl、Python等）。这些特性使JSON成为理想的数据交换语言。 易于人阅读和编写，同时也易于机器解析和生成(一般用于提升网络传输速率)。
+
+
+基础结构对象结构
+12345&#123;    &quot;name&quot;:&quot;flunky&quot;,    &quot;age&quot;:23,    &quot;sex&quot;:&quot;男&quot;&#125;
+
+数组结构
+123456789101112[    &#123;        &quot;name&quot;:&quot;flunky&quot;,        &quot;age&quot;:23,        &quot;sex&quot;:&quot;男&quot;    &#125;,    &#123;        &q ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/216/" title="C++高级编程（一）——运算符重载"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++高级编程（一）——运算符重载"></a></div><div class="recent-post-info"><a class="article-title" href="/216/" title="C++高级编程（一）——运算符重载">C++高级编程（一）——运算符重载</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-05-02T13:48:00.000Z" title="Created 2016-05-02 21:48:00">2016-05-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a></span></div><div class="content">C++ 允许在同一作用域中的某个函数和运算符指定多个定义，分别称为函数重载和运算符重载。
+重载声明是指一个与之前已经在该作用域内声明过的函数或方法具有相同名称的声明，但是它们的参数列表和定义（实现）不相同。
+当您调用一个重载函数或重载运算符时，编译器通过把您所使用的参数类型与定义中的参数类型进行比较，决定选用最合适的定义。选择最合适的重载函数或重载运算符的过程，称为重载决策。
+
+
+函数重载同众多面向对象编程语言一样，C++也支持函数重载。
+函数重载是指：定义函数时，函数名相同，形参个数和类型不同。返回类型可以不同，函数实现可以不同。
+12345678910111213141516#include &lt;iostream&gt;using namespace std;void print(int a,int b)&#123;	cout&lt;&lt;a&lt;&lt;&quot; &quot;&lt;&lt;b&lt;&lt;endl; &#125;void print(int a,char b,float c)&#123;		cout&lt;&lt;a&lt;&lt;&quot; & ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/215/" title="C++面向对象（三）——封装和多态"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++面向对象（三）——封装和多态"></a></div><div class="recent-post-info"><a class="article-title" href="/215/" title="C++面向对象（三）——封装和多态">C++面向对象（三）——封装和多态</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-04-30T13:34:44.000Z" title="Created 2016-04-30 21:34:44">2016-04-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a></span></div><div class="content">封装什么是封装封装(encapsulation)又叫隐藏实现(Hiding the implementation)。就是只公开代码单元的对外接口，而隐藏其具体实现。
+实现封装在程序设计里，封装往往是通过访问控制实现的。C++，Java，Objective-C中都有 Public, Protected, Private 等访问控制符。通过用Public将信息暴露，Private，Protected将信息隐藏，来实现封装。
+一个优秀的OOP程序员会尽量不对外公开代码，即最喜欢用Private关键字。因为在OOP中，对代码访问控制得越严格，日后你对代码修改的自由就越大。
+封装的好处
+封装使得对代码的修改更加安全和容易。将代码分成了一个个相对独立的单元。 
+封装使整个软件开发复杂度大大降低。 
+封装还避免了命名冲突的问题。
+
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/214/" title="C++面向对象（二）——继承"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++面向对象（二）——继承"></a></div><div class="recent-post-info"><a class="article-title" href="/214/" title="C++面向对象（二）——继承">C++面向对象（二）——继承</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-04-29T02:17:39.000Z" title="Created 2016-04-29 10:17:39">2016-04-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a></span></div><div class="content">面向对象程序设计的三大特征：继承、封装、多态。
+
+
+基类和派生类继承是指根据一个类，定义一个新的类。创建一个类时，您不需要重新编写新的数据成员和成员函数，只需指定新建的类继承了一个已有的类的成员即可。这使得创建和维护一个应用程序变得更容易。这样做，也达到了重用代码功能和提高执行时间的效果。已有的类叫基类（父类），新建的类称为派生类（子类）。
+1234567891011121314151617181920212223242526272829//定义动物类class Animal&#123;	protected:		string species;//物种		public:		string getSpecies();&#125;;string Animal::getSpecies()&#123;	return species;&#125;//哺乳动物继承动物类class BreastfeedAnimal:public Animal&#123;	protected:		string type;	public:		BreastfeedAnimal(string spec);		~Breastfe ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/213/" title="C++面向对象（一）——类与对象"><img class="post-bg" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++面向对象（一）——类与对象"></a></div><div class="recent-post-info"><a class="article-title" href="/213/" title="C++面向对象（一）——类与对象">C++面向对象（一）——类与对象</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2016-04-28T13:30:27.000Z" title="Created 2016-04-28 21:30:27">2016-04-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/C-C/">C/C++</a></span></div><div class="content">定义类关键字class开头，后跟类的名称。类的主体被包在花括号中。类定义后必须跟着一个分号或列表。
+1234567class Line&#123;	private:		double length;	public:		void setLength(double len);		double getLength();&#125;;
+定义对象声明类的对象，就像声明基本类型的变量一样。注意区分普通变量和引用变量的区别。
+1234Line line1 ;//声明普通变量Line* line2 = new Line;//声明指针变量delete line2;
+
+
+普通变量的内存占用由编译器去管理 。指针变量的内存占用由开发人员手动管理
+
+访问数据成员普通变量和指针变量访问数据成员的方式不一样，都只能访问公共成员变量和函数——用public 声明。
+12345678910Line line1 ;Line* line2 = new Line;	line1.setLength(10.0);line2-&gt;setLength(11.1);	cout&lt;&lt;&quot;line1 &quot;&l ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/5/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/7/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/105/" title="Arch 编译 Android 11 源码"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 编译 Android 11 源码"/></a><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/104/" title="Arch 定制化安装与美化"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 定制化安装与美化"/></a><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/103/" title="Arch 安装教程"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Arch 安装教程"/></a><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/030/" title="重新认识 Android 图片适配"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重新认识 Android 图片适配"/></a><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/029/" title="Android 线程间通信"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android 线程间通信"/></a><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="View More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Android/"><span class="card-category-list-name">Android</span><span class="card-category-list-count">27</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Arch/"><span class="card-category-list-name">Arch</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C-C/"><span class="card-category-list-name">C/C++</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Hexo/"><span class="card-category-list-name">Hexo</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Shell/"><span class="card-category-list-name">Shell</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%8A%A0%E5%AF%86/"><span class="card-category-list-name">加密</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%97%E8%8A%82%E5%A4%84%E7%90%86/"><span class="card-category-list-name">字节处理</span><span class="card-category-list-count">3</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Gradle/" style="font-size: 1.23em; color: #999ea6">Gradle</a> <a href="/tags/Sublime/" style="font-size: 1.1em; color: #999">Sublime</a> <a href="/tags/AIDL/" style="font-size: 1.1em; color: #999">AIDL</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 1.1em; color: #999">动态规划</a> <a href="/tags/svn/" style="font-size: 1.1em; color: #999">svn</a> <a href="/tags/rsa/" style="font-size: 1.1em; color: #999">rsa</a> <a href="/tags/AndroidStudio/" style="font-size: 1.5em; color: #99a9bf">AndroidStudio</a> <a href="/tags/Maven/" style="font-size: 1.1em; color: #999">Maven</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 1.1em; color: #999">链表</a> <a href="/tags/md5/" style="font-size: 1.1em; color: #999">md5</a> <a href="/tags/aes/" style="font-size: 1.1em; color: #999">aes</a> <a href="/tags/JNI/" style="font-size: 1.37em; color: #99a4b2">JNI</a> <a href="/tags/3des/" style="font-size: 1.1em; color: #999">3des</a> <a href="/tags/eclipse/" style="font-size: 1.23em; color: #999ea6">eclipse</a> <a href="/tags/sha1/" style="font-size: 1.1em; color: #999">sha1</a> <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" style="font-size: 1.1em; color: #999">二叉树</a> <a href="/tags/Sqlite/" style="font-size: 1.1em; color: #999">Sqlite</a> <a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" style="font-size: 1.1em; color: #999">策略模式</a> <a href="/tags/base64/" style="font-size: 1.1em; color: #999">base64</a> <a href="/tags/%E6%A0%88/" style="font-size: 1.1em; color: #999">栈</a> <a href="/tags/16%E8%BF%9B%E5%88%B6/" style="font-size: 1.1em; color: #999">16进制</a> <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 1.23em; color: #999ea6">自定义View</a> <a href="/tags/PlantUML/" style="font-size: 1.23em; color: #999ea6">PlantUML</a> <a href="/tags/Json/" style="font-size: 1.1em; color: #999">Json</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 1.1em; color: #999">队列</a> <a href="/tags/OpenGrok/" style="font-size: 1.1em; color: #999">OpenGrok</a> <a href="/tags/%E9%A1%BA%E5%BA%8F%E8%A1%A8/" style="font-size: 1.1em; color: #999">顺序表</a> <a href="/tags/des/" style="font-size: 1.1em; color: #999">des</a> <a href="/tags/sha256/" style="font-size: 1.1em; color: #999">sha256</a> <a href="/tags/UML/" style="font-size: 1.1em; color: #999">UML</a> <a href="/tags/%E5%9B%9E%E6%BA%AF%E6%B3%95/" style="font-size: 1.1em; color: #999">回溯法</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="View More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">January 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/11/"><span class="card-archive-list-date">November 2019</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/10/"><span class="card-archive-list-date">October 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/09/"><span class="card-archive-list-date">September 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">August 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">June 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/05/"><span class="card-archive-list-date">May 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/04/"><span class="card-archive-list-date">April 2019</span><span class="card-archive-list-count">3</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">71</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-08T11:05:02.741Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
