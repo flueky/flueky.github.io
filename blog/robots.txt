@@ -1,5 +1,7 @@
+User-agent:*
+Disallow:
 
 User-agent:*
 Disallow:
 
-Sitemap: https://mister-hope.github.io/blog/sitemap.xml
+Sitemap: https://vuepress-theme-hope.github.io/blog/sitemap.xml
