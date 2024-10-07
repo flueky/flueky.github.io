@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://vuepress-theme-hope.github.io/blog/atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
   <id>https://vuepress-theme-hope.github.io/blog/</id>
-  <title>vuepress-theme-hope</title>
-  <subtitle>一个具有强大功能的 vuepress 主题✨</subtitle>
+  <title>Flueky&amp;apos;s 技术小站</title>
   <icon>https://vuepress-theme-hope.github.io/blog/favicon.ico</icon>
-  <updated>2024-10-07T12:51:05.019Z</updated>
+  <updated>2024-10-07T14:37:52.426Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://vuepress-theme-hope.github.io/blog/atom.xml"/>
   <link rel="alternate" href="https://vuepress-theme-hope.github.io/blog/"/>

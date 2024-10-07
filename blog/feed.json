@@ -1,9 +1,8 @@
 {
   "version": "https://jsonfeed.org/version/1.1",
-  "title": "vuepress-theme-hope",
+  "title": "Flueky's 技术小站",
   "home_page_url": "https://vuepress-theme-hope.github.io/blog/",
   "feed_url": "https://vuepress-theme-hope.github.io/blog/feed.json",
-  "description": "一个具有强大功能的 vuepress 主题✨",
   "favicon": "https://vuepress-theme-hope.github.io/blog/favicon.ico",
   "items": [
     {
