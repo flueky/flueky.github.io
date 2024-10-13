@@ -9,11 +9,11 @@
       "title": "Vuepress Markdown 语法",
       "url": "https://vuepress-theme-hope.github.io/blog/markdown.html",
       "id": "https://vuepress-theme-hope.github.io/blog/markdown.html",
-      "summary": "示例 标题 文本 列表 引用 代码块 链接 图像 注脚 上标下标 表格 分割线 数学公式 警告 提示 自定义对齐 思维导图 流程图 注脚解释1。 ↩︎ 注脚解释2。 ↩︎",
+      "summary": "示例 标题 文本 列表 引用 代码块 链接 图像 注脚 上标下标 表格 分割线 数学公式 警告 提示 标签 自定义对齐 思维导图 流程图 注脚解释1。 ↩︎ 注脚解释2。 ↩︎",
       "content_html": "<h2>示例</h2>\n\n<h2>标题</h2>\n\n<h2>文本</h2>\n\n<h2>列表</h2>\n\n<h2>引用</h2>\n\n<h2>代码块</h2>\n\n<h2>链接</h2>\n\n<h2>图像</h2>\n\n<h2>注脚</h2>\n\n<h2>上标下标</h2>\n\n<h2>表格</h2>\n\n<hr class=\"footnotes-sep\">\n<section class=\"footnotes\">\n<ol class=\"footnotes-list\">\n<li id=\"footnote1\" class=\"footnote-item\"><p>注脚解释1。 <a href=\"#footnote-ref1\" class=\"footnote-backref\">↩︎</a></p>\n</li>\n<li id=\"footnote2\" class=\"footnote-item\"><p>注脚解释2。 <a href=\"#footnote-ref2\" class=\"footnote-backref\">↩︎</a></p>\n</li>\n</ol>\n</section>\n",
       "image": "https://support-assets.githubassets.com/packs/static/components/v2/components/assets/images/product-cards/get-started-f69cbc8bacc67cbe4240.webp =500x500",
       "date_published": "2024-10-06T15:51:15.000Z",
-      "date_modified": "2024-10-07T05:47:32.000Z",
+      "date_modified": "2024-10-13T13:42:48.000Z",
       "authors": [],
       "tags": [
         "Note"
