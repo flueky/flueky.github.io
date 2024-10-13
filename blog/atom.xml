@@ -3,7 +3,7 @@
   <id>https://vuepress-theme-hope.github.io/blog/</id>
   <title>Flueky&amp;apos;s 技术小站</title>
   <icon>https://vuepress-theme-hope.github.io/blog/favicon.ico</icon>
-  <updated>2024-10-13T13:46:47.254Z</updated>
+  <updated>2024-10-13T15:16:47.810Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://vuepress-theme-hope.github.io/blog/atom.xml"/>
   <link rel="alternate" href="https://vuepress-theme-hope.github.io/blog/"/>
@@ -98,7 +98,7 @@
     <title type="text">Git 常用命令</title>
     <id>https://vuepress-theme-hope.github.io/blog/git.html</id>
     <link href="https://vuepress-theme-hope.github.io/blog/git.html"/>
-    <updated>2024-10-07T05:47:32.000Z</updated>
+    <updated>2024-10-13T15:15:47.000Z</updated>
     <summary type="html"><![CDATA[<p>记录 Git 常用命令</p>
 ]]></summary>
     <content type="html"><![CDATA[<p>记录 Git 常用命令</p>
@@ -444,7 +444,17 @@
 <span class="line"><span>    --show-scope          show scope of config (worktree, local, global, system, command)</span></span>
 <span class="line"><span>    --default &lt;value&gt;     with --get, use default value when missing entry</span></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></details>
-<h2>fetch</h2>
+<p>配置 git 工作环境。分系统，用户，仓库三个级别的配置。</p>
+<p>下面给出三个配置文件的位置。</p>
+<ul>
+<li>system: 存储在 <code>/etc/gitconfig</code>.</li>
+<li>global: 存储在 <code>~/.gitconfig</code>.</li>
+<li>local: 存储在 <code>&lt;repo&gt;/.git/config</code>.</li>
+</ul>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> config</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --global</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> user.name</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> "user name"</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> config</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --global</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> user.email</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> "example@example.com"</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> config</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --global</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> autocrlf=input</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 配置 crlf 到 lf 的转换，windows 建议设置 true。</span></span></code></pre>
+</div><h2>fetch</h2>
 <details class="hint-container details"><summary>git fetch -h</summary>
 <div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>usage: git fetch [&lt;options&gt;] [&lt;repository&gt; [&lt;refspec&gt;...]]</span></span>
 <span class="line"><span>   or: git fetch [&lt;options&gt;] &lt;group&gt;</span></span>
@@ -575,24 +585,31 @@
 <span class="line"><span>    --object-format &lt;hash&gt;</span></span>
 <span class="line"><span>                          specify the hash algorithm to use</span></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></details>
+<p>创建一个空的 git 仓库。</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> init</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> test</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 创建目录为 test 的仓库</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> init</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -b</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> main</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> test</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 创建默认分支 main 的仓库</span></span></code></pre>
+</div><div class="hint-container important">
+<p class="hint-container-title">创建裸仓库</p>
+<p>默认创建的仓库都带工作区。裸仓库主要用在远程服务仓库，如 github，gitee， 用于开发者提交自己的代码。</p>
+<p>下面是在 linux 环境创建并使用裸仓库的实例。 用户名 <code>flueky.zuo</code></p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> init</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --base</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> test</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 在用户目录下创建 test 裸仓库</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 以下命令在 git 工作区仓库执行。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remote</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> add</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> local</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> flueky.zuo@localhost:test</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> </span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> push</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> local</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> main</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 提交代码到 local 仓库。</span></span></code></pre>
+</div></div>
 <h2>log</h2>
-<details class="hint-container details"><summary>git log -h</summary>
-<div class="language-" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>usage: git log [&lt;options&gt;] [&lt;revision-range&gt;] [[--] &lt;path&gt;...]</span></span>
-<span class="line"><span>   or: git show [&lt;options&gt;] &lt;object&gt;...</span></span>
-<span class="line"><span></span></span>
-<span class="line"><span>    -q, --quiet           suppress diff output</span></span>
-<span class="line"><span>    --source              show source</span></span>
-<span class="line"><span>    --use-mailmap         use mail map file</span></span>
-<span class="line"><span>    --mailmap             alias of --use-mailmap</span></span>
-<span class="line"><span>    --clear-decorations   clear all previously-defined decoration filters</span></span>
-<span class="line"><span>    --decorate-refs &lt;pattern&gt;</span></span>
-<span class="line"><span>                          only decorate refs that match &lt;pattern&gt;</span></span>
-<span class="line"><span>    --decorate-refs-exclude &lt;pattern&gt;</span></span>
-<span class="line"><span>                          do not decorate refs that match &lt;pattern&gt;</span></span>
-<span class="line"><span>    --decorate[=...]      decorate options</span></span>
-<span class="line"><span>    -L &lt;range:file&gt;       trace the evolution of line range &lt;start&gt;,&lt;end&gt; or function :&lt;funcname&gt; in &lt;file&gt;</span></span></code></pre>
-</div></details>
-<h2>merge</h2>
+<p>查看提交记录。</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 默认按照标准格式，由近到远输出提交记录</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --oneline</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 简化输出，只显示提交 id 和信息。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --author</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> 'flueky.zuo'</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 查看指定提交者的信息，通常记录在 user.name 和 user.email 中。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --since/--after</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> '2024-10-01'</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 显示指定时间之后的提交。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --until/--before</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> '2024-10-02'</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 显示指定时间之前的提交。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --grep</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> 'message'</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 查看包含指定信息的提交。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --graph</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 显示包含图形的提交记录</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -p</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 补丁的形式，显示每个提交的差异。可结合 -- filepath 使用。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --stat</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 显示每次修改提交的文件统计信息。</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> log</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -num</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 显示最近 num 次的提交。</span></span></code></pre>
+</div><h2>merge</h2>
 <details class="hint-container details"><summary>git merge -h</summary>
 <div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>usage: git merge [&lt;options&gt;] [&lt;commit&gt;...]</span></span>
 <span class="line"><span>   or: git merge --abort</span></span>
@@ -787,7 +804,33 @@
 <span class="line"><span>    --reapply-cherry-picks</span></span>
 <span class="line"><span>                          apply all changes, even those already present upstream</span></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></details>
-<h2>reset</h2>
+<h2>remote</h2>
+<details class="hint-container details"><summary>git remote -h</summary>
+<div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>usage: git remote [-v | --verbose]</span></span>
+<span class="line"><span>   or: git remote add [-t &lt;branch&gt;] [-m &lt;master&gt;] [-f] [--tags | --no-tags] [--mirror=&lt;fetch|push&gt;] &lt;name&gt; &lt;url&gt;</span></span>
+<span class="line"><span>   or: git remote rename &lt;old&gt; &lt;new&gt;</span></span>
+<span class="line"><span>   or: git remote remove &lt;name&gt;</span></span>
+<span class="line"><span>   or: git remote set-head &lt;name&gt; (-a | --auto | -d | --delete | &lt;branch&gt;)</span></span>
+<span class="line"><span>   or: git remote [-v | --verbose] show [-n] &lt;name&gt;</span></span>
+<span class="line"><span>   or: git remote prune [-n | --dry-run] &lt;name&gt;</span></span>
+<span class="line"><span>   or: git remote [-v | --verbose] update [-p | --prune] [(&lt;group&gt; | &lt;remote&gt;)...]</span></span>
+<span class="line"><span>   or: git remote set-branches [--add] &lt;name&gt; &lt;branch&gt;...</span></span>
+<span class="line"><span>   or: git remote get-url [--push] [--all] &lt;name&gt;</span></span>
+<span class="line"><span>   or: git remote set-url [--push] &lt;name&gt; &lt;newurl&gt; [&lt;oldurl&gt;]</span></span>
+<span class="line"><span>   or: git remote set-url --add &lt;name&gt; &lt;newurl&gt;</span></span>
+<span class="line"><span>   or: git remote set-url --delete &lt;name&gt; &lt;url&gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    -v, --verbose         be verbose; must be placed before a subcommand</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></details>
+<p>本地仓库关联到远程仓库的信息，使用 <code>remote</code> 管理。配置信息保存在 <code>.git/config</code>。 常用命令如下：</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remote</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -v</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 检查 remote 信息</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 添加 GitHub 地址， 使用 git push github main 推送</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remote</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> add</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> github</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> git@github.com:flueky/docs.git</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 重命名 github 到 origin，后续使用 origin 推送代码</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remote</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> rename</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> github</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> origin</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 删除这个分支</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remote</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> remove</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> github</span></span></code></pre>
+</div><h2>reset</h2>
 <details class="hint-container details"><summary>git reset -h</summary>
 <div class="language- line-numbers-mode" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>usage: git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [&lt;commit&gt;]</span></span>
 <span class="line"><span>   or: git reset [-q] [&lt;tree-ish&gt;] [--] &lt;pathspec&gt;...</span></span>
