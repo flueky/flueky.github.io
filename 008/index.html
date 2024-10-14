@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NDK开发入门终极教程 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="同NDK技术的渊源始于3年前，使用so文件的时候了解到NDK技术，并且C语言一直是强项，就鼓捣起NDK开发。在AndroidStduio还没推广的年代，基于eclipse搭建NDK开发环境需要安全依赖开发工具，并且调试起来具备难度。随后AndroidStudio也先后支持nkd-build和cmake使用NDK开发。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NDK开发入门终极教程">
+<meta property="og:url" content="https://flueky.github.io/008/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="同NDK技术的渊源始于3年前，使用so文件的时候了解到NDK技术，并且C语言一直是强项，就鼓捣起NDK开发。在AndroidStduio还没推广的年代，基于eclipse搭建NDK开发环境需要安全依赖开发工具，并且调试起来具备难度。随后AndroidStudio也先后支持nkd-build和cmake使用NDK开发。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://flueky.github.io/pic/img/user_icon.gif">
+<meta property="article:published_time" content="2019-01-12T14:47:04.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:33:04.560Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta property="article:tag" content="JNI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://flueky.github.io/pic/img/user_icon.gif"><link rel="shortcut icon" href="/../pic/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/008/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NDK开发入门终极教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:33:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/../pic/img/user_icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">NDK开发入门终极教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2019-01-12T14:47:04.000Z" title="Created 2019-01-12 22:47:04">2019-01-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:33:04.560Z" title="Updated 2024-09-08 18:33:04">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Android/">Android</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="NDK开发入门终极教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>同<code>NDK</code>技术的渊源始于3年前，使用<code>so</code>文件的时候了解到<code>NDK</code>技术，并且<code>C</code>语言一直是强项，就鼓捣起<code>NDK</code>开发。在<code>AndroidStduio</code>还没推广的年代，基于<code>eclipse</code>搭建<code>NDK</code>开发环境需要安全依赖开发工具，并且调试起来具备难度。随后<code>AndroidStudio</code>也先后支持<code>nkd-build</code>和<code>cmake</code>使用<code>NDK</code>开发。</p>
+<span id="more"></span>
+
+<p>参见之前的博客：</p>
+<p>[eclipse下使用NDK开发so库](&#x2F;blog&#x2F;2016-03-23)</p>
+<p>[AndroidStudio配置NDK开发环境](&#x2F;blog&#x2F;2016-04-09)</p>
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h2><h3 id="1-1-下载-NDK"><a href="#1-1-下载-NDK" class="headerlink" title="1.1 下载 NDK"></a>1.1 下载 NDK</h3><p>当前 NDK 稳定版已经 发布到 <code>r15c</code> 。附上各个平台的下载地址：</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/android-ndk-r15c-windows-x86.zip?utm_source=androiddevtools&utm_medium=website">android-ndk-r15c-windows-x86</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/android-ndk-r15c-windows-x86_64.zip?utm_source=androiddevtools&utm_medium=website">android-ndk-r15c-windows-x86_64</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/android-ndk-r15c-darwin-x86_64.zip?utm_source=androiddevtools&utm_medium=website">android-ndk-r15c-darwin-x86_64</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/android-ndk-r15c-linux-x86_64.zip?utm_source=androiddevtools&utm_medium=website">android-ndk-r15c-linux-x86_64</a></p>
+</li>
+</ol>
+<h3 id="1-2-添加NDK依赖"><a href="#1-2-添加NDK依赖" class="headerlink" title="1.2 添加NDK依赖"></a>1.2 添加NDK依赖</h3><p>解压下载好的文件在本地，在 AndroidStudio 工程配置（<strong>注意不是 AndroidStudio 工具配置</strong>）中指定 NDK 路径。</p>
+<img src="../pic/008/3.png" width="400"/>
+
+<p>或者在<code>local.properties</code>文件中指定NDK路径。</p>
+<img src="../pic/008/4.png" width="300"/>
+
+<h3 id="1-3-添加cmake支持"><a href="#1-3-添加cmake支持" class="headerlink" title="1.3 添加cmake支持"></a>1.3 添加cmake支持</h3><p>在 AndroidStudio 工具配置中，选择 Android SDK -&gt; SDK Tools 中，勾选CMake并安装。</p>
+<img src="../pic/008/5.png" width="600"/>
+
+<h2 id="2-新建支持NDk工程"><a href="#2-新建支持NDk工程" class="headerlink" title="2 新建支持NDk工程"></a>2 新建支持NDk工程</h2><p>现在的<code>AndroidStduio</code>更支持一种极简方式集成<code>NDK</code>开发支持，即在下图中勾选<code>include C++ support</code>。然后选择<code>C++</code>标准。如<code>C++ 11</code>。建选默认的<code>ToolChain Default</code>。</p>
+<img src="../pic/008/1.png" width="400"/>
+
+<img src="../pic/008/2.png" width="400"/>
+
+<p>之后正常 run 即可将 C 语言部分生成出 so 文件并打包到 apk 文件中。</p>
+<h2 id="3-给工程添加NDK支持"><a href="#3-给工程添加NDK支持" class="headerlink" title="3 给工程添加NDK支持"></a>3 给工程添加NDK支持</h2><p>上述方式适合在新的工程中添加 NDK 支持。如何要在现有的项目中添加 NDK 支持，现提供 <code>cmake</code> 和 <code>ndk-build</code> 两种方式。</p>
+<p>由于在同一个工程中，同时支持 <code>cmake</code> 和 <code>ndk-build</code> 两种方式编译 so 文件，因此将 C 源码单独放在 <code>cpp-src</code> 目录。且将 <code>cmake</code>、<code>ndk-build</code> 区分不同的<code>module</code>进行编译。</p>
+<img src="../pic/008/6.png" width="150"/>
+
+<h3 id="3-1-cmake"><a href="#3-1-cmake" class="headerlink" title="3.1 cmake"></a>3.1 cmake</h3><p>这是目前最受欢迎的集成方式，AndroidStduio 在创建新工程时默认使用该方式添加 NDK 支持。但在现有的工程中添加 NDK支持，需要手动配置。</p>
+<img src="../pic/008/7.png" width="200"/>
+
+<p>创建 cmake module 添加个三个文件。</p>
+<ol>
+<li>CMakeLists.txt cmake编译配置文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.4.1)</span><br><span class="line"></span><br><span class="line">add_library(</span><br><span class="line">        hello-jni # so 库的名称 libhello-jni.so</span><br><span class="line">        SHARED # 设置为分享库</span><br><span class="line">        # 指定C源文件的路径，指向公共cpp-src目录</span><br><span class="line">        ../../../../cpp-src/hello-jni.c</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">find_library(</span><br><span class="line">        log-lib # 设置路径变量名称</span><br><span class="line">        log # 指定CMake需要加载的NDK库</span><br><span class="line">)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">链接hello-jni库依赖的库，注意下面变量名的配置</span></span><br><span class="line">target_link_libraries(hello-jni</span><br><span class="line">        $&#123;log-lib&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>AndroidManifest.xml 每个module必须的配置文件，指定packageName。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">package</span>=<span class="string">&quot;com.flueky.cmake&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Build.gradle 每个module必须的配置文件，用于构建项目。</li>
+</ol>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">28</span></span><br><span class="line"></span><br><span class="line">    defaultConfig&#123;</span><br><span class="line">        externalNativeBuild &#123;</span><br><span class="line">            cmake &#123;</span><br><span class="line">                <span class="comment">// 指定配置参数，更多参数设置见 https://developer.android.google.cn/ndk/guides/cmake</span></span><br><span class="line">                arguments <span class="string">&quot;-DCMAKE_BUILD_TYPE=DEBUG&quot;</span></span><br><span class="line">                <span class="comment">// 添加CPP标准</span></span><br><span class="line"><span class="comment">//                cppFlags &quot;-std=c++11&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">            <span class="comment">// 指定CMake编译配置文件路径</span></span><br><span class="line">            path <span class="string">&quot;src/main/cpp/CMakeLists.txt&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于 CMake 编译参数的设置，更多内容请阅读<a target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/guides/cmake">官方资料</a>。</p>
+<p>眼尖的小伙伴已经发现两处配置了 <code>externalNativeBuild</code>。其中第二处的<code>externalNativeBuild</code>配置是生成<code>Gradle Task</code> 可以不运行工程，直接在 ndk-cmake -&gt; Tasks -&gt; other 找到编译 so 文件有关的四个任务。</p>
+<img src="../pic/008/8.png" width="250"/>
+<img src="../pic/008/9.png" width="200"/>
+
+<p>双击 <code>exeternalNativeBuildDebug</code> 执行任务，如图：</p>
+<img src="../pic/008/10.png" width="800"/>
+
+<p>根据路径即可找到生成的so文件。</p>
+<h3 id="3-2-ndk-build"><a href="#3-2-ndk-build" class="headerlink" title="3.2 ndk-build"></a>3.2 ndk-build</h3><p>这是最传统的 ndk 编译方式。在配置得当的情况下，可以在不打开 AndroidStudio 情况下完成so文件的编译和输出。</p>
+<img src="../pic/008/11.png" width="200"/>
+
+<p>创建 ndk-build module ,添加4个文件。</p>
+<ol>
+<li>Android.mk</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">讲真，这个参数我看不懂。从 官方demo 抄来的。用于指定源文件的时候使用</span></span><br><span class="line">abspath_wa = $(join $(filter %:,$(subst :,: ,$1)),$(abspath $(filter-out %:,$(subst :,: ,$1))))</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定当前路径</span></span><br><span class="line">LOCAL_PATH := $(call my-dir)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定源文件路径</span></span><br><span class="line">JNI_SRC_PATH := $(call abspath_wa, $(LOCAL_PATH)/../../../../cpp-src)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">声明 clear 变量</span></span><br><span class="line">include $(CLEAR_VARS)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定 so 库的名称 libhello-jni.so</span></span><br><span class="line">LOCAL_MODULE    := hello-jni</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定 c 源文件</span></span><br><span class="line">LOCAL_SRC_FILES := $(JNI_SRC_PATH)/hello-jni.c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加需要依赖的NDK库</span></span><br><span class="line">LOCAL_LDLIBS := -llog -landroid</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定为分享库</span></span><br><span class="line">include $(BUILD_SHARED_LIBRARY)</span><br></pre></td></tr></table></figure>
+<p>关于 Android.mk 编译参数的设置，更多内容请阅读<a target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/guides/android_mk">官方资料</a></p>
+<ol start="2">
+<li>Application.mk</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定编译的的so版本</span></span><br><span class="line">APP_ABI := all</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定 APP 平台版本。比 android:minSdkVersion 值大时，会有警告</span></span><br><span class="line">APP_PLATFORM := android-28</span><br></pre></td></tr></table></figure>
+<p>关于 Application.mk 编译参数的设置，更多内容请阅读<a target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/guides/application_mk">官方资料</a></p>
+<ol start="3">
+<li>AndroidManifext.xml</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">package</span>=<span class="string">&quot;com.flueky.ndk&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>build.gradle</li>
+</ol>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">28</span></span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        ndkBuild &#123;</span><br><span class="line">            <span class="comment">// 指定mk文件路径</span></span><br><span class="line">            path <span class="string">&#x27;src/main/jni/Android.mk&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的<code>externalNativeBuild</code>作用同 <code>CMake </code>方式的一样，用于编译生成 so 文件。<br>但是 ndk-build 还支持使用命令<code>ndk-build</code>编译 so 文件。 <strong>需要将 NDK 路径添加至环境变量。</strong></p>
+<p>需要在<code>jni</code>目录下执行该命令:</p>
+<img src="../pic/008/12.png" width="800"/>
+
+<p>最后生成的so文件路径如图；</p>
+<img src="../pic/008/13.png" width="200"/>
+
+<h2 id="4-实践"><a href="#4-实践" class="headerlink" title="4 实践"></a>4 实践</h2><h3 id="4-1-生成头文件"><a href="#4-1-生成头文件" class="headerlink" title="4.1 生成头文件"></a>4.1 生成头文件</h3><p>在主 module 中的 MainActivity中添加 native 方法 。使用 javah 编译出头文件。 使用 <code>-d</code> 参数指定头文件的输出目录。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">Activity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// 加载 JNI 库</span></span><br><span class="line">        System.loadLibrary(<span class="string">&quot;hello-jni&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 声明 Native 方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">native</span> String <span class="title function_">hello</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>app/src/main/java</code> 目录下执行命令 <code>javah</code></p>
+<img src="../pic/008/14.png" width="400"/>
+
+<h3 id="4-2-编写-C-源码"><a href="#4-2-编写-C-源码" class="headerlink" title="4.2 编写 C 源码"></a>4.2 编写 C 源码</h3><p>在<code>hello-jni.c</code>文件引用生成的头文件，并编写测试代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;com_flueky_demo_MainActivity.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;util/log.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * JNI 示例，演示native方法返回一个字符串，Java 源码见</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * ndk-sample/app/src/main/java/com/flueky/demo/MainActivity.java</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Java_com_flueky_demo_MainActivity_hello</span><span class="params">( JNIEnv* env,</span></span><br><span class="line"><span class="params">                                                  jobject thiz )</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined(__arm__)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> defined(__ARM_ARCH_7A__)</span></span><br><span class="line">        <span class="meta">#<span class="keyword">if</span> defined(__ARM_NEON__)</span></span><br><span class="line">            <span class="meta">#<span class="keyword">if</span> defined(__ARM_PCS_VFP)</span></span><br><span class="line">                <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;armeabi-v7a/NEON (hard-float)&quot;</span></span></span><br><span class="line">            <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">                <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;armeabi-v7a/NEON&quot;</span></span></span><br><span class="line">            <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">            <span class="meta">#<span class="keyword">if</span> defined(__ARM_PCS_VFP)</span></span><br><span class="line">                <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;armeabi-v7a (hard-float)&quot;</span></span></span><br><span class="line">            <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">                <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;armeabi-v7a&quot;</span></span></span><br><span class="line">            <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">        <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;armeabi&quot;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__i386__)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;x86&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__x86_64__)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;x86_64&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__mips64)  <span class="comment">/* mips64el-* toolchain defines __mips__ too */</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;mips64&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__mips__)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;mips&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> defined(__aarch64__)</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;arm64-v8a&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> ABI <span class="string">&quot;unknown&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    LOGD(<span class="string">&quot;日志输出示例&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, <span class="string">&quot;Hello from JNI !  Compiled with ABI &quot;</span> ABI <span class="string">&quot;.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-运行截图"><a href="#4-3-运行截图" class="headerlink" title="4.3 运行截图"></a>4.3 运行截图</h3><p>页面截图：<br><img src="../pic/008/15.png" width="280"/></p>
+<p>日志截图：<br><img src="../pic/008/16.png" width="500"/></p>
+<h2 id="5-源码获取"><a href="#5-源码获取" class="headerlink" title="5 源码获取"></a>5 源码获取</h2><p>工程源码已开放在GitHub，<a target="_blank" rel="noopener" href="https://github.com/flueky/Flueky-Sample/tree/master/ndk-sample">下载地址</a>。如果您有多余的CSDN积分，不防<a target="_blank" rel="noopener" href="https://download.csdn.net/download/flueky/10914233">从这里下载</a>。可以直接编写 C 源码并进行调试和生成 so 文件。</p>
+<p><strong>觉得有用？那打赏一个呗。[去打赏](&#x2F;donate&#x2F;)</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/008/">https://flueky.github.io/008/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JNI/">JNI</a></div><div class="post_share"><div class="social-share" data-image="/../pic/img/user_icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>请楼主喝咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/../pic/img/wx_zs_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/wx_zs_min.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/../pic/img/zfb_sk_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/zfb_sk_min.png" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/009/" title="使用OpenGrok阅读源码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">使用OpenGrok阅读源码</div></div></a></div><div class="next-post pull-right"><a href="/007/" title="使用Android Profiler 做性能分析及优化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">使用Android Profiler 做性能分析及优化</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/201/" title="eclipse搭建JNI开发环境"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-03-21</div><div class="title">eclipse搭建JNI开发环境</div></div></a></div><div><a href="/202/" title="一个例子掌握JNI开发"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-03-22</div><div class="title">一个例子掌握JNI开发</div></div></a></div><div><a href="/203/" title="eclipse下使用NDK开发so库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-03-23</div><div class="title">eclipse下使用NDK开发so库</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/../pic/img/user_icon.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">1 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%8B%E8%BD%BD-NDK"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 下载 NDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%B7%BB%E5%8A%A0NDK%E4%BE%9D%E8%B5%96"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 添加NDK依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%B7%BB%E5%8A%A0cmake%E6%94%AF%E6%8C%81"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 添加cmake支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%B0%E5%BB%BA%E6%94%AF%E6%8C%81NDk%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2 新建支持NDk工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BB%99%E5%B7%A5%E7%A8%8B%E6%B7%BB%E5%8A%A0NDK%E6%94%AF%E6%8C%81"><span class="toc-number">3.</span> <span class="toc-text">3 给工程添加NDK支持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-cmake"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-ndk-build"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 ndk-build</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%9E%E8%B7%B5"><span class="toc-number">4.</span> <span class="toc-text">4 实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%94%9F%E6%88%90%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 生成头文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%BC%96%E5%86%99-C-%E6%BA%90%E7%A0%81"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 编写 C 源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 运行截图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="toc-number">5.</span> <span class="toc-text">5 源码获取</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

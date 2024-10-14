@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>编码、摘要和加密（三）——数据加密 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="关于加密，此处没有更加通俗易懂的解释。与同是对于字节类型数据处理的编码和摘要对比：  编码是可逆的，任何人只要知道编码规则，就能够进行解码。 摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。  加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。 接下来，将针对几个常见的加密算法：DES、3DES、AES、RSA 的 Java 实现及其相关进行介绍，由于之前实现过 DES">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码、摘要和加密（三）——数据加密">
+<meta property="og:url" content="https://flueky.github.io/018/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="关于加密，此处没有更加通俗易懂的解释。与同是对于字节类型数据处理的编码和摘要对比：  编码是可逆的，任何人只要知道编码规则，就能够进行解码。 摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。  加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。 接下来，将针对几个常见的加密算法：DES、3DES、AES、RSA 的 Java 实现及其相关进行介绍，由于之前实现过 DES">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://flueky.github.io/pic/img/user_icon.gif">
+<meta property="article:published_time" content="2019-04-30T06:09:40.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:24:55.498Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta property="article:tag" content="aes">
+<meta property="article:tag" content="des">
+<meta property="article:tag" content="3des">
+<meta property="article:tag" content="rsa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://flueky.github.io/pic/img/user_icon.gif"><link rel="shortcut icon" href="/../pic/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/018/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '编码、摘要和加密（三）——数据加密',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:24:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/../pic/img/user_icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">编码、摘要和加密（三）——数据加密</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2019-04-30T06:09:40.000Z" title="Created 2019-04-30 14:09:40">2019-04-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:24:55.498Z" title="Updated 2024-09-08 18:24:55">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%97%E8%8A%82%E5%A4%84%E7%90%86/">字节处理</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%8A%A0%E5%AF%86/">加密</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="编码、摘要和加密（三）——数据加密"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>关于加密，此处没有更加通俗易懂的解释。与同是对于字节类型数据处理的编码和摘要对比：</p>
+<ol>
+<li>编码是可逆的，任何人只要知道编码规则，就能够进行解码。</li>
+<li>摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。</li>
+</ol>
+<p>加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。</p>
+<p>接下来，将针对几个常见的加密算法：<code>DES</code>、<code>3DES</code>、<code>AES</code>、<code>RSA</code> 的 Java 实现及其相关进行介绍，由于之前实现过 <code>DES</code> 和 <code>AES</code> 算法，因此具体算法说明，后续有空会写到。</p>
+<span id="more"></span>
+
+<h2 id="1-相关概念"><a href="#1-相关概念" class="headerlink" title="1. 相关概念"></a>1. 相关概念</h2><h3 id="1-1-密钥"><a href="#1-1-密钥" class="headerlink" title="1.1 密钥"></a>1.1 密钥</h3><p>在代码实现的过程中，密钥即是 key 。使用对称加密算法时，加密和解密是同一个密钥。使用非对称加密算法时，加密和解密密钥不相同，区分为公钥（<strong>public key</strong>）和私钥（<strong>private key</strong>）。</p>
+<p>见过把 <code>base64</code> 当做对称加密， <code>md5</code> 当做非对称加密，因此下面划重点：</p>
+<ol>
+<li>判别加密算法最直接的方式，是否需要密钥。</li>
+<li>对称加密和非对称加密区别在于，加解密是否是同一个key。</li>
+<li>对称加密算法效率优于非对称加密算法，建议用对称加密算法加密长数据，非对称加密算法加密端数据。</li>
+</ol>
+<h3 id="1-2-加密模式"><a href="#1-2-加密模式" class="headerlink" title="1.2 加密模式"></a>1.2 加密模式</h3><p>加密模式主要体现在对称加密算法中。之前提到过，对称加密算法效率优，适合加密长数据。实际加密过程中，是将长数据划分成固定长度的若干块短数据进行加密操作。为防止暴力破解得出明文，因此衍生了四种加密模式。</p>
+<h4 id="1-2-1-电子密码本模式"><a href="#1-2-1-电子密码本模式" class="headerlink" title="1.2.1 电子密码本模式"></a>1.2.1 电子密码本模式</h4><p>英译 <strong>Electronic Code Book</strong> ，简称 <code>ECB</code> 模式，最简单的加密模式。</p>
+<ol>
+<li>将长数据分割成固定长度的若干块。</li>
+<li>分别对每块数据用同一个密钥进行加密。</li>
+<li>将每块加密出来的密文合并拼接成最终的完整密文。</li>
+</ol>
+<p>上述步骤存在一个严重的问题，如果有重复的明文块，那么加密出来的密文也重复。</p>
+<h4 id="1-2-2-加密块链模式"><a href="#1-2-2-加密块链模式" class="headerlink" title="1.2.2 加密块链模式"></a>1.2.2 加密块链模式</h4><p>英译 <strong>Cipher Block Chaining</strong> ，简称 <code>CBC</code>,基于 <code>ECB</code> 模式的改进版。<br>此处引入一个概念：初始化向量 <strong>Initialization Vector</strong> 简称 <code>IV</code> 。</p>
+<ol>
+<li>将长数据分割成固定长度的若干块。</li>
+<li>将前一块的密文与后一块明文进行异或，再用密钥进行加密。</li>
+<li>将每块加密出来的密文合并拼接成最终的完整密文。</li>
+<li><strong>第一块明文没有密文与其异或，因此需要 IV 对其异或再用密钥加密。</strong></li>
+</ol>
+<h4 id="1-2-3-加密反馈模式"><a href="#1-2-3-加密反馈模式" class="headerlink" title="1.2.3  加密反馈模式"></a>1.2.3  加密反馈模式</h4><p>英译 <strong>Cipher Feedback Mode</strong> ，简称 <code>CFB</code> 。</p>
+<ol>
+<li>将长数据分割成固定长度的若干块。</li>
+<li>将前一块密文使用密钥进行加密，再与后一块明文进行异或。</li>
+<li>将每块异或后的密文合并拼接成最终的完整密文。</li>
+<li><strong>第一块明文需要与用密钥加密后的 IV 进行异或。</strong></li>
+</ol>
+<h4 id="1-2-4-输出反馈模式"><a href="#1-2-4-输出反馈模式" class="headerlink" title="1.2.4 输出反馈模式"></a>1.2.4 输出反馈模式</h4><p>英译 <strong>Output Feedback Mode</strong> , 简称 <code>OFB</code> ，与 <code>CFB</code> 模式有些细小的区别。</p>
+<ol>
+<li>将长数据分割成固定长度的若干块。</li>
+<li>将前一块中间密文使用密钥进行加密得中间密文。中间密文与明文进行异或得密文。</li>
+<li>将每个中间密文与明文块异或后的密文进行合并拼接成最终的完整密文。</li>
+<li><strong>第一块明文需要的中间密文是用密钥加密后的 IV 。</strong></li>
+</ol>
+<p><strong><code>CFB</code> 与 <code>OFB</code> 的区别在于中间密文和密文块的用法 。</strong></p>
+<ol>
+<li><code>CFB</code> 使用前一块的密文进行加密。</li>
+<li><code>OFB</code> 使用前一块的中间密文进行加密。</li>
+</ol>
+<h3 id="1-3-填充模式"><a href="#1-3-填充模式" class="headerlink" title="1.3 填充模式"></a>1.3 填充模式</h3><p>分块加密的过程中，遇到不够整分的块。如，将 16 字节作为一个明文块。当加密 17 字节时，不够分成两块。此时需要对第二块明文进行填充。填充后的两个明文块各 16 字节共 32 字节后再进行加密操作。</p>
+<p>后 15 字节的填充内容，需要取决于具体的填充模式。见后续 Java 代码实现中介绍。</p>
+<h2 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h2><p>Java 对加密部分做了比较完整的封装—— <code>Cipher</code>  类。</p>
+<p>以下列举几个主要方法：</p>
+<ol>
+<li><code>getInstance</code> 获取 <code>Cipher</code> 对象，主要接收转换类型参数对象。转换类型参数分为 <strong>算法</strong> 和 <strong>算法&#x2F;模式&#x2F;填充</strong> 。</li>
+<li><code>init</code> 初始化加密参数。包括指定加解密模式、密钥和初始化向量-<code>IV</code>。</li>
+<li><code>doFinal</code> 结束加密和解密操作，有多个重载方法，主要接收需要加密或解密的数据。</li>
+</ol>
+<p>关于填充，之前简要介绍过。在 Java 代码中常见的填充模式是 <code>PKCS5Padding</code> 。还有一种模式 <code>NoPadding</code> 由于对明文长度有要求，不建议使用。其他填充模式未深入了解，暂不误导。</p>
+<p><code>PKCS5Padding</code> 指，需要填充多少字节，就填充多少个字节的数字。如 <code>DES</code> 算法要求每个明文块 8 字节，那么，加密 1 字节数据，需要填充 7 个字节，此时填充 7 个 7<br>。加密 7 字节数据，需要填充 1 个 1 。加密 8 字节数据时，为方便校验解密后的明文正确性，需要扩展成 16 字节数据，此时第二个明文块填充 8 个 8 。</p>
+<h3 id="2-1-DES"><a href="#2-1-DES" class="headerlink" title="2.1 DES"></a>2.1 DES</h3><p>DES 全称 <strong>Data Encryption Standard</strong> ，数据加密标准算法。固定密钥 8 字节，64 位。每个明文块长度 8 字节。</p>
+<p><code>getInstance</code> 接收参数：<em>DES&#x2F;ECB&#x2F;PKCS5Padding</em> ，其中 <code>ECB</code> 表示加密模式，可以用上述的其他三个模式替换以及更多 JDK 支持的模式。<code>PKCS5Padding</code> 表示一种填充模式。</p>
+<p>在使用 <code>CBC</code> 、 <code>CFB</code> 、 <code>OFB</code> 时，需要在 <code>init</code> 方法中指定 <strong>IV</strong> 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">KEY_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;DES&quot;</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CIPHER_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;DES/ECB/PKCS5Padding&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] encrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        <span class="comment">// 加密模式</span></span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] decrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        <span class="comment">// 解密模式</span></span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-3DES"><a href="#2-2-3DES" class="headerlink" title="2.2 3DES"></a>2.2 3DES</h3><p><code>3DES</code> 即使用 3 次 <code>DES</code> 算法。由于每个 <code>DES</code> 算法处理需要 8 字节密钥，因此 <code>3DES</code> 算法需要 24 字节密钥。</p>
+<p><strong>需要注意，<code>3DES</code> 算法名称使用 <code>DESede</code> 或 <code>TripleDES</code><strong>。</strong>e</strong> 表示做 <code>DES</code> 加密操作，<strong>d</strong> 表示做 <code>DES</code> 解密操作。前者表示用 DES 连续做加密 、解密、加密操作，后者表示连续做三次加密操作。每次使用的密钥，分别是 24 字节密钥中不同的三段（前、中、后各8字节）。</p>
+<blockquote>
+<p>若使用 <code>DESede</code> 算法时 24 字节密钥中的前两段一样，该算法等同于 <code>DES</code> 算法使用第三段的 8 字节密钥。</p>
+</blockquote>
+<p>填充相关同 <code>DES</code> 算法一样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">KEY_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;DESede&quot;</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CIPHER_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;DESede/CBC/PKCS5Padding&quot;</span>;</span><br><span class="line"><span class="comment">// 初始化向量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">IV</span> <span class="operator">=</span> <span class="string">&quot;12345678&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] encrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM),<span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(IV.getBytes()));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] decrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-AES"><a href="#2-3-AES" class="headerlink" title="2.3 AES"></a>2.3 AES</h3><p>AES 全称 <strong>Advanced Encryption Standard</strong> ，高级加密标准算法，用于替代  <code>DES</code> 。</p>
+<p><code>DES</code> 只支持 8 字节密钥，<code>AES</code> 可以支持 16  字节、24 字节和 32 字节密钥。明文块长度也可以划分成 16 字节 、24 字节和  32 字节进行填充。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">KEY_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;AES&quot;</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CIPHER_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] encrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] decrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, KEY_ALGORITHM));</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上三种对称加密算法的 Java 代码实现基本一致。</p>
+<h3 id="2-4-RSA"><a href="#2-4-RSA" class="headerlink" title="2.4 RSA"></a>2.4 RSA</h3><p>RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的非对称加密算法，因此使用他们 3 人姓氏首字母命名。</p>
+<p>示例代码中的公钥和私钥是随机生成的密钥对，密钥对模长建议是 1024 或 2048，对应密文长度是 128 字节和 256 字节。<strong>模长可以大于 2048 ， 越长越难破解，但是效率越低。</strong> 实际应用中，建议将密钥对模长设置为 2048 并以文件的形式存储在终端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> PrivateKey privateKey;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> PublicKey publicKey;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_CIPHER_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;RSA&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">KeyPairGenerator</span> <span class="variable">keyGener</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        keyGener = KeyPairGenerator.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        keyGener.initialize(<span class="number">1024</span>);</span><br><span class="line">        <span class="type">KeyPair</span> <span class="variable">keyPair</span> <span class="operator">=</span> keyGener.generateKeyPair();</span><br><span class="line">        privateKey = keyPair.getPrivate();</span><br><span class="line">        publicKey = keyPair.getPublic();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] encrypt(<span class="type">byte</span>[] data) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, publicKey);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">byte</span>[] decrypt(<span class="type">byte</span>[] data) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, privateKey);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/018/">https://flueky.github.io/018/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/aes/">aes</a><a class="post-meta__tags" href="/tags/des/">des</a><a class="post-meta__tags" href="/tags/3des/">3des</a><a class="post-meta__tags" href="/tags/rsa/">rsa</a></div><div class="post_share"><div class="social-share" data-image="/../pic/img/user_icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>请楼主喝咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/../pic/img/wx_zs_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/wx_zs_min.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/../pic/img/zfb_sk_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/zfb_sk_min.png" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/019/" title="探索文件加解密"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">探索文件加解密</div></div></a></div><div class="next-post pull-right"><a href="/017/" title="编码、摘要和加密（二）——信息摘要"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">编码、摘要和加密（二）——信息摘要</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/../pic/img/user_icon.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1. 相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AF%86%E9%92%A5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8A%A0%E5%AF%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 加密模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E7%94%B5%E5%AD%90%E5%AF%86%E7%A0%81%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 电子密码本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%8A%A0%E5%AF%86%E5%9D%97%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 加密块链模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E5%8A%A0%E5%AF%86%E5%8F%8D%E9%A6%88%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3  加密反馈模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-%E8%BE%93%E5%87%BA%E5%8F%8D%E9%A6%88%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 输出反馈模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%A1%AB%E5%85%85%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 填充模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">2. 代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DES"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 DES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3DES"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 3DES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-AES"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 AES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-RSA"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 RSA</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>指针与引用 | Flueky 技术小站</title><meta name="author" content="Flueky Zuo"><meta name="copyright" content="Flueky Zuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="初学者分析指针和引用最常用的方式是写一个swap函数，分析传值还是传址的交换。 普通变量交换12345678910111213int main(int argc, const char * argv[]) &#123;        int a &#x3D; 1;    int b &#x3D; 2;    	printf(&quot;交换前:%d %d\n&quot;,a,b);	    int temp &#x3D; a;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="指针与引用">
+<meta property="og:url" content="https://flueky.github.io/220/index.html">
+<meta property="og:site_name" content="Flueky 技术小站">
+<meta property="og:description" content="初学者分析指针和引用最常用的方式是写一个swap函数，分析传值还是传址的交换。 普通变量交换12345678910111213int main(int argc, const char * argv[]) &#123;        int a &#x3D; 1;    int b &#x3D; 2;    	printf(&quot;交换前:%d %d\n&quot;,a,b);	    int temp &#x3D; a;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://flueky.github.io/pic/img/user_icon.gif">
+<meta property="article:published_time" content="2016-05-27T06:27:59.000Z">
+<meta property="article:modified_time" content="2024-09-08T10:24:55.496Z">
+<meta property="article:author" content="Flueky Zuo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://flueky.github.io/pic/img/user_icon.gif"><link rel="shortcut icon" href="/../pic/img/favicon.png"><link rel="canonical" href="https://flueky.github.io/220/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '指针与引用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-08 18:24:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/../pic/img/user_icon.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Flueky 技术小站"><span class="site-name">Flueky 技术小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-coffee"></i><span> Donate</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">指针与引用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2016-05-27T06:27:59.000Z" title="Created 2016-05-27 14:27:59">2016-05-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-08T10:24:55.496Z" title="Updated 2024-09-08 18:24:55">2024-09-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-C/">C/C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="指针与引用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>初学者分析指针和引用最常用的方式是写一个swap函数，分析传值还是传址的交换。</p>
+<h1 id="普通变量交换"><a href="#普通变量交换" class="headerlink" title="普通变量交换"></a>普通变量交换</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">	</span><br><span class="line">    <span class="type">int</span> temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输出</p>
+<blockquote>
+<p>交换前:1 2 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>这里没什么好分析的。</p>
+<h1 id="指针交换"><a href="#指针交换" class="headerlink" title="指针交换"></a>指针交换</h1><p>正确交换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,*p,*q);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* temp = p;</span><br><span class="line">    p = q;</span><br><span class="line">    q = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:1 2 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>现在就变得有意思了。最初p、q分别指向a和b的地址。表示p-&gt;a,q-&gt;b。经过交换之后，p-&gt;b,q-&gt;a。</p>
+<p>错误交换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,*p,*q);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* temp = p;</span><br><span class="line">    *p = *q;<span class="comment">//注意这里的不同</span></span><br><span class="line">    q = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+</blockquote>
+<blockquote>
+<p>交换后:2 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>代码<code>*p = *q</code>等价于<code>a=b</code>。所以第一个会输出2 2。需要注意的是，此时p 和 q 依然指向不同的地址。执行完代码<code>q = temp</code> q 和p 指向相同的地址了。因为最初<code>temp = p</code>。</p>
+<p>也有的人写成这样的交换方式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//案例1</span></span><br><span class="line"><span class="type">int</span> temp = *p;</span><br><span class="line">   *p = *q;</span><br><span class="line">   *q = temp;</span><br><span class="line"><span class="comment">//案例2</span></span><br><span class="line">   <span class="type">int</span> temp = *p;</span><br><span class="line">   p = q;</span><br><span class="line">   *q = temp;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>案例1 <br/><br>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<blockquote>
+<p>案例2 有<code>*q = temp</code> <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/></p>
+</blockquote>
+<blockquote>
+<p>案例2 没有<code>*q = temp</code> <br/><br>交换后:1 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>关于案例1，等价于普通变量的交换。最终交换的是a 和 b的值。p和q的指针不变。案例2中，先给temp赋a 的值，再将p的指针指向q，最后修改q指向的值。得出最终结果p &#x3D; q-&gt;b &#x3D; a &#x3D; 1。如果没有	<code>*q = temp</code>最终结果p &#x3D; q-&gt;b &#x3D; 2，a &#x3D; 1</p>
+<h1 id="二重指针交换"><a href="#二重指针交换" class="headerlink" title="二重指针交换"></a>二重指针交换</h1><p>正常交换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>** pp = &amp;p;</span><br><span class="line">    <span class="type">int</span>** qq = &amp;q;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,**pp,**qq);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>** temp = pp;</span><br><span class="line">    pp = qq;</span><br><span class="line">    qq = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,**pp,**qq);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+</blockquote>
+<blockquote>
+<p>交换后:1 2 <br/><br>交换后:1 2 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>简单分析：最初时，pp-&gt;p-&gt;a,qq-&gt;q-&gt;b。交换后：qq-&gt;p-&gt;a,pp-&gt;q-&gt;b。弄懂了二重指针的道理，之后遇到三重、四重指针时，可以递归分析。</p>
+<p>错误交换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>** pp = &amp;p;</span><br><span class="line">    <span class="type">int</span>** qq = &amp;q;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,**pp,**qq);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>** temp = pp;</span><br><span class="line">    **pp = **qq;<span class="comment">//注意此处的不同</span></span><br><span class="line">    qq = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,**pp,**qq);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>交换后:2 2 <br/><br>交换后:2 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>之前也说过了，此处<code>**pp = **qq</code>相当于<code>a = b</code>所以pp-&gt;p-&gt;a &#x3D; 2；qq-&gt;q-&gt;b &#x3D; 2;因此输出全是2。执行<code>qq = temp</code>使得qq&#x3D;pp-&gt;p-&gt;a &#x3D; 2，并没有改变q-&gt;b &#x3D; 2。</p>
+<p>看到这里有没有晕？接下来举几个一定能让你晕的案例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//案例1</span></span><br><span class="line">   <span class="type">int</span>** temp = pp;</span><br><span class="line">   *pp = *qq;</span><br><span class="line">   qq = temp;</span><br><span class="line"><span class="comment">//案例2</span></span><br><span class="line">   <span class="type">int</span>* temp = *pp;</span><br><span class="line">   **pp = **qq;</span><br><span class="line">   *qq = temp;</span><br><span class="line"><span class="comment">//案例3</span></span><br><span class="line"><span class="type">int</span>* temp = *pp;</span><br><span class="line">   *pp = *qq;</span><br><span class="line">   *qq = temp;</span><br><span class="line"><span class="comment">//案例4</span></span><br><span class="line"><span class="type">int</span>* temp = *pp;</span><br><span class="line">   pp = qq;</span><br><span class="line">   *qq = temp;</span><br><span class="line"><span class="comment">//案例5</span></span><br><span class="line">   <span class="type">int</span> temp = **pp;</span><br><span class="line">   pp = qq;</span><br><span class="line">   **qq = temp;</span><br><span class="line">	<span class="comment">//案例6   </span></span><br><span class="line">   <span class="type">int</span> temp = **pp;</span><br><span class="line">   *pp = *qq;</span><br><span class="line">   **qq = temp;</span><br><span class="line"><span class="comment">//案例7</span></span><br><span class="line">   <span class="type">int</span> temp = **pp;</span><br><span class="line">   **pp = **qq;</span><br><span class="line">   **qq = temp;</span><br></pre></td></tr></table></figure>
+
+<p>加上之前的两个，这里包含了二重指针置换的所有的可能的写法。</p>
+<blockquote>
+<p>案例1 <br/><br>交换后:1 2 <br/><br>交换后:2 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>执行<code>*pp = *qq</code>，pp-&gt;p&#x3D;q-&gt;b&#x3D;2,qq-&gt;q-&gt;b&#x3D;2。执行<code>qq = temp</code>，qq&#x3D;pp-&gt;p&#x3D;q-&gt;b&#x3D;2。而此时a&#x3D;1，b&#x3D;2不变。</p>
+<blockquote>
+<p>案例2 <br/><br>交换后:2 2 <br/><br>交换后:2 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>执行<code>**pp = **qq</code>，pp-&gt;p-&gt;a&#x3D;b&#x3D;2,qq-&gt;q-&gt;b&#x3D;2。执行	<code>*qq = temp</code>，pp-&gt;p-&gt;a&#x3D;b&#x3D;2,qq-&gt;q&#x3D;p-&gt;a&#x3D;2。<strong>分析这里时，可将<code>**pp = **qq</code>等价成<code>a = b</code>而<code>*qq = temp</code>等价成q &#x3D; temp &#x3D; p</strong>。</p>
+<blockquote>
+<p>案例3 <br/><br>交换后:1 2 <br/><br>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>用通俗的话讲，这里交换的是p和q 两个指针（等价于一重指针的正确案例）。pp-&gt;p-&gt;b &#x3D; 2,qq-&gt;q-&gt;a &#x3D; 1;</p>
+<blockquote>
+<p>案例4 <br/><br>交换后:1 2 <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/></p>
+</blockquote>
+<p>执行<code>pp = qq</code>，pp&#x3D;qq-&gt;q-&gt;b&#x3D;2,p-&gt;a&#x3D;1。执行<code> *qq = temp</code>,等价于<code>q = p</code>,所以pp&#x3D;qq-&gt;q&#x3D;p-&gt;a&#x3D;1，b&#x3D;2。</p>
+<blockquote>
+<p>案例5 <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/></p>
+</blockquote>
+<p>执行<code>pp = qq</code>,pp&#x3D;qq-&gt;q-&gt;b&#x3D;2,p-&gt;a&#x3D;1。执行<code>**qq = temp</code>等价于<code>**qq = **pp，b = a</code>，因此pp&#x3D;qq-&gt;q-&gt;b&#x3D;a &#x3D; 1,p-&gt;a&#x3D;1</p>
+<blockquote>
+<p>案例6 <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/><br>交换后:1 1 <br/></p>
+</blockquote>
+<p>执行<code>*pp = *qq</code>，等价于<code>p = q</code>，pp-&gt;p&#x3D;q-&gt;b&#x3D;2,qq-&gt;q-&gt;b&#x3D;2,a&#x3D;1。执行<code>**qq = temp</code>，pp-&gt;p&#x3D;q-&gt;b&#x3D;a&#x3D;1,qq-&gt;q-&gt;b&#x3D;a&#x3D;1。</p>
+<blockquote>
+<p>案例7 <br/><br>交换后:2 1 <br/><br>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>一句话的总结就是：交换了a和b。pp-&gt;p-&gt;a &#x3D; 2,qq-&gt;q-&gt;b &#x3D; 1。</p>
+<h1 id="引用交换"><a href="#引用交换" class="headerlink" title="引用交换"></a>引用交换</h1><p>引用是C++中才有的概念，因此在c文件中测试如下代码，会在编译时候产生语法错误。需要创建cpp文件测试。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>&amp; r = a;</span><br><span class="line">    <span class="type">int</span>&amp; s = b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,r,s);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>&amp; temp = r;</span><br><span class="line">    r = s;</span><br><span class="line">    s = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,r,s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:2 2 <br/><br>交换后:2 2 <br/></p>
+</blockquote>
+<p>运行后发现，这里并没有起到交换的作用。究其原因，定义temp 引用时，temp 和 r指向内存中同一块，也就是a所在的内存。引用之间只能够传值（指针之间可以传止，如p &#x3D; q使 p&#x3D;q-&gt;b&#x3D;2，a&#x3D;1），r &#x3D; s &#x3D; b &#x3D; 2，于是temp &#x3D; 2，a &#x3D; 2。s &#x3D; temp &#x3D; 2。</p>
+<p>正确的交换应当是</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> temp = r;<span class="comment">//注意这里的不同</span></span><br><span class="line">r = s;</span><br><span class="line">s = temp;</span><br></pre></td></tr></table></figure>
+
+<p>这样就得到了预期的运行结果。啊哦……</p>
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<h1 id="函数交换"><a href="#函数交换" class="headerlink" title="函数交换"></a>函数交换</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 普通交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">swap</span>(a, b);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/></p>
+<p>交换后:1 2 <br/></p>
+</blockquote>
+<p>swap 函数中的a、b是形参，main函数中，传入的是a、b 的值，所以在swap函数中交换的是形参a、b的值，不影响main函数中a、b的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指针交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapP</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> temp = *a;</span><br><span class="line">    *a = *b;</span><br><span class="line">    *b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,*p,*q);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">swapP</span>(&amp;a, &amp;b);</span><br><span class="line"><span class="comment">//    swapP(p, q);//等价上句</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n\n&quot;</span>,*p,*q);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>swapP函数两个参数都是指针类型，接收main函数中的指针p或a的地址（<strong>指针p 指向a的地址，同理b</strong>），因此在swap中交换的依然是a和b的值，不改变main函数中p-&gt;a,q-&gt;b。</p>
+<p>错误交换示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 指针交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapP</span><span class="params">(<span class="type">int</span> *a,<span class="type">int</span> *b)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span>* temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:1 2 <br/><br>交换后:1 2 <br/></p>
+</blockquote>
+<p>这里是对指针指向的地址进行交换，而这里的指针依然是形参，交换后的值不改变main函数中的p、q。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二重指针交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapPP</span><span class="params">(<span class="type">int</span>** pp,<span class="type">int</span> **qq)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span>* temp = *pp;</span><br><span class="line">    *pp = *qq;</span><br><span class="line">    *qq = temp;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="type">int</span>* q = &amp;b;</span><br><span class="line">    <span class="type">int</span>** pp = &amp;p;</span><br><span class="line">    <span class="type">int</span>** qq = &amp;q;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,**pp,**qq);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">swapPP</span>(pp, qq);</span><br><span class="line"><span class="comment">//    swapPP(&amp;p, &amp;q);//等价上句</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,*p,*q);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n\n&quot;</span>,**pp,**qq);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:1 2 <br/><br>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<blockquote>
+<p>交换前：pp-&gt;p-&gt;a &#x3D; 1,qq-&gt;q-&gt;b &#x3D; 2;<br>交换后：pp-&gt;p-&gt;b &#x3D; 2,qq-&gt;q-&gt;a &#x3D; 1;换句话说，交换了p和q指向的地址。</p>
+</blockquote>
+<p>错误交换示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二重指针交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapPP1</span><span class="params">(<span class="type">int</span>** pp,<span class="type">int</span> **qq)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span>** temp = pp;</span><br><span class="line">    pp = qq;</span><br><span class="line">    qq = temp;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:1 2 <br/><br>交换后:1 2 <br/><br>交换后:1 2 <br/></p>
+</blockquote>
+<p>原理同一重指针的错误交换示例。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 引用交换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swapR</span><span class="params">(<span class="type">int</span>&amp; a,<span class="type">int</span>&amp; b)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span>&amp; r = a;</span><br><span class="line">    <span class="type">int</span>&amp; s = b;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换前:%d %d\n\n&quot;</span>,r,s);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">swapR</span>(r,s);</span><br><span class="line"><span class="comment">//    swapR(a,b);//等价上句</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,a,b);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;交换后:%d %d\n&quot;</span>,r,s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>交换前:1 2 <br/><br>交换前:1 2 <br/></p>
+<p>交换后:2 1 <br/><br>交换后:2 1 <br/></p>
+</blockquote>
+<p>原理同一重指针的正确交换。这里传入的是a、b的地址。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>正确的交换代码片段：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> temp = a;</span><br><span class="line">a = b;</span><br><span class="line">b = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* temp = p;</span><br><span class="line">p = q;</span><br><span class="line">q = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>** temp = pp;</span><br><span class="line">pp = qq;</span><br><span class="line">qq = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* temp = *pp;</span><br><span class="line">*pp = *qq;</span><br><span class="line">*qq = temp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> temp = r;</span><br><span class="line">r = s;</span><br><span class="line">s = temp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意二重指针的两种交换，在函数中只有一种是有效的</strong></p>
+<p><strong>谨以此篇博文，欢迎加入我们软件实验室的新生……</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://flueky.github.io">Flueky Zuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://flueky.github.io/220/">https://flueky.github.io/220/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/../pic/img/user_icon.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>请楼主喝咖啡</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/../pic/img/wx_zs_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/wx_zs_min.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/../pic/img/zfb_sk_min.png" target="_blank"><img class="post-qr-code-img" src="/../pic/img/zfb_sk_min.png" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/221/" title="Activity&amp;Fragment生命周期详解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Activity&amp;Fragment生命周期详解</div></div></a></div><div class="next-post pull-right"><a href="/219s/" title="分分钟修改Android keystore"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">分分钟修改Android keystore</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/../pic/img/user_icon.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Flueky Zuo</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/flueky"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Android 程序猿秘籍</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%8F%98%E9%87%8F%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">普通变量交换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E4%BA%A4%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">指针交换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E9%87%8D%E6%8C%87%E9%92%88%E4%BA%A4%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">二重指针交换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E4%BA%A4%E6%8D%A2"><span class="toc-number">4.</span> <span class="toc-text">引用交换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%BA%A4%E6%8D%A2"><span class="toc-number">5.</span> <span class="toc-text">函数交换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/105/" title="Arch 编译 Android 11 源码">Arch 编译 Android 11 源码</a><time datetime="2021-01-24T10:05:38.000Z" title="Created 2021-01-24 18:05:38">2021-01-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/104/" title="Arch 定制化安装与美化">Arch 定制化安装与美化</a><time datetime="2021-01-23T00:05:38.000Z" title="Created 2021-01-23 08:05:38">2021-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/103/" title="Arch 安装教程">Arch 安装教程</a><time datetime="2021-01-22T10:05:38.000Z" title="Created 2021-01-22 18:05:38">2021-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/030/" title="重新认识 Android 图片适配">重新认识 Android 图片适配</a><time datetime="2019-11-29T05:27:09.000Z" title="Created 2019-11-29 13:27:09">2019-11-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/029/" title="Android 线程间通信">Android 线程间通信</a><time datetime="2019-11-16T08:59:27.000Z" title="Created 2019-11-16 16:59:27">2019-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2014 - 2024 By Flueky Zuo</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
