@@ -6,30 +6,357 @@
     <link>https://vuepress-theme-hope.github.io/blog/</link>
     <description></description>
     <language>zh-CN</language>
-    <pubDate>Mon, 14 Oct 2024 23:39:01 GMT</pubDate>
-    <lastBuildDate>Mon, 14 Oct 2024 23:39:01 GMT</lastBuildDate>
+    <pubDate>Tue, 15 Oct 2024 14:54:36 GMT</pubDate>
+    <lastBuildDate>Tue, 15 Oct 2024 14:54:36 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
-    <category>Android</category>
     <category>Note</category>
+    <category>Hexo</category>
+    <category>Android</category>
     <category>字节处理</category>
     <category>加密</category>
     <category>Linux</category>
+    <item>
+      <title>搭建个人知识库</title>
+      <link>https://vuepress-theme-hope.github.io/blog/build-blog.html</link>
+      <guid>https://vuepress-theme-hope.github.io/blog/build-blog.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">搭建个人知识库</source>
+      <description>个人知识库，可以是一个只包含静态页面的网站。作为新手，不需要买域名以及服务器。GitHub Pages 就够用了。</description>
+      <category>Note</category>
+      <pubDate>Tue, 15 Oct 2024 14:52:51 GMT</pubDate>
+      <content:encoded><![CDATA[<p>个人知识库，可以是一个只包含静态页面的网站。作为新手，不需要买域名以及服务器。<a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a> 就够用了。</p>
+<!-- more -->
+<h2>准备工作</h2>
+<p>基于 GitHub Pages 搭建知识库网站，需要基于一些主流的平台与框架编译，用 Markdown 编写文件内容。因此需要做如下准备。</p>
+<ul>
+<li>安装 git</li>
+<li>安装 nodejs</li>
+<li>熟练编写 md 文件</li>
+</ul>
+<h2>安装 git</h2>
+<p><a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">https://git-scm.com/</a></p>
+<h2>安装 Node.js</h2>
+<p><a href="https://nodejs.org/zh-cn" target="_blank" rel="noopener noreferrer">Node.js</a> 版本较多，遇到兼容性要求时，对不同版本管理不太友好。建议使用 NVM 。</p>
+<h3>Windows</h3>
+<p><a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener noreferrer">GitHub 地址</a></p>
+<p>下载 <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener noreferrer">最新版本</a>， 直接解压安装即可。</p>
+<p>查询 <a href="https://nodejs.org/zh-cn/download/prebuilt-installer" target="_blank" rel="noopener noreferrer">最新版本 Node.js</a></p>
+<div class="language-cmd" data-highlighter="shiki" data-ext="cmd" data-title="cmd" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">nvm install </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">20.18.0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> # 当前最新版本</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">nvm list # 查看已安装版本</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">nvm use </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">20.18.0</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> # 选择需要的版本</span></span></code></pre>
+</div><h3>Mac/Linux</h3>
+<p><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener noreferrer">GitHub 地址</a></p>
+<p>安装命令如下：</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 使用 curl</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">curl</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -o-</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> | </span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">bash</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 使用 wget</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">wget</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -qO-</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> | </span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">nvm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> ls-remote</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 查看最新版本号，建议选择 LTS</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">nvm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> install</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 20.18.0</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 当前最新版本</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">nvm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> list</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 查看已安装版本</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">nvm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> use</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 20.18.0</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 选择需要的版本</span></span></code></pre>
+</div><h2>Markdown</h2>
+<p>Markdown 语法，支持快速排版内容。入门较简单，参考<a href="markdown">文档</a>。除了基本的 Markdown 语法，还支持 Vuepress 支持的高级功能。如：数学公式，图表以及脑图。</p>
+<h2>Hexo</h2>
+<p><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener noreferrer">Hexo</a> 是快速简洁且高效的博客框架。需要搭配合适 <a href="https://hexo.io/themes/" target="_blank" rel="noopener noreferrer">主题</a> 使用。</p>
+<p>推荐主题 <a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener noreferrer">hexo-theme-butterfly</a> 。</p>
+<p>也可参照之前写的<a href="hexo-basic">文档</a> 。</p>
+<h2>Vuepress</h2>
+<p><a href="https://vuepress.vuejs.org/zh/" target="_blank" rel="noopener noreferrer">Vuepress</a> 是 Vue 驱动的静态网站生成器。</p>
+<p>推荐主题 <a href="https://theme-hope.vuejs.press/" target="_blank" rel="noopener noreferrer">Vuepress Theme Hope</a> 。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Hexo 建站手札——进阶</title>
+      <link>https://vuepress-theme-hope.github.io/blog/hexo-advanced.html</link>
+      <guid>https://vuepress-theme-hope.github.io/blog/hexo-advanced.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">Hexo 建站手札——进阶</source>
+      <description>基础篇 讲到了如何使用 Hexo 建站。包括基本命令使用及获取到源码之后的一些简单工程配置。</description>
+      <category>Hexo</category>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p><a href="hexo-basic">基础篇</a> 讲到了如何使用 <strong>Hexo</strong> 建站。包括基本命令使用及获取到源码之后的一些简单工程配置。</p>
+<!-- more -->
+<p>下面将介绍，如何给博客添加  <strong>评论</strong>、<strong>背景音乐</strong>、<strong>点击特效</strong>、<strong>字数统计</strong>等功能。</p>
+<p>文章内容多数内容皆来自于<strong>TRHX</strong> 的文章<a href="https://www.itrhx.com/2018/08/27/A04-Hexo-blog-topic-personalization/" target="_blank" rel="noopener noreferrer">Hexo 博客主题个性化</a>。</p>
+<p><strong>友情提示，本文篇幅太长，建议结合目录选择性的浏览。</strong></p>
+<h2>1. 添加评论</h2>
+<p><strong>material-x</strong> 主题已经集成了四个评论系统。暂时只介绍用过的两个。</p>
+<h3>1.1 使用 valineS</h3>
+<p>首先需要在 <a href="https://leancloud.cn/" target="_blank" rel="noopener noreferrer">leancloud</a> 上注册应用。在控制台中，点开注册的应用查看 <code>AppID</code> 和 <code>AppKey</code>。</p>
+<img src="/assets/image/027/1.png" width="500">
+<p>在主题配置文件中</p>
+<div class="language-yaml line-numbers-mode" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">#valine配置</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">valine</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  enable</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 如果你想用Valine评论系统，请设置enable为true</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  volantis</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 是否启用volantis版本（禁止匿名，增加若干贴吧、QQ表情）</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 还需要在根目录配置文件中添加下面这三行内容</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # leancloud:</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  #   app_id: 你的appId</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  #   app_key: 你的appKey</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  guest_info</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">nick,mail,link</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> #valine comment header info</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  placeholder</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">快来评论吧~</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # valine comment input placeholder(like: Please leave your footprints )</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  avatar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">mp</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # gravatar style https://valine.js.org/avatar</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  pageSize</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">10</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # comment list page size</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  verify</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # valine verify code (true/false)</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  notify</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # valine mail notify (true/false)</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  lang</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">zh-cn</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  highlight</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在博客配置文件中</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">leancloud</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  app_id</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的appId</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  app_key</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的appKey</span></span></code></pre>
+</div><p>配置完成后，在文章底部出现评论界面。</p>
+<img src="/assets/image/027/2.png" width="600">
+<p>评论效果支持 Markdown 语法。</p>
+<img src="/assets/image/027/3.png" width="550">
+<p>评论内容可以在  <a href="https://leancloud.cn/" target="_blank" rel="noopener noreferrer">leancloud</a> 控制台中管理。</p>
+<img src="/assets/image/027/4.png" width="800">
+<h3>1.2 使用 gitalk</h3>
+<p>首先需要在  <strong>GitHub</strong> 中创建一个授权应用。此应用在访客评论时使用  <strong>GitHub</strong>  账户登录，进行授权。</p>
+<p>创建授权应用地址：<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener noreferrer">https://github.com/settings/applications/new</a>，亦可以在 <strong>GitHub</strong>  中通过 <code>Settings -&gt; Developer settings -&gt; OAuth Apps -&gt;New Auth App</code> 访问 。</p>
+<img src="/assets/image/027/5.png" width="600">
+<p>需要填写四条信息，以我的应用为例：</p>
+<img src="/assets/image/027/6.png" width="400">
+<ol>
+<li>应用名称，授权时告知用户是哪个应用使用  <strong>GitHub</strong> 账户。</li>
+<li>应用主页，使用博客站点主页 ，也可以换别的。</li>
+<li>应用描述。</li>
+<li>授权通过后的跳转页面。</li>
+</ol>
+<p>授权页面如图：</p>
+<img src="/assets/image/027/7.png" width="400">
+<p>在应用中查看 <code>Client ID</code> 和 <code>Client Secret</code> 。</p>
+<img src="/assets/image/027/8.png" width="400">
+<p>最后在博客配置文件中</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">gitalk</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  clientID</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的clientID</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  clientSecret</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的clientSecret</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  repo</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的repo名</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  owner</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">你的GitHub名</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  admin</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: [] </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">至少填写你的GitHub名</span></span></code></pre>
+</div><p>由于，gitalk 的评论方式是通过对 repo 提 issues 的方式。因此上面的 <code>repo</code> 即是查看 issues 的仓库地址。</p>
+<p>评论界面如下：</p>
+<img src="/assets/image/027/9.png" width="400">
+<p>在 issues 管理，通过<strong>最近更新</strong>的排序方式，查看最新的评论。</p>
+<img src="/assets/image/027/10.png" width="600">
+<p>可以直接在 issues 中直接回复。这样的好处是，只要查看 issues 就可以知道有新的评论，便于实时互动。<strong>GitHub还会通过发送邮件的方式告知有新的  issues</strong>。</p>
+<img src="/assets/image/027/11.png" width="600">
+<h2>2.  添加BGM</h2>
+<p>在主题的配置文件中:</p>
+<div class="language-yaml line-numbers-mode" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">############################### 默认值 ###############################</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 音乐控件的默认配置，如果sidebar或者page里没有提供，就取这里的参数</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">music</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  enable</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">      # 是否启用</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  color</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">'#1BCDFC'</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 主题色</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  mode</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">circulation</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # random （随机） single （单曲） circulation （列表循环） order （列表）</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  server</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">netease</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">   # netease（网易云音乐）tencent（QQ音乐） xiami（虾米） kugou（酷狗）</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  type</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">playlist</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">    # song （单曲） album （专辑） playlist （歌单） search （搜索）</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  id</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">2615636388</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">    # 歌曲/专辑/歌单 ID</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  volume</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">0.7</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">       # 音量, 0~1</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  autoplay</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">false</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">   # 自动播放</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># sidebar 配置  </span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">sidebar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">  - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">widget</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">music</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">fas fa-compact-disc</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    title</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">"最近在听"</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    more</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">far fa-heart</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      url</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">https://music.163.com/#/user/home?id=63035382</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      rel</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">external nofollow noopener noreferrer</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      target</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">_blank</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    server</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">netease</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">   # netease（网易云音乐）tencent（QQ音乐） xiami（虾米） kugou（酷狗）</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    type</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">playlist</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">    # song （单曲） album （专辑） playlist （歌单） search （搜索）</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    id</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">2615636388</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">     # 歌曲/专辑/歌单 ID</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>还要在 layout 中配置是否显示在侧边栏。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">layout</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 文章列表（主页、自定义的列表）布局</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  posts</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">    # 列表类页面的侧边栏,显示 music 部件</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    sidebar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: [</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">author</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">list</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">grid</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">music</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">category</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">tagcloud</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">]</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 文章页面布局</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  article</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">    # 文章页面的侧边栏，不显示 music 部件</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    sidebar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: [</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">author</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">toc</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">grid</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">category</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">tagcloud</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">list</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">, </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">related_posts</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">]</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 其他的页面布局暂时等于文章列表</span></span></code></pre>
+</div><img src="/assets/image/027/12.png" width="250">
+<p>在文章 <code>md</code> 文件中：</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># page中配置，用于文章标题</span></span></code></pre>
+</div>]]></content:encoded>
+    </item>
+    <item>
+      <title>Hexo 建站手札——基础</title>
+      <link>https://vuepress-theme-hope.github.io/blog/hexo-basic.html</link>
+      <guid>https://vuepress-theme-hope.github.io/blog/hexo-basic.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">Hexo 建站手札——基础</source>
+      <description>2016 年 2 月，写了工作中第一篇博客。至今快 4 年时间，写了几十篇文章，也使用过几个平台。 CSDN 一直在用，上面有着几乎全部的文章。传送门 掘金 这两年掘金顺势崛起，也在上面同步过数篇博客。传送门</description>
+      <category>Hexo</category>
+      <pubDate>Sat, 02 Nov 2019 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>2016 年 2 月，写了工作中第一篇博客。至今快 4 年时间，写了几十篇文章，也使用过几个平台。</p>
+<ol>
+<li><strong>CSDN</strong> 一直在用，上面有着几乎全部的文章。<a href="https://blog.csdn.net/flueky" target="_blank" rel="noopener noreferrer">传送门</a></li>
+<li><strong>掘金</strong> 这两年掘金顺势崛起，也在上面同步过数篇博客。<a href="https://juejin.im/user/5a97e5df518825558358a1bd" target="_blank" rel="noopener noreferrer">传送门</a></li>
+</ol>
+<!-- more -->
+<p>直到接触到 <strong>jekyll</strong> 、 <strong>Hexo</strong> 这样的博客生成工具。前者使用一年，没多研究其扩展功能。本文将介绍使用 <strong>Hexo</strong> 建站的步骤。</p>
+<p>本文适用于初学者，如果您已具备 Hexo 建站技能，需要丰富下网页的功能，请参阅<a href="hexo-advanced">进阶篇</a>。</p>
+<h2>1. 准备工作</h2>
+<p>万事开头难，建站也是需要做一些准备的。</p>
+<ul>
+<li>搭建 <strong>Hexo</strong> 环境。</li>
+<li>熟悉用 <strong>MarkDown</strong> 写作。</li>
+<li>代码托管平台。</li>
+</ul>
+<ol>
+<li>使用 <strong>Hexo</strong> 建站，建议参照<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener noreferrer">官方文档</a>。</li>
+<li>如果您还在使用 html 排版的方式，只能说 out 了。使用 md 写作，快速排版，实时对比。</li>
+<li>将文章存放在 GitHub 或 GitLab 等这样的开源平台，或者购买域名服务器。</li>
+</ol>
+<p>建议前期使用开源平台，因为<strong>免费</strong>，入门简单。甚至不需要编码基础。</p>
+<h3>1.1 创建仓库</h3>
+<ol>
+<li>注册 <strong>GitHub</strong> 。假如用户名是 <code>flueky</code> ,那么你的 <strong>GitHub</strong> 主页地址是 <a href="https://github.com/flueky" target="_blank" rel="noopener noreferrer">https://github.com/flueky</a>。</li>
+<li>创建仓库，必须名字是 <strong><a href="http://flueky.github.io" target="_blank" rel="noopener noreferrer">flueky.github.io</a></strong> ,其中 <code>flueky</code> 替换成你自己的 <strong>GitHub</strong> 账户名字。即，创建完后，仓库地址是 <a href="https://github.com/flueky/flueky.github.io" target="_blank" rel="noopener noreferrer">https://github.com/flueky/flueky.github.io</a>。</li>
+</ol>
+<p>将此仓库作为博客主页后 ，可以直接使用域名 <a href="https://flueky.github.io/" target="_blank" rel="noopener noreferrer">https://flueky.github.io/</a> 访问 。</p>
+<p>主题来自于 <a href="https://xaoxuu.com/" target="_blank" rel="noopener noreferrer">xaoxuu</a> 的 <strong>matrial x</strong> 。</p>
+<h2>2. Hexo 常用命令</h2>
+<h3>2.1 创建目录</h3>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 创建 blog 目录</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> init</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> blog</span></span></code></pre>
+</div><p>下面的命令，如无特殊说明，都是在 <strong>blog</strong> 目录下执行。</p>
+<h3>2.2 启动服务</h3>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 默认启动参数，访问地址：http://127.0.0.1:4000</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> server</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 使用指定端口，用在端口冲突的情况下 访问地址：http://127.0.0.1:4001</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> server</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -p</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> 4001</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 带草稿箱文件启动</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> server</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --draft</span></span></code></pre>
+</div><h3>2.3 部署博客</h3>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 在配置好站点后，将博客文件推送至站点</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> deploy</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 清楚生成文件</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> clean</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 通常使用下面的方式合用两条命令</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> clean</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> &amp;&amp; </span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">hexo</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> deploy</span></span></code></pre>
+</div><h2>3.  初始化博客</h2>
+<p>正确搭建好 <strong>Hexo</strong> 环境后，可以使用 <code>init</code> 命令完成博客目录创建。</p>
+<p><code>init</code> 命令完成后，启动服务见到下面的页面表示成功。</p>
+<img src="/assets/image/026/1.png" width="800">
+<p>文件列表如下，<strong>未列出的皆为命令生成的文件，无须添加到版本控制工具中</strong>。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 博客文件</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">├── _config.yml</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 博客配置文件，可修改大多数配置，需要重启服务。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">├── package.json</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 程序配置文件。无须修改。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">├── scaffolds</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 模板目录，使用 hexo new 命令新建博客文件时使用。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">├── source</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 博客资源文件，存放博客文本和图片。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">│   └── _drafts</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # drafts (草稿箱目录)，使用  hexo publish 命令移动到 _posts 目录。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">│   └── _posts</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # post 目录，部署时直接部署此目录的博客文本。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">└── themes</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 所有主题都存放在此目录下。</span></span>
+<span class="line"><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">    └── landscape</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> #主题</span></span></code></pre>
+</div><p>使用主题 <strong>material-x</strong>。</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 在 blog 目录中执行，获取主题源码</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> clone</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> https://github.com/xaoxuu/hexo-theme-material-x</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> themes/material-x</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 安装相关依赖包</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">npm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> i</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> -S</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> hexo-generator-search</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> hexo-generator-json-content</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> hexo-renderer-less</span></span></code></pre>
+</div><p>或者直接使用 <strong>xaoxuu</strong> 或 <strong>flueky</strong> 整理好的 demo 。</p>
+<div class="language-shell" data-highlighter="shiki" data-ext="shell" data-title="shell" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 获取 xaoxuu 源码</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> clone</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> https://github.com/xaoxuu/blog-example</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> blog</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 获取 flueky 源码，可以使用其它版本，具体见说明</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">git</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> clone</span><span style="--shiki-light:#986801;--shiki-dark:#D19A66"> --branch</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> v0.0.2</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> https://github.com/flueky/hexo-blog.git</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF"> </span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 在 blog 目录中执行，安装 hexo 有关文件后方可使用 hexo 命令</span></span>
+<span class="line"><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">npm</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379"> install</span></span></code></pre>
+</div><p>在博客配置文件 <code>_config.yml</code> 中切换主题。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># theme: landscape # 注释旧主题</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">theme</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">material-x</span></span></code></pre>
+</div><p>再次启动服务见到下面的页面表示成功。</p>
+<img src="/assets/image/026/2.png" width="800">
+<h2>4. 个性化配置</h2>
+<p>以下配置 ，均是基于  <code>material-x</code> 主题。</p>
+<h3>4.1 修改站点 logo 和 标题</h3>
+<p>修改前：</p>
+<img src="/assets/image/026/3.png" width="200">
+<p>修改博客配置文件 <code>_config.yml</code>。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># Site</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 站点名称</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">title</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">Flukey 小站</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 站点图标</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">favicon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">pic/user_icon.png</span></span></code></pre>
+</div><p>修改后：</p>
+<img src="/assets/image/026/4.png" width="200">
+<h3>4.2 修改主页标题</h3>
+<p>修改前：</p>
+<img src="/assets/image/026/5.png" width="350">
+<p>修改主题配置文件 <code>_config.yml</code>。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># page的封面</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">cover</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  title</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">FLUEKY</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 不设置 ，默认显示站点的标题。</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # logo: assets/logo.png    # logo和title只显示一个，若同时设置，则只显示logo</span></span></code></pre>
+</div><img src="/assets/image/026/6.png" width="350">
+<h3>4.3 修改用户LOGO</h3>
+<p>修改前：</p>
+<img src="/assets/image/026/7.png" width="300">
+<p>修改主题配置文件 <code>_config.yml</code>。</p>
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 侧边栏小部件配置</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">sidebar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">  - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">widget</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">author</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    avatar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">pic/user_icon.png</span><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"> # 此处替换 logo</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">    social</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#986801;--shiki-dark:#D19A66">true</span></span></code></pre>
+</div><img src="/assets/image/026/8.png" width="300">
+<h3>4.4 修改作者信息</h3>
+<img src="/assets/image/026/10.png" width="300">
+<div class="language-yaml" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># Site</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 作者名称</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">author</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">Flueky</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 作者图标，使用相对路径时，需要关注文章实际生成的目录。</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 此路径在文章中使用，但是pic文件夹在source目录下</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># 如果更改了 permalink ，下面的路径需要做修改。</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">avatar</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">/assets/image/img/user_icon.png</span></span></code></pre>
+</div><img src="/assets/image/026/11.png" width="300">
+<h3>4.5 配置菜单</h3>
+<p>菜单指主页标题，搜索框下四个模块。</p>
+<img src="/assets/image/026/6.png" width="350">
+<div class="language-yaml line-numbers-mode" data-highlighter="shiki" data-ext="yaml" data-title="yaml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic"># page的封面</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">cover</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#A0A1A7;--shiki-dark:#7F848E;--shiki-light-font-style:italic;--shiki-dark-font-style:italic">  # 主页封面菜单</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">  features</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">:</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">name</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">博文</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">fas fa-rss</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      url</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">/</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">name</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">项目</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">fas fa-code-branch</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      url</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">projects/</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">name</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">友链</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">fas fa-link</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      url</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">friends/</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      rel</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">nofollow</span></span>
+<span class="line"><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">    - </span><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">name</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">关于</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      icon</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">fas fa-info-circle</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      url</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">about/</span></span>
+<span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E06C75">      rel</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">: </span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">nofollow</span></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>按照上面的配置修改后，请在 <code>source</code> 目录下做如下操作。</p>
+<ol>
+<li>
+<p>建立 <strong>projects</strong>  文件夹，创建 <a href="http://index.md" target="_blank" rel="noopener noreferrer">index.md</a> 文件。内容：</p>
+<div class="language-" data-highlighter="shiki" data-ext="" data-title="" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span></span></span></code></pre>
+</div></li>
+</ol>
+]]></content:encoded>
+    </item>
     <item>
       <title>Android 线程间通信</title>
       <link>https://vuepress-theme-hope.github.io/blog/android-thread-communication.html</link>
       <guid>https://vuepress-theme-hope.github.io/blog/android-thread-communication.html</guid>
       <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">Android 线程间通信</source>
-      <description>Android 系统中，应用在运行时是一个独立的进程，但是每个进程中可以包含多个线程提高运行效率。在多线程开发中，有一个很重要的原则：不能在子线程中更新 UI 。 Only the original thread that created a view hierarchy can touch its views. 为解决这个问题，目前有多重方案实现子线...</description>
+      <description>Android 系统中，应用在运行时是一个独立的进程，但是每个进程中可以包含多个线程提高运行效率。在多线程开发中，有一个很重要的原则：不能在子线程中更新 UI 。</description>
       <category>Android</category>
       <category>Note</category>
       <pubDate>Sat, 16 Nov 2019 16:59:27 GMT</pubDate>
       <content:encoded><![CDATA[<p>Android 系统中，应用在运行时是一个独立的进程，但是每个进程中可以包含多个线程提高运行效率。在多线程开发中，有一个很重要的原则：<strong>不能在子线程中更新  UI 。</strong></p>
+<!-- more -->
 <blockquote>
 <p>Only the original thread that created a view hierarchy can touch its views.</p>
 </blockquote>
 <p>为解决这个问题，目前有多重方案实现子线程和主线程（UI 线程）之间的通信。</p>
-<!-- more -->
 <h2>1. 判断代码执行的线程</h2>
 <p>在一些简单代码逻辑中，也许能够很清晰的辨别出运行在子线程或主线程中。通常在复杂的类关系依赖、函数嵌套调用中，可能需要花费很大精力去阅读代码之后去判断。不过，巧法子也是有的，一行代码解决。</p>
 <div class="language-java" data-highlighter="shiki" data-ext="java" data-title="java" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span style="--shiki-light:#E45649;--shiki-dark:#E5C07B">Log</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">.</span><span style="--shiki-light:#4078F2;--shiki-dark:#61AFEF">d</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">(</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">"TAG"</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">,</span><span style="--shiki-light:#50A14F;--shiki-dark:#98C379">"test"</span><span style="--shiki-light:#383A42;--shiki-dark:#ABB2BF">);</span></span></code></pre>
@@ -138,11 +465,12 @@
       <link>https://vuepress-theme-hope.github.io/blog/encode.html</link>
       <guid>https://vuepress-theme-hope.github.io/blog/encode.html</guid>
       <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">编码、摘要和加密（一）—— 字节编码</source>
-      <description>之所以取这个题目，是因为在面试的过程中，许多求职者对问题“请列举常用的加密算法”给出了比较普遍的回答：“用过 MD5 和 Base64 ”，更有甚者说，“ Base64 是对称加密， MD5 是非对称加密”。那么，通过接下来的三篇文章科普下，在编程过程中常见的三个术语：字节编码 、信息摘要、 数据加密。</description>
+      <description>之所以取这个题目，是因为在面试的过程中，许多求职者对问题“请列举常用的加密算法”给出了比较普遍的回答：“用过 MD5 和 Base64 ”，更有甚者说，“ Base64 是对称加密， MD5 是非对称加密”。</description>
       <category>字节处理</category>
       <pubDate>Mon, 14 Oct 2024 23:22:06 GMT</pubDate>
-      <content:encoded><![CDATA[<p>之所以取这个题目，是因为在面试的过程中，许多求职者对问题“请列举常用的加密算法”给出了比较普遍的回答：“用过 <code>MD5</code> 和 <code>Base64</code> ”，更有甚者说，“ <code>Base64</code> 是对称加密， <code>MD5</code> 是非对称加密”。那么，通过接下来的三篇文章科普下，在编程过程中常见的三个术语：<strong>字节编码</strong> 、<strong>信息摘要</strong>、 <strong>数据加密</strong>。</p>
+      <content:encoded><![CDATA[<p>之所以取这个题目，是因为在面试的过程中，许多求职者对问题“请列举常用的加密算法”给出了比较普遍的回答：“用过 <code>MD5</code> 和 <code>Base64</code> ”，更有甚者说，“ <code>Base64</code> 是对称加密， <code>MD5</code> 是非对称加密”。</p>
 <!-- more -->
+<p>那么，通过接下来的三篇文章科普下，在编程过程中常见的三个术语：<strong>字节编码</strong> 、<strong>信息摘要</strong>、 <strong>数据加密</strong>。</p>
 <h2>1. 编码介绍</h2>
 <p>在计算机领域，数据存储单位叫字节——byte，最小的存储单元的容量是1位-1bit。一个bit有两个状态 0 和 1。1byte = 8bit。通常，一个英文字母占1字节，汉字采用GBK编码时，占用2字节。<strong>UTF-8是可变长度编码，一般用 0-4 字节表示。</strong></p>
 <p>以上介绍，仅局限于计算机可以显示在屏幕上的字符。但是 1byte 通常可表示 256 个不同的数据。二进制表示：00000000-11111111，即 2^8 。根据 ASCII 中显示，可见字符不足 100 个。若想完整的显示 1byte 表示的全部内容，需要对其进行编码。通常使用16进制的方式，0x00-0xFF。0x31 表示字符 '1' ，0x01 表示字母 1，0x41 表示 'A' ,0x61 表示 'a' 。不再一一列举，有兴趣的小伙伴可以查阅 ASCII 码表。</p>
@@ -722,7 +1050,7 @@ base64 MUFh<br></p>
       <link>https://vuepress-theme-hope.github.io/blog/encrypt.html</link>
       <guid>https://vuepress-theme-hope.github.io/blog/encrypt.html</guid>
       <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">编码、摘要和加密（三）—— 数据加密</source>
-      <description>关于加密，此处没有更加通俗易懂的解释。与同是对于字节类型数据处理的编码和摘要对比： 编码是可逆的，任何人只要知道编码规则，就能够进行解码。 摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。 加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。</description>
+      <description>关于加密，此处没有更加通俗易懂的解释。与同是对于字节类型数据处理的编码和摘要对比： 编码是可逆的，任何人只要知道编码规则，就能够进行解码。 摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。</description>
       <category>加密</category>
       <category>字节处理</category>
       <pubDate>Mon, 14 Oct 2024 23:22:06 GMT</pubDate>
@@ -731,8 +1059,8 @@ base64 MUFh<br></p>
 <li>编码是可逆的，任何人只要知道编码规则，就能够进行解码。</li>
 <li>摘要是不可逆的，即使知道只要算法的实现原理，也很难还原出原数据。</li>
 </ol>
-<p>加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。</p>
 <!-- more -->
+<p>加密是可逆的，但只知道加密算法并不能解密，还需要知道加密密钥。</p>
 <p>接下来，将针对几个常见的加密算法：<code>DES</code>、<code>3DES</code>、<code>AES</code>、<code>RSA</code> 的 Java 实现及其相关进行介绍，由于之前实现过 <code>DES</code> 和 <code>AES</code> 算法，因此具体算法说明，后续有空会写到。</p>
 <h2>1. 相关概念</h2>
 <h3>1.1 密钥</h3>
@@ -957,11 +1285,12 @@ base64 MUFh<br></p>
       <link>https://vuepress-theme-hope.github.io/blog/hash.html</link>
       <guid>https://vuepress-theme-hope.github.io/blog/hash.html</guid>
       <source url="https://vuepress-theme-hope.github.io/blog/rss.xml">编码、摘要和加密（二）—— 信息摘要</source>
-      <description>信息摘要，英译 Message Digest 。看见首字母这么大的 M 、D有没有立即联想到 MD5 算法。其实 MD5算法只是目前比较流行的信息摘要算法，在它之前，还出现过 MD2 MD4,以及目前仍然在用的安全散列算法（Secure Hash Algorithm） SHA1 和 SHA256都属于信息摘要算法的一种。国家密码管理局于2010年12月...</description>
+      <description>信息摘要，英译 Message Digest 。看见首字母这么大的 M 、D有没有立即联想到 MD5 算法。其实 MD5算法只是目前比较流行的信息摘要算法，在它之前，还出现过 MD2 MD4,以及目前仍然在用的安全散列算法（Secure Hash Algorithm） SHA1 和 SHA256都属于信息摘要算法的一种。</description>
       <category>字节处理</category>
       <pubDate>Mon, 14 Oct 2024 23:22:06 GMT</pubDate>
-      <content:encoded><![CDATA[<p>信息摘要，英译 <strong>Message Digest</strong> 。看见首字母这么大的 <code>M</code> 、<code>D</code>有没有立即联想到 <code>MD5</code> 算法。其实 <code>MD5</code>算法只是目前比较流行的信息摘要算法，在它之前，还出现过 <code>MD2</code> <code>MD4</code>,以及目前仍然在用的安全散列算法（<strong>Secure Hash Algorithm</strong>） <code>SHA1</code> 和 <code>SHA256</code>都属于信息摘要算法的一种。国家密码管理局于2010年12月也发布了一种信息摘要算法 <code>SM3</code> 。</p>
+      <content:encoded><![CDATA[<p>信息摘要，英译 <strong>Message Digest</strong> 。看见首字母这么大的 <code>M</code> 、<code>D</code>有没有立即联想到 <code>MD5</code> 算法。其实 <code>MD5</code>算法只是目前比较流行的信息摘要算法，在它之前，还出现过 <code>MD2</code> <code>MD4</code>,以及目前仍然在用的安全散列算法（<strong>Secure Hash Algorithm</strong>） <code>SHA1</code> 和 <code>SHA256</code>都属于信息摘要算法的一种。</p>
 <!-- more -->
+<p>国家密码管理局于2010年12月也发布了一种信息摘要算法 <code>SM3</code> 。</p>
 <p>由于对信息摘要算法研究并不透彻，因此这篇文章将重点讲 jdk 支持的三个常见摘要算法的使用：<code>MD5</code>、<code>SHA1</code>、<code>SHA256</code>。</p>
 <h2>1. 相关代码</h2>
 <p>Java 对信息摘要算法做了比较完整的封装——<code>MessageDigest</code>。该类是抽象类，针对具体信息摘要算法的实现使用了代理模式。主要提供了三个方法及其重载方法。</p>
