@@ -6,16 +6,300 @@
     <link>https://vuepress-theme-hope.github.io/</link>
     <description></description>
     <language>zh-CN</language>
-    <pubDate>Wed, 16 Oct 2024 13:31:11 GMT</pubDate>
-    <lastBuildDate>Wed, 16 Oct 2024 13:31:11 GMT</lastBuildDate>
+    <pubDate>Wed, 16 Oct 2024 14:39:02 GMT</pubDate>
+    <lastBuildDate>Wed, 16 Oct 2024 14:39:02 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+    <category>开发工具</category>
     <category>Note</category>
     <category>Hexo</category>
     <category>Android</category>
     <category>字节处理</category>
     <category>加密</category>
     <category>Linux</category>
+    <item>
+      <title>使用PlantUML绘制类图</title>
+      <link>https://vuepress-theme-hope.github.io/plantuml.html</link>
+      <guid>https://vuepress-theme-hope.github.io/plantuml.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/rss.xml">使用PlantUML绘制类图</source>
+      <description>本文基于sublime的PlantUML插件绘制类图。如需了解插件安装，请点击Sublime安装PlantUML插件</description>
+      <category>开发工具</category>
+      <pubDate>Wed, 16 Oct 2024 14:32:21 GMT</pubDate>
+      <content:encoded><![CDATA[<p>本文基于sublime的PlantUML插件绘制类图。如需了解插件安装，请点击<a href="sublime-plantuml">Sublime安装PlantUML插件</a></p>
+<!-- more -->
+<h2>1 类的UML表示</h2>
+<p>使用UML表示一个类，主要由三部分组成。<code>类名</code>、<code>属性</code>、<code>方法</code>。其中<code>属性</code>和<code>方法</code>的访问修饰符用 <code>-</code> 、<code>#</code> 、<code>+</code> 表示 <code>private</code>、<code>protected</code>、<code>public</code>。</p>
+<img src="/assets/image/005/1.png" width="200">
+<p>如图所示，表示<code>A</code>类有一个<code>private</code>属性，<code>protected</code> 构造函数和<code>public</code>方法。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A{</span></span>
+<span class="line"><span>	- String field</span></span>
+<span class="line"><span>	+ A()</span></span>
+<span class="line"><span>	# void method()</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span>note right: 这是测试类 A</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><h2>2 类的关系</h2>
+<p>在面向对象语言中，类的关系有很多种，可以概括为三类：<code>泛化</code>、<code>依赖</code>、<code>关联</code>。</p>
+<h3>2.1 泛化</h3>
+<p>泛化指父类跟子类的关系,表示<code>is-a</code>的关系。如父类是抽象类或普通类，则这种关系叫继承。如，父类是接口，则这种关系叫实现。UML中，继承和实现由不同的标记表示。</p>
+<h4>2.1.1 继承</h4>
+<p>PlantUML用 <code>--|&gt;</code> 表示继承关系。实线和三角形的抽象表示，指向谁，即继承谁。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    class A</span></span>
+<span class="line"><span>    abstract B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ' A 继承 B</span></span>
+<span class="line"><span>    A --|&gt; B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/2.png" width="60">
+<h4>2.1.2 实现</h4>
+<p>PlantUML用 <code>..|&gt;</code> 表示实现关系。虚和三角形的抽象表示，指向谁，即实现谁。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    class A</span></span>
+<span class="line"><span>    interface C</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ' A 实现 C</span></span>
+<span class="line"><span>    A ..|&gt; C</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/3.png" width="60">
+<h3>2.2 依赖</h3>
+<p>类之间，最弱的关联方式。常用于在A类的方法中使用B类的对象作为参数、局部变量或者对B类静态方法的调用。</p>
+<p>PlantUML用 <code>..&gt;</code> 表示依赖关系。虚线和箭头的抽象表示，指向谁，即依赖谁。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    class A</span></span>
+<span class="line"><span>    class B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ' A 依赖 B</span></span>
+<span class="line"><span>    A ..&gt; B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/4.png" width="60">
+<h3>2.3 关联</h3>
+<p>关联关系，即对象之间的引用关系。常使用类的属性表达。</p>
+<h4>2.3.1 单向关联</h4>
+<p>B类作为A类的属性，表示A类与B类有关联。<br>
+PlantUML用 <code>--&gt;</code> 表示单向关联。实线线和箭头的抽象表示，指向谁，即关联谁。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	class A{</span></span>
+<span class="line"><span>		- B b</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span>	class B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	' A 关联 B</span></span>
+<span class="line"><span>	A --&gt; B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/5.png" width="60">
+<h4>2.3.2 双向关联</h4>
+<p>B类作为A类的属性同时，A类也是B类的属性，表示双向关联。<br>
+PlantUML用 <code>--</code> 表示双向关联。或者用<code>&lt;--&gt;</code>。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	class A{</span></span>
+<span class="line"><span>		- B b</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span>	class B{</span></span>
+<span class="line"><span>		- A a</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	' A 关联 B</span></span>
+<span class="line"><span>	A -- B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/6.png" width="60">
+<h4>2.3.3 自关联</h4>
+<p>A类关联A类自身。常见于单例模式。</p>
+<img src="/assets/image/005/7.png" width="100">
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	class A{</span></span>
+<span class="line"><span>		- A a</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span>	</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	' A 关联 A</span></span>
+<span class="line"><span>	A --&gt; A</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><h4>2.3.4 聚合</h4>
+<p>在关联关系的基础上，延伸出聚合关系，强的关联关系，表示<code>has-a</code>关系。整体与部分的关系，部分不依赖于整体，可独立存在。常用于成员变量。</p>
+<p>如；汽车和轮胎的关系，轮胎可作为独立的商品出售。</p>
+<p>PlantUML用 <code>o--</code> 表示聚合关系。实线和空心菱形的抽象表示，指向谁，表示谁是整体。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	class Car{</span></span>
+<span class="line"><span>		- List&lt;Wheel&gt; wheels</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span>	class Wheel</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	' Car 关联 Wheel</span></span>
+<span class="line"><span>	Car "1" o-- "4" Wheel</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/8.png" width="180">
+<p>图中数字<code>1</code>和<code>4</code>也表示一对多关联。<code>N</code>对<code>N</code>同理。</p>
+<h4>2.3.5 组合</h4>
+<p>在关联关系的基础上，延伸出另外一种关联关系，组合关系，表示<code>contains-a</code>关系。整体与部分的关系，部分依赖于整体，不可独立存在。常用于成员变量。</p>
+<p>如：身体和动作的关系。</p>
+<p>PlantUML用 <code>*--</code> 表示聚合关系。实线和实心菱形的抽象表示，指向谁，表示谁是整体。</p>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	class Body{</span></span>
+<span class="line"><span>		- List&lt;Action&gt; actions</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span>	class Action</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	' Body 关联 Action</span></span>
+<span class="line"><span>	Body "1" *-- "N" Action</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/9.png" width="180">
+<h2>3 PlantUML排版</h2>
+<p>相比较其他的UML软件或插件。PlantUML的优势在于，存储的是文本文件，可以方便的进行团队协作以及高度可定制化的依赖关系。但是，最大的缺点在于，排版是通过插件自动生成的，排版效果不尽人意。因此，PlantUML提供四个关键字 <code>up</code> <code>down</code> <code>left</code> <code>right</code>。指定类与类之间的相对关系。</p>
+<h3>3.1 default</h3>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A1</span></span>
+<span class="line"><span>class B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>A1 --&gt; B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A2</span></span>
+<span class="line"><span>class B2</span></span>
+<span class="line"><span>A2 &lt;-- B2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/10.png" width="180">
+<p>箭头向左时，被指向对象在上；<br>
+箭头向右时，被指向对象在下。</p>
+<h3>3.2 up</h3>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A1</span></span>
+<span class="line"><span>class B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>A1 -up-&gt; B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A2</span></span>
+<span class="line"><span>class B2</span></span>
+<span class="line"><span>A2 &lt;-up- B2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/11.png" width="180">
+<p>使用up时，被指向对象在上。</p>
+<h3>3.3 down</h3>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A1</span></span>
+<span class="line"><span>class B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>A1 -down-&gt; B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A2</span></span>
+<span class="line"><span>class B2</span></span>
+<span class="line"><span>A2 &lt;-down- B2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/12.png" width="180">
+<p>使用down时，被指向对象在下。</p>
+<h3>3.4 left</h3>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A1</span></span>
+<span class="line"><span>class B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>A1 -left-&gt; B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A2</span></span>
+<span class="line"><span>class B2</span></span>
+<span class="line"><span>A2 &lt;-left- B2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><p>使用left时，被指向对象在左。</p>
+<img src="/assets/image/005/13.png" width="350">
+<h3>3.5 right</h3>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A1</span></span>
+<span class="line"><span>class B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>A1 -right-&gt; B1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A2</span></span>
+<span class="line"><span>class B2</span></span>
+<span class="line"><span>A2 &lt;-right- B2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><img src="/assets/image/005/14.png" width="350">
+<p>使用right时，被指向对象在右。</p>
+<h2>4 总结</h2>
+<p>画类图，只是PlantUML的功能之一，还可以使用它画用例图、顺序图、活动图。更多用法，请关注后续博客或<a href="http://plantuml.com/" target="_blank" rel="noopener noreferrer">访问官网</a>。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Sublime安装PlantUML插件</title>
+      <link>https://vuepress-theme-hope.github.io/sublime-plantuml.html</link>
+      <guid>https://vuepress-theme-hope.github.io/sublime-plantuml.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/rss.xml">Sublime安装PlantUML插件</source>
+      <description>1 安装 graphviz Graphviz的是AT&amp;T Labs Research开发的图形绘制工具,他可以很方便的用来绘制结构化的图形网络,支持多种格式输出,生成图片的质量和速度都不错。（摘自百度百科） Mac 安装 graphviz只需一条命令。 2 安装Sublime Text 笔者使用的文本编辑工具比较多。VScode、Atom、Sublim...</description>
+      <category>开发工具</category>
+      <pubDate>Wed, 16 Oct 2024 14:32:21 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>1 安装 graphviz</h2>
+<p>Graphviz的是AT&amp;T Labs Research开发的图形绘制工具,他可以很方便的用来绘制结构化的图形网络,支持多种格式输出,生成图片的质量和速度都不错。（摘自<a href="https://baike.baidu.com/item/Graphviz/2314699" target="_blank" rel="noopener noreferrer">百度百科</a>）</p>
+<p>Mac 安装 <code>graphviz</code>只需一条命令。</p>
+<pre><code>brew install graphviz
+</code></pre>
+<h2>2 安装Sublime Text</h2>
+<p>笔者使用的文本编辑工具比较多。<code>VScode</code>、<code>Atom</code>、<code>Sublime</code>、<code>UltraEdit</code>。其实都没有掌握太高深的用法，只觉得哪个好用就用哪个。</p>
+<p>下载地址见<a href="http://www.sublimetext.com/" target="_blank" rel="noopener noreferrer">官网</a>。</p>
+<h2>3 安装PlantUml</h2>
+<p>这其实是一个支持安装<code>Sublime</code>的插件,支持<code>VScode</code>等其他文本编辑工具。</p>
+<p>打开<code>Package Control</code>，输入<code>install</code></p>
+<img src="/assets/image/004/1.png" width="300">
+<p>选中<code>Install Package</code>后，在新页面输入<code>plantuml</code>。</p>
+<img src="/assets/image/004/2.png" width="350">
+<p>点击<code>PlantUMLDiagrams</code>进行安装。</p>
+<h2>4 配置快捷键</h2>
+<p>安装后，配置好快捷键，按照图中步骤，配置默认快捷键。</p>
+<img src="/assets/image/004/3.png" width="450">
+<p>粘贴以下内容，将可以使用<code>command+m</code>快捷键显示UML图片。</p>
+<pre><code>[ 
+{"keys": ["super+m"], "command": "display_diagrams"}
+]
+</code></pre>
+<h2>5 添加依赖jar</h2>
+<p>切记，最后一步，需要指定<code>plantuml.jar</code>，不然将生成不了最终的UML效果图片。</p>
+<p>并提示:<strong></strong></p>
+<img src="/assets/image/004/5.png" width="450">
+<p>plantuml.jar<a href="https://download.csdn.net/download/flueky/10828200" target="_blank" rel="noopener noreferrer">下载地址</a>。</p>
+<p>将下载下来的jar文件复制到**Application Support/Sublime Text 3/Packages/PlantUmlDiagrams/diagram/**目录下</p>
+<img src="/assets/image/004/6.png" width="450">
+<h2>6 设置语法高亮</h2>
+<p>在页面右下角，选择需要高亮的语法，推荐PlantUmlDiagrams-&gt;Diagram。</p>
+<img src="/assets/image/004/4.png" width="450">
+<h2>7 验证</h2>
+<div class="language-uml" data-highlighter="shiki" data-ext="uml" data-title="uml" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code><span class="line"><span>@startuml</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>class A</span></span>
+<span class="line"><span>note right: 这是测试类 A</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@enduml</span></span></code></pre>
+</div><p>复制上面的内容，command+m生成下面的图片。</p>
+<img src="/assets/image/004/7.png" width="200">
+<p>*注：<strong>针对中文乱码的情况，可以添加utf-8编码支持。</strong></p>
+<img src="/assets/image/004/8.png" width="300">
+<p>修改标记的文件最后一行<code>"charset": null</code> 为 <code>"charset": "UTF-8"</code>。</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>搭建个人知识库</title>
       <link>https://vuepress-theme-hope.github.io/build-blog.html</link>
