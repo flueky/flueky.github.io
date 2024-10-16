@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Git常用命令"><meta name="keywords" content="Git"><meta name="author" content="flueky"><meta name="copyright" content="flueky"><title>Git常用命令 | Flueky 技术小站</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#init"><span class="toc-number">1.</span> <span class="toc-text">init</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#status"><span class="toc-number">2.</span> <span class="toc-text">status</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add"><span class="toc-number">3.</span> <span class="toc-text">add</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#commit"><span class="toc-number">4.</span> <span class="toc-text">commit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log"><span class="toc-number">5.</span> <span class="toc-text">log</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#branch"><span class="toc-number">6.</span> <span class="toc-text">branch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tag"><span class="toc-number">7.</span> <span class="toc-text">tag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#remote"><span class="toc-number">8.</span> <span class="toc-text">remote</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push"><span class="toc-number">9.</span> <span class="toc-text">push</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pull"><span class="toc-number">10.</span> <span class="toc-text">pull</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">flueky</div><div class="author-info__description text-center">小飞哥的个人博客主页</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">71</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">13</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Flueky 技术小站</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Git常用命令</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-30</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="init"><a href="#init" class="headerlink" title="init"></a>init</h2><p>毫无疑问，这是学习<code>git</code>使用的第一个命令。在本地初始化<code>git</code>仓库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd Demo</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>表示切换到<code>Demo</code>目录并在该目录初始化<code>git</code>仓库。会生成<code>.git</code>文件夹。</p>
+<img src="../../pic/002/1.png" width="450"/>
+
+<p>如图，是一个<code>Android</code>初始工程目录，创建<code>git</code>仓库后多出<code>.git</code>文件夹。</p>
+<h2 id="status"><a href="#status" class="headerlink" title="status"></a>status</h2><p>查看仓库中文件状态。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<img src="../../pic/002/2.png" width="450"/>
+
+<p>图中表示全部文件均未添加至仓库，无需要提交至仓库文件。</p>
+<p>有些不需要提交至仓库的文件，可以添加到<code>.gitignore</code>文件中。</p>
+<img src="../../pic/002/3.png" width="450"/>
+
+<p><code>.gitignore</code>文件内容：</p>
+<pre><code>.idea
+.gradle
+gradle
+gradlew
+gradlew.bat
+local.properties
+build
+*.iml
+</code></pre>
+<h2 id="add"><a href="#add" class="headerlink" title="add"></a>add</h2><p>添加文件至仓库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;file&gt; # 添加一个文件至仓库</span><br><span class="line">git add &lt;file1&gt; &lt;file2&gt;... # 添加多个文件至仓库</span><br><span class="line">git add . # 添加全部文件至仓库</span><br><span class="line">git add -f &lt;file&gt; # 强制将已忽略的文件添加至仓库</span><br></pre></td></tr></table></figure>
+
+<img src="../../pic/002/4.png" width="450"/>
+
+<p>可以每次只添加一个文件（夹），也可以每次添加多个文件（夹）。甚至可以使用<code>git add . </code>添加全部文件（夹）至仓库。</p>
+<p>最新添加至仓库的文件（夹）会有<code>new file</code>标记。</p>
+<p>在未commit之前，修改文件，也能看见修改标记。</p>
+<img src="../../pic/002/5.png" width="450"/>
+
+<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><p>提交文件至仓库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m 描述 #提交已在仓中的文件，不包括修改的内容</span><br><span class="line">git commit -am 描述 #提交已在仓库中的文件，包括修改的内容</span><br></pre></td></tr></table></figure>
+
+<p>创建三种场景：</p>
+<ol>
+<li>三个新文件。</li>
+<li>其中一个文件修改过。</li>
+<li>还有个文件夹未添加至版本库。</li>
+</ol>
+<img src="../../pic/002/6.png" width="450"/>
+
+<p>执行commit命令之后，再次查看提交前后的状态发现，修改的文件和为添加至版本库的文件没有提交。准确说，修改文件中的修改内容未提交至版本库。</p>
+<h2 id="log"><a href="#log" class="headerlink" title="log"></a>log</h2><p>提交记录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git log # 查看提交记录</span><br><span class="line">git log --pretty=oneline # 查看精简后的提交记录</span><br></pre></td></tr></table></figure>
+
+<img src="../../pic/002/7.png" width="450"/>
+
+<p>每条提交记录都对应一条40字节的id，该id在后面有很大用途。</p>
+<h2 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h2><p>分支管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch # 查看全部分支，当前分支会有标记</span><br><span class="line">git branch name # 创建名称为name的分支</span><br><span class="line">git checkout name # 将分支切换到name</span><br><span class="line">git checkout -b name # 创建并切换到name分支</span><br><span class="line">git branch -d name # 删除name分支</span><br></pre></td></tr></table></figure>
+
+<img src="../../pic/002/8.png" width="500"/>
+
+<p>图中依次显示了上述指令用法。需要注意，删除指定分支时，不可以删除被<code>checkout</code>的分支。</p>
+<h2 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h2><p>标签管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git tag # 查看全部标签</span><br><span class="line">git tag name # 创建name标签</span><br><span class="line">git tag name -m 描述 # 创建name标签，并指定描述</span><br><span class="line">git tag name id # 在指定的提交id上创建标签,id 只需要写前几位</span><br><span class="line">git tag -d name # 删除name标签</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../../pic/002/9.png" width="500"/>
+
+<p>演示了创建标签，在指定id上创建标签，查看标签，删除标签。</p>
+<img src="../../pic/002/10.png" width="450"/>
+
+<p>查看标签信息。</p>
+<img src="../../pic/002/11.png" width="600"/>
+
+<p>查看自定义描述的标签信息。</p>
+<h2 id="remote"><a href="#remote" class="headerlink" title="remote"></a>remote</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将本地仓库关联到远程库</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">远程库名称 origin</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git@github.com:user/project.git表示远程仓库地址。</span></span><br><span class="line">git remote add origin git@github.com:user/project.git</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看本地仓库关联的远程仓库</span></span><br><span class="line">git remote -v </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除远程仓库</span></span><br><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure>
+
+<p>如果需要同时关联多个远程仓库，如 GitHub 和 码云。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">远程仓库名 github 关联到 github 仓库</span></span><br><span class="line">git remote add github git@github.com:user/project.git</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">远程仓库名 gitee 关联到 gitee 仓库</span></span><br><span class="line">git remote add gitee git@gitee.com:user/project.git</span><br></pre></td></tr></table></figure>
+
+<h2 id="push"><a href="#push" class="headerlink" title="push"></a>push</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin master # 将 master 分支推送到远程库</span><br><span class="line">git push --tags # 推送标签到远程服务</span><br></pre></td></tr></table></figure>
+
+<h2 id="pull"><a href="#pull" class="headerlink" title="pull"></a>pull</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 拉取远程分支 branch1 到本地分支 branch2</span><br><span class="line">git pull origin branch1:branch2</span><br></pre></td></tr></table></figure>
+
+
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">flueky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/002/">http://example.com/002/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/003/"><i class="fa fa-chevron-left">  </i><span>给AndroidStudio工程添加依赖</span></a></div><div class="next-post pull-right"><a href="/001/"><span>从零构建Android工程</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2016 - 2024 By flueky</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

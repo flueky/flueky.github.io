@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="不是安卓工程师，也能看logcat日志"><meta name="keywords" content="AndroidStudio"><meta name="author" content="flueky"><meta name="copyright" content="flueky"><title>不是安卓工程师，也能看logcat日志 | Flueky 技术小站</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">1 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%8B%E8%BD%BDAndroid-SDK"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 下载Android SDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%89%93%E5%BC%80%E6%89%8B%E6%9C%BA%E5%BC%80%E5%8F%91%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 打开手机开发者模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">2 相关命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="toc-number">3.</span> <span class="toc-text">3 查看日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%AD%9B%E9%80%89%E6%97%A5%E5%BF%97"><span class="toc-number">4.</span> <span class="toc-text">4 筛选日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%A0%B9%E6%8D%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E7%AD%9B%E9%80%89"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 根据日志级别筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A0%B9%E6%8D%AE%E6%A0%87%E7%AD%BE%E7%AD%9B%E9%80%89"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 根据标签筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%A0%B9%E6%8D%AEPID%EF%BC%88%E5%BA%94%E7%94%A8%E5%8C%85%E5%90%8D%EF%BC%89%E7%AD%9B%E9%80%89"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 根据PID（应用包名）筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%BB%BC%E5%90%88%E7%AD%9B%E9%80%89"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 综合筛选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BF%9D%E5%AD%98%E6%97%A5%E5%BF%97"><span class="toc-number">5.</span> <span class="toc-text">5 保存日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E4%BF%9D%E5%AD%98%E5%88%B0%E6%89%8B%E6%9C%BA"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 保存到手机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E4%BF%9D%E5%AD%98%E5%88%B0%E7%94%B5%E8%84%91"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 保存到电脑</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">flueky</div><div class="author-info__description text-center">小飞哥的个人博客主页</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">71</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">13</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Flueky 技术小站</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">不是安卓工程师，也能看logcat日志</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2016-12-14</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>写这篇博客的灵感，来自于最近工作的刺激。手上有好几个项目不定期出现问题，而自己又去不了开发现场看日志分析问题、做debug操作。</p>
+<span id="more"></span>
+
+<p>目前比较流行的两种查看日志的方式有：</p>
+<ol>
+<li>   开发者通过在开发工具的logcat窗口查看日志输出。优点：具备日志筛选功能，能够比较容易的找到关键信息。缺点：需要装备整套的安卓开发环境。</li>
+<li>   在程序中添加保存日志到文件的功能。优点：能够捕获到更完整详细的日志。缺点：保存的日志太多，几百上千行，看起来太累。</li>
+</ol>
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h2><p>需要具备基础的计算机技能、Java开发环境和 Android sdk。</p>
+<h3 id="1-1-下载Android-SDK"><a href="#1-1-下载Android-SDK" class="headerlink" title="1.1 下载Android SDK"></a>1.1 下载Android SDK</h3><p>[请跳转](&#x2F;blog&#x2F;2019-01-23&#x2F;#1.1-下载-sdk)</p>
+<h3 id="1-2-配置环境变量"><a href="#1-2-配置环境变量" class="headerlink" title="1.2 配置环境变量"></a>1.2 配置环境变量</h3><p>[请跳转](&#x2F;blog&#x2F;2019-01-23&#x2F;#1.2-配置环境变量)</p>
+<h3 id="1-3-打开手机开发者模式"><a href="#1-3-打开手机开发者模式" class="headerlink" title="1.3 打开手机开发者模式"></a>1.3 打开手机开发者模式</h3><p>[请跳转](&#x2F;blog&#x2F;2019-01-24&#x2F;#3-打开开发者模式)</p>
+<h2 id="2-相关命令"><a href="#2-相关命令" class="headerlink" title="2 相关命令"></a>2 相关命令</h2><p>做好一切，就可以将手机连接到电脑调试。个人觉得，Windows系统有个比较恶心的问题就是usb的驱动。如果在使用中，同样遇到这个问题，建议使用豌豆荚等PC端的手机管理软件。他们会只能匹配usb驱动，类似于驱动精灵。打开开发者模式的方式，也做了相应的引导。</p>
+<ol>
+<li>启动adb服务：<code>adb start-server</code></li>
+<li>查看连接设备：<code>adb devices</code></li>
+<li>停止adb服务：<code>adb kill-server</code></li>
+</ol>
+<img src="../../pic/228/7.jpg" width="400"/>
+
+<p><strong>注：这里停止adb服务命令只做演示用途，查看日志时，在检查手机成功连接上电脑之后，不能停止adb服务。</strong></p>
+<h2 id="3-查看日志"><a href="#3-查看日志" class="headerlink" title="3 查看日志"></a>3 查看日志</h2><p>使用adb logcat命令，执行后如下：</p>
+<img src="../../pic/228/8.jpg" width="400"/>
+
+<p>这输出的日志也是一大坨，而且还不停的输出，看上去眼花缭乱。主要是因为没做筛选。</p>
+<p>以上输出的信息包含了：日期、时间、PID、TID、日志级别、标签、日志内容。</p>
+<p>PID:可以看成app运行时，在系统中的唯一的一个标识。<br>UID:PID可以对应多个TID，主要是由于支持多线程。每个线程对应一个TID。<br>日志级别：Android Log类源码中，日志有6个级别。常用的5个分别是 V（Verbose 明细，最低级别）、D（Debug 调试）、I（Info 信息）、W（Warn 警告）、E（Error 错误）。<br>标签：开发中，标记日志的一个属性。如，使用类名，表示是哪个类里输出的日志。</p>
+<h2 id="4-筛选日志"><a href="#4-筛选日志" class="headerlink" title="4 筛选日志"></a>4 筛选日志</h2><p>可以根据PID（同一时刻包名和PID是一一对应关系）、TID、日志级别、日志标签、日志内容做筛选。考虑到篇幅关系暂且只介绍使用PID、日志级别、标签筛选日志。</p>
+<h3 id="4-1-根据日志级别筛选"><a href="#4-1-根据日志级别筛选" class="headerlink" title="4.1 根据日志级别筛选"></a>4.1 根据日志级别筛选</h3><p>命令模板：adb logcat 标签：日志级别 （*：s）。</p>
+<p>筛选Warn级别以上的日志（包含Error）命令：<code>adb logcat *:W </code> 表示不匹配标签。</p>
+<img src="../../pic/228/9.jpg" width="400"/>
+
+<h3 id="4-2-根据标签筛选"><a href="#4-2-根据标签筛选" class="headerlink" title="4.2 根据标签筛选"></a>4.2 根据标签筛选</h3><p>筛选System的日志命令：<code>adb logcat System:* *:s</code>第一个星号表示不匹配日志级别， *:S用于设置所有标记的日志优先级为S，这样可以确保仅输出符合条件的日志。</p>
+<img src="../../pic/228/10.jpg" width="400"/>
+
+<h3 id="4-3-根据PID（应用包名）筛选"><a href="#4-3-根据PID（应用包名）筛选" class="headerlink" title="4.3 根据PID（应用包名）筛选"></a>4.3 根据PID（应用包名）筛选</h3><p>由于应用每次启动后，系统分配的PID都不一样。因此，需要根据包名或UID筛选日志时，需要先启动应用，再使用命令<code>adb shell dumpsys meminfo 包名</code> 查看到UID信息，最后根据PID筛选日志。</p>
+<img src="../../pic/228/11.jpg" width="400"/>
+
+<p>根据PID 18270（图中所示）筛选日志 ，命令<code>adb logcat | grep 18270</code>:</p>
+<img src="../../pic/228/12.jpg" width="400"/>
+
+<blockquote>
+<p>图中可以看出，PID 18270 是唯一的，右边的TID可以有多个值。横向匹配的18270 是没有添加<code>*:s</code>导致的。</p>
+</blockquote>
+<h3 id="4-4-综合筛选"><a href="#4-4-综合筛选" class="headerlink" title="4.4 综合筛选"></a>4.4 综合筛选</h3><img src="../../pic/228/13.jpg" width="400"/>
+
+<h2 id="5-保存日志"><a href="#5-保存日志" class="headerlink" title="5 保存日志"></a>5 保存日志</h2><h3 id="5-1-保存到手机"><a href="#5-1-保存到手机" class="headerlink" title="5.1 保存到手机"></a>5.1 保存到手机</h3><p>命令模板：<code>adb logcat -f 手机上文件目录 标签:日志级别 *:s | grep PID</code> </p>
+<p>如：<code>adb logcat -f /sdcard/Download/log.txt JPush:D *:s | grep 18270</code></p>
+<h3 id="5-2-保存到电脑"><a href="#5-2-保存到电脑" class="headerlink" title="5.2 保存到电脑"></a>5.2 保存到电脑</h3><p>命令模板：<code>adb logcat &gt; 电脑上文件目录 标签:日志级别 *:s | grep PID</code> </p>
+<p>如：<code>adb logcat &gt; ~/Desktop/log.txt JPush:D *:s | grep 18270</code></p>
+<p>保存的文件内容如下：</p>
+<img src="../../pic/228/14.jpg" width="400"/>
+
+<p><strong>觉得有用？那打赏一个呗。[去打赏](&#x2F;donate&#x2F;)</strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">flueky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/228/">http://example.com/228/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AndroidStudio/">AndroidStudio</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/229/"><i class="fa fa-chevron-left">  </i><span>Android 画布使用之电子签名</span></a></div><div class="next-post pull-right"><a href="/227/"><span>数据结构（五）——二叉树（C语言实现）</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2016 - 2024 By flueky</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

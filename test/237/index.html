@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="自定义Android键盘"><meta name="keywords" content=""><meta name="author" content="flueky"><meta name="copyright" content="flueky"><title>自定义Android键盘 | Flueky 技术小站</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%B8%E5%85%B3%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">1 相关属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Keyboard"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Keyboard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Row"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Row</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Key"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-KeyboardView"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 KeyboardView</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E7%9B%98"><span class="toc-number">2.</span> <span class="toc-text">2 自定义键盘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 布局</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E5%AD%97%E6%AF%8D%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 字母键盘布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E6%95%B0%E5%AD%97%E9%94%AE%E7%9B%98%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 数字键盘布局</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E9%80%BB%E8%BE%91"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9B%9E%E6%98%BE"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 回显</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%A4%87%E9%80%89%E5%B0%8F%E9%94%AE%E7%9B%98"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 备选小键盘</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">flueky</div><div class="author-info__description text-center">小飞哥的个人博客主页</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">71</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">13</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Flueky 技术小站</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">自定义Android键盘</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-04-26</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>前段时间改造了公司的安全键盘，是基于<code>Dialog</code>和<code>Button</code>自定义的。也因此借机了解下 Android 平台提供的自定义键盘接口。主要有两个类：<code>Keyboard</code>和<code>KeyboardView</code>。很搞笑的是，百度出来<strong>自定义Android键盘</strong>（与<strong>自定义Android输入法</strong>不同）的文章千篇一律。</p>
+<span id="more"></span>
+
+<p>注：<strong>这里讲的自定义键盘同公司安全键盘是两种实现方式，不存在泄露公司内部技术的问题！！！</strong></p>
+<p>不去吐槽别人，楼主秉持只原创和翻译的作风，输出这第50篇博客。<strong>相关属性</strong>部分是对照官方文档和Demo实践翻译的，若有瑕疵，请见谅。楼主csdn主页请点击<a target="_blank" rel="noopener" href="https://blog.csdn.net/flueky">flueky专栏</a>。</p>
+<h2 id="1-相关属性"><a href="#1-相关属性" class="headerlink" title="1 相关属性"></a>1 相关属性</h2><h3 id="1-1-Keyboard"><a href="#1-1-Keyboard" class="headerlink" title="1.1 Keyboard"></a>1.1 Keyboard</h3><table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">属性</th>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">keyHeight</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key高度，区分精确值（dp、px等）和相对值（%、%p）</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">keyWidth</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key宽度，同上</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">horizontalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key水平间隙，同上</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">verticalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key按键间隙（垂直），同上</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-Row"><a href="#1-2-Row" class="headerlink" title="1.2 Row"></a>1.2 Row</h3><table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">属性</th>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">keyHeight</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key高度，区分精确值（dp、px等）和相对值（%、%p）</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">keyWidth</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key宽度，同上</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">horizontalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key水平间隙，同上</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">verticalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key按键间隙（垂直），同上</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">keyboardMode</td>
+<td align="center">reference</td>
+<td align="left">键盘类型，如果该行的类型不符合键盘的类型，将跳过该行。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">rowEdgeFlags</td>
+<td align="center">enum</td>
+<td align="left">行边界标记，top&#x2F;bottom，键盘顶（底）部锚点。</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-Key"><a href="#1-3-Key" class="headerlink" title="1.3 Key"></a>1.3 Key</h3><table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">属性</th>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">keyHeight</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key高度，区分精确值（dp、px等）和相对值（%、%p）</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">keyWidth</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key宽度，同上</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">horizontalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key水平间隙，同上</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">verticalGap</td>
+<td align="center">dimension&#x2F;fractional</td>
+<td align="left">Key按键间隙（垂直），同上</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">codes</td>
+<td align="center">int</td>
+<td align="left">Key输出符号对应的Unicode值，官方还说支持字转义字符串，不明白。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">iconPreview</td>
+<td align="center">reference</td>
+<td align="left">弹出回显的icon</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">isModifier</td>
+<td align="center">boolean</td>
+<td align="left">是否功能修饰键，如：Alt&#x2F;Shift</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">isSticky</td>
+<td align="center">boolean</td>
+<td align="left">是否是开关键</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">isRepeatable</td>
+<td align="center">boolean</td>
+<td align="left">是否允许重复。true表示长按时重复执行。</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">keyEdgeFlags</td>
+<td align="center">enum</td>
+<td align="left">Key边缘位置标记，left&#x2F;right，键盘左（右）边锚点。</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">keyIcon</td>
+<td align="center">reference</td>
+<td align="left">替换label显示在按键上的icon。</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">keyLabel</td>
+<td align="center">reference</td>
+<td align="left">显示在Key上的标签。</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">keyOutputText</td>
+<td align="center">string</td>
+<td align="left">Key按下时输出的字符或字符串。</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">popupCharacters</td>
+<td align="center">string</td>
+<td align="left">小键盘显示的字符，用于显示Key候选项。</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">popupKeyboard</td>
+<td align="center">reference</td>
+<td align="left">按键候选小键盘的keyboard布局</td>
+</tr>
+</tbody></table>
+<h3 id="1-4-KeyboardView"><a href="#1-4-KeyboardView" class="headerlink" title="1.4 KeyboardView"></a>1.4 KeyboardView</h3><table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">属性</th>
+<th align="center">类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">keyBackground</td>
+<td align="center">reference</td>
+<td align="left">按键的图像背景，必须包含多个状态的drawable</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">verticalCorrection</td>
+<td align="center">dimension</td>
+<td align="left">补充触摸y坐标的偏移，用于偏差矫正</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">keyPreviewLayout</td>
+<td align="center">reference</td>
+<td align="left">按键按下时预览框的布局</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">keyPreviewOffset</td>
+<td align="center">dimension</td>
+<td align="left">按键按下时预览框的偏移。&gt;0 向下，&lt;0 向上。</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">keyPreviewHeight</td>
+<td align="center">dimension</td>
+<td align="left">按键按下时预览框的高度。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">keyTextSize</td>
+<td align="center">dimension</td>
+<td align="left">按键文字大小。</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">keyTextColor</td>
+<td align="center">color</td>
+<td align="left">按键文字颜色。</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">labelTextSize</td>
+<td align="center">dimension</td>
+<td align="left">标签文字大小,keylabel有多个字符且keycodes只有一个值时，该属性生效。</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">popupLayout</td>
+<td align="center">reference</td>
+<td align="left">按键候选小键盘的KeyboardView布局。</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">shadowRadius</td>
+<td align="center">float</td>
+<td align="left">按键文字阴影半径</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">shadowColor</td>
+<td align="center">color</td>
+<td align="left">按键文字阴影颜色</td>
+</tr>
+</tbody></table>
+<h2 id="2-自定义键盘"><a href="#2-自定义键盘" class="headerlink" title="2 自定义键盘"></a>2 自定义键盘</h2><h3 id="2-1-布局"><a href="#2-1-布局" class="headerlink" title="2.1 布局"></a>2.1 布局</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.inputmethodservice.KeyboardView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/activity_main_keyboard&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">&quot;#212121&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyBackground</span>=<span class="string">&quot;@drawable/key_bg&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyTextColor</span>=<span class="string">&quot;#dddddd&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyTextSize</span>=<span class="string">&quot;18sp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:labelTextSize</span>=<span class="string">&quot;18sp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:paddingBottom</span>=<span class="string">&quot;2dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:paddingTop</span>=<span class="string">&quot;2dp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>键盘容器视图，Demo中直接放在Activity布局。KeyboardView可以显示不同类型的Keyboard。请区分<code>background</code>和<code>keyBackground</code>。<code>keyBackground</code>内容如下：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 此处设置key边距 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:bottom</span>=<span class="string">&quot;2dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:left</span>=<span class="string">&quot;2dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:right</span>=<span class="string">&quot;2dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:top</span>=<span class="string">&quot;2dp&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">selector</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 按压后图层 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_pressed</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#565656&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 正常状态图层 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#383838&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:radius</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-1-字母键盘布局"><a href="#2-1-1-字母键盘布局" class="headerlink" title="2.1.1 字母键盘布局"></a>2.1.1 字母键盘布局</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Keyboard</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyHeight</span>=<span class="string">&quot;50dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyWidth</span>=<span class="string">&quot;10%p&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span> <span class="attr">android:rowEdgeFlags</span>=<span class="string">&quot;top&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;q&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;w&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;e&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;r&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;t&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;y&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;u&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;i&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;o&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;p&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;97&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:horizontalGap</span>=<span class="string">&quot;5%p&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;a&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;s&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;d&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;f&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;g&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;h&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;j&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;k&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;l&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-1&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:isModifier</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:isSticky</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyIcon</span>=<span class="string">&quot;@drawable/key_caps_lock_icon&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyWidth</span>=<span class="string">&quot;15%p&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;z&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;x&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;c&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;v&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;b&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;n&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:keyLabel</span>=<span class="string">&quot;m&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-5&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:isModifier</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:isRepeatable</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyIcon</span>=<span class="string">&quot;@drawable/key_delete_icon&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyWidth</span>=<span class="string">&quot;15%p&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span> <span class="attr">android:rowEdgeFlags</span>=<span class="string">&quot;bottom&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-11&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;123&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyWidth</span>=<span class="string">&quot;15%p&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;32&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:isRepeatable</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot; &quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyWidth</span>=<span class="string">&quot;70%p&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-12&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">&quot;right&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;#+=&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyWidth</span>=<span class="string">&quot;15%p&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Keyboard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：</p>
+<img src="../../pic/237/1.png" width="300"/>
+
+<img src="../../pic/237/2.png" width="300"/>
+
+
+<h4 id="2-1-2-数字键盘布局"><a href="#2-1-2-数字键盘布局" class="headerlink" title="2.1.2 数字键盘布局"></a>2.1.2 数字键盘布局</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Keyboard</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyHeight</span>=<span class="string">&quot;50dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyWidth</span>=<span class="string">&quot;33.3%p&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;49&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;50&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;2&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;51&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;3&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;52&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;4&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;53&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;5&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;54&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;6&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;55&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;7&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;56&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;8&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;57&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;9&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-10&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;ABC&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;48&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;0&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:codes</span>=<span class="string">&quot;-12&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:keyLabel</span>=<span class="string">&quot;#+=&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Keyboard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：</p>
+<img src="../../pic/237/3.png" width="300"/>
+
+<ol>
+<li>Key之间的间隙不建议使用<code>horizontalGap</code>和<code>verticalGap</code> 设置。有兴趣可以尝试下，设置后会出现什么效果。此处采用<code>drawable</code>的<code>padding</code>属性。</li>
+<li><code>keyLabel</code>属性只有一个字符时，当做输入键，<code>keyLabel</code>有多个字符时，如果<code>codes</code>也有多个值，仍然当做输入键，<code>keyTextSize</code> 值有效；只有一个值时当做功能键。<code>labelTextSize</code>值有效。</li>
+<li><code>codes</code> 属性可以省略，默认使用keyLabel字符的Unicode值。功能键等其他自定义按键的 key code 建议设置为负数。</li>
+<li><code>codes</code>有多个值时，单击取第一个，双击取第二个，三连击取第三个。通常建议该属性值不要超过3个。多个值用逗号分隔。</li>
+</ol>
+<h3 id="2-2-逻辑"><a href="#2-2-逻辑" class="headerlink" title="2.2 逻辑"></a>2.2 逻辑</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="type">Keyboard</span> <span class="variable">pinyin26KB</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Keyboard</span>(<span class="built_in">this</span>, R.xml.pinyin_26);<span class="comment">// 字母键盘</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">Keyboard</span> <span class="variable">numberKB</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Keyboard</span>(<span class="built_in">this</span>, R.xml.number); <span class="comment">// 数字键盘</span></span><br><span class="line"></span><br><span class="line">keyboardView.setKeyboard(pinyin26KB); <span class="comment">// 设置默认显示字符键盘</span></span><br><span class="line">keyboardView.setOnKeyboardActionListener(<span class="keyword">new</span> <span class="title class_">KeyboardView</span>.OnKeyboardActionListener() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按下 key 时执行</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onPress</span><span class="params">(<span class="type">int</span> primaryCode)</span> &#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;onPress: &quot;</span>+primaryCode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 释放 key 时执行</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onRelease</span><span class="params">(<span class="type">int</span> primaryCode)</span> &#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;onRelease: &quot;</span>+primaryCode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 点击 key 时执行</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onKey</span><span class="params">(<span class="type">int</span> primaryCode, <span class="type">int</span>[] keyCodes)</span> &#123;</span><br><span class="line">        <span class="type">Editable</span> <span class="variable">editable</span> <span class="operator">=</span> edtInput.getText();</span><br><span class="line">        <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> edtInput.getSelectionStart();</span><br><span class="line">        <span class="keyword">switch</span> (primaryCode) &#123;</span><br><span class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_SHIFT:<span class="comment">// 设置shift状态然后刷新页面</span></span><br><span class="line">                pinyin26KB.setShifted(!pinyin26KB.isShifted());</span><br><span class="line">                keyboardView.invalidateAllKeys();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_DELETE:<span class="comment">// 点击删除键，长按连续删除</span></span><br><span class="line">                <span class="keyword">if</span> (editable != <span class="literal">null</span> &amp;&amp; editable.length() &gt; <span class="number">0</span> &amp;&amp; start &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    editable.delete(start - <span class="number">1</span>, start);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">10</span>:<span class="comment">// 自定义code，切换到拼音键盘</span></span><br><span class="line">                keyboardView.setKeyboard(pinyin26KB);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">11</span>:<span class="comment">// 自定义code，切换到字母键盘</span></span><br><span class="line">                keyboardView.setKeyboard(numberKB);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">12</span>:<span class="comment">// 自定义code</span></span><br><span class="line">                <span class="comment">// 切换到符号键盘，待实现</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:<span class="comment">// 数值code</span></span><br><span class="line">                <span class="keyword">if</span> (primaryCode &gt;= <span class="number">97</span> &amp;&amp; primaryCode &lt;= <span class="number">97</span> + <span class="number">26</span>) &#123;<span class="comment">// 按下字母键</span></span><br><span class="line">                    editable.insert(start, pinyin26KB.isShifted() ? Character.toString((<span class="type">char</span>) (primaryCode - <span class="number">32</span>)) : Character.toString((<span class="type">char</span>) (primaryCode)));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;<span class="comment">// 其他code值，转字符在输入框中显示</span></span><br><span class="line">                    editable.insert(start, Character.toString((<span class="type">char</span>) (primaryCode)));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置了 keyOutputText 属性后执行。</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onText</span><span class="params">(CharSequence text)</span> &#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;onText: &quot;</span>+text);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>已经定义的功能键code值，如下：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_SHIFT</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_MODE_CHANGE</span> <span class="operator">=</span> -<span class="number">2</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_CANCEL</span> <span class="operator">=</span> -<span class="number">3</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_DONE</span> <span class="operator">=</span> -<span class="number">4</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_DELETE</span> <span class="operator">=</span> -<span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">KEYCODE_ALT</span> <span class="operator">=</span> -<span class="number">6</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>Shift</code>键需要设置 <code>isSticky</code>和<code>isModifier</code> 值为<code>true</code>， <code>codes</code>值为-1。<br/></li>
+<li><code>Delete</code>键需要设置<code>isRepeatable</code>和<code>isModifier</code> 值为<code>true</code>，<code>codes</code>值为-5。<br/></li>
+<li>切换键盘的功能键需要自定义上述中未用到的code值，在<code>onKey</code>方法中做好对应的处理。</li>
+</ol>
+<h3 id="2-3-回显"><a href="#2-3-回显" class="headerlink" title="2.3 回显"></a>2.3 回显</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keyboardView.setPreviewEnabled(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>打开回显，默认是true。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">android:keyPreviewLayout=&quot;@layout/preview&quot;</span><br><span class="line">android:keyPreviewHeight=&quot;50dp&quot;</span><br><span class="line">android:keyPreviewOffset=&quot;-20dp&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在键盘容器中声明以上属性。</p>
+<img src="../../pic/237/4.gif" width="300">
+
+<h3 id="2-4-备选小键盘"><a href="#2-4-备选小键盘" class="headerlink" title="2.4 备选小键盘"></a>2.4 备选小键盘</h3><p><code>pupop_layout.xml</code> 备选小键盘容器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">android.inputmethodservice.KeyboardView</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@android:id/keyboardView&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">&quot;#212121&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyBackground</span>=<span class="string">&quot;@drawable/popup_bg&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyPreviewHeight</span>=<span class="string">&quot;60dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyPreviewLayout</span>=<span class="string">&quot;@layout/preview&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyPreviewOffset</span>=<span class="string">&quot;-10dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyTextColor</span>=<span class="string">&quot;#dddddd&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyTextSize</span>=<span class="string">&quot;18sp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:labelTextSize</span>=<span class="string">&quot;18sp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>pupop.xml</code> 备选小键盘视图：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Keyboard</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">&quot;@drawable/popup_bg&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyHeight</span>=<span class="string">&quot;50dp&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:codes</span>=<span class="string">&quot;97&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:codes</span>=<span class="string">&quot;98&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Key</span> <span class="attr">android:codes</span>=<span class="string">&quot;99&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Keyboard</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>给<code>w</code>键添加备选功能：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Key</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:keyLabel</span>=<span class="string">&quot;w&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:popupCharacters</span>=<span class="string">&quot;123&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:popupKeyboard</span>=<span class="string">&quot;@layout/pupop&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在键盘容器中，指定备选小键盘布局：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:popupLayout=&quot;@layout/pupop_layout&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果只声明了<code>popupCharacters</code>，没有声明<code>popupLayout</code>和<code>popupKeyboard</code>,将会使用默认布局。只声明<code>popupLayout</code>没声明<code>popupKeyboard</code>，<code>popupLayout</code>无效。</p>
+</blockquote>
+<img src="../../pic/237/5.gif" width="300">
+
+<p><strong>觉得有用？那打赏一个呗。[去打赏](&#x2F;donate&#x2F;)</strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">flueky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/237/">http://example.com/237/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/010/"><i class="fa fa-chevron-left">  </i><span>Android 实现水波浪效果</span></a></div><div class="next-post pull-right"><a href="/236/"><span>用Shell批量删除AndroidStudio build目录</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2016 - 2024 By flueky</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

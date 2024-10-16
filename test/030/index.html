@@ -1,0 +1,785 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="重新认识 Android 图片适配"><meta name="keywords" content=""><meta name="author" content="flueky"><meta name="copyright" content="flueky"><title>重新认识 Android 图片适配 | Flueky 技术小站</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%B3%E4%BA%8E%E9%80%82%E9%85%8D"><span class="toc-number">1.</span> <span class="toc-text">1. 关于适配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9B%BE%E7%89%87%E9%80%82%E9%85%8D"><span class="toc-number">2.</span> <span class="toc-text">2. 图片适配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">3. 源码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">4. 总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">flueky</div><div class="author-info__description text-center">小飞哥的个人博客主页</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">71</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">13</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Flueky 技术小站</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">重新认识 Android 图片适配</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-29</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>Android 图片适配，真的不是你想像的那样，至少在写这篇文章之前，我陷在一个很大很大的误区中。</p>
+<span id="more"></span>
+
+<h2 id="1-关于适配"><a href="#1-关于适配" class="headerlink" title="1. 关于适配"></a>1. 关于适配</h2><p>所有关于适配的基本概念，这里不多介绍，资料有很多。下面只介绍点比较重要的部分。</p>
+<table>
+<thead>
+<tr>
+<th align="center">等级</th>
+<th align="center">密度</th>
+<th align="center">比例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ldpi</td>
+<td align="center">120dpi</td>
+<td align="center">1dp&#x3D;0.75px</td>
+</tr>
+<tr>
+<td align="center">mdpi</td>
+<td align="center">160dpi</td>
+<td align="center">1dp&#x3D;1px</td>
+</tr>
+<tr>
+<td align="center">hdpi</td>
+<td align="center">240dpi</td>
+<td align="center">1dp&#x3D;1.5px</td>
+</tr>
+<tr>
+<td align="center">xhdpi</td>
+<td align="center">320dpi</td>
+<td align="center">1dp&#x3D;2px</td>
+</tr>
+<tr>
+<td align="center">xxhdpi</td>
+<td align="center">480dpi</td>
+<td align="center">1dp&#x3D;3px</td>
+</tr>
+<tr>
+<td align="center">xxxhdpi</td>
+<td align="center">640dpi</td>
+<td align="center">1dp&#x3D;4px</td>
+</tr>
+</tbody></table>
+<p>上面这张表介绍了 dpi 与 px 之间的关系。而多数手机厂商没有严格按照上述规范生产屏幕，才会有如今令人恶心的 Android 适配问题。</p>
+<p>如：三星 C9，6英寸屏幕，分辨率 1920x1080 ，按照<strong>公式计算</strong>屏幕密度 367 dpi ，更接近 320dpi ，因此适配时，会取 xhdpi 目录下的数据。</p>
+<p>但实际中，会取 xxhdpi 数据，因为实际屏幕密度是 420 dpi。（通过代码的方式获取）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DisplayMetrics</span> <span class="variable">dm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DisplayMetrics</span>();</span><br><span class="line">getWindowManager().getDefaultDisplay().getMetrics(dm);</span><br><span class="line">Log.d(TAG, <span class="string">&quot;onCreate: &quot;</span>+dm.density);</span><br><span class="line">Log.d(TAG, <span class="string">&quot;onCreate: &quot;</span>+dm.densityDpi);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>2019-11-29 14:50:03.879 28034-28034&#x2F;com.flueky.demo D&#x2F;MainActivity: onCreate: 2.625<br/><br>2019-11-29 14:50:03.879 28034-28034&#x2F;com.flueky.demo D&#x2F;MainActivity: onCreate: 420</p>
+</blockquote>
+<p>2.625 是 420&#x2F;160 的结果。表示在 C9 上，1dp&#x3D;2.625 px ，411dp 约等于 1080px ，表示整个屏幕的宽度。</p>
+<p>如：三星 S8，5.8英寸屏幕，分辨率 2960x1440 ，屏幕密度 568 dpi，接近 640 dpi ,因此适配时，会取 xxxhdpi 目录下数据。</p>
+<p>但实际中，会取 xxhdpi 数据，因为实际屏幕密度是 560 dpi 。</p>
+<blockquote>
+<p>2019-11-29 14:59:49.604 20793-20793&#x2F;com.flueky.demo D&#x2F;MainActivity: onCreate: 3.5<br/><br>2019-11-29 14:59:49.604 20793-20793&#x2F;com.flueky.demo D&#x2F;MainActivity: onCreate: 560</p>
+</blockquote>
+<p>在 S8 上 ，1dp&#x3D;3.5px ，411dp 约等于 1440px ，表示整个屏幕的宽度。</p>
+<p>很庆幸，这两台手机上的适配数据是一样的，高度会存在差异，但是通常都是滚动长页面，或者留白端页面不受太大影响。若恰好是满屏页面，则不适用。</p>
+<p><strong>今日头条的适配方案即是通过修改 density 的 值进行适配。不知道什么原因，他们在《今日头条》7.5 版本中未使用此适配方式。</strong></p>
+<h2 id="2-图片适配"><a href="#2-图片适配" class="headerlink" title="2. 图片适配"></a>2. 图片适配</h2><p>言归正传，关于图片适配才是我们的主题。</p>
+<p>秉着实践是检验真理的唯一标准这一原则，做了如下实验。三种尺寸的图片，放置在四个目录目录，用三种尺寸的 ImageView ，用三种方式加载图片，检查其内存使用的情况。</p>
+<ol>
+<li><p>图片尺寸</p>
+<ul>
+<li>large 1600x900 ，占用内存 1600x900x4&#x2F;1024&#x2F;1024 &#x3D; 5.49m</li>
+<li>middle 800x450 ，占用内存 800x450x4&#x2F;1024&#x2F;1024 &#x3D; 1.37m</li>
+<li>small 400x225 ，占用内存 400x225x4&#x2F;1024&#x2F;1024 &#x3D; 0.34m</li>
+</ul>
+</li>
+<li><p>图片目录</p>
+<ul>
+<li>asset</li>
+<li>drawable hdpi</li>
+<li>drawable xhdpi</li>
+<li>drawable xxhdpi</li>
+</ul>
+</li>
+<li><p>ImageView</p>
+<ul>
+<li>wrap-content</li>
+<li>280dp</li>
+<li>160dp</li>
+</ul>
+</li>
+<li><p>引用方式</p>
+<ul>
+<li>android:src</li>
+<li>setImageResource</li>
+<li>setImageBitmap</li>
+</ul>
+</li>
+</ol>
+<p><strong>加载 asset 目录下的图片，只能使用 setImageBitmap 的方式。</strong>   </p>
+<p>第一组实验，使用 1 2 3 以及 setImageBitmap ，得出 3x4x3x1 &#x3D; 36 条数据，如下表。</p>
+<ul>
+<li>B 表示内存中图片的 bitmap 大小。</li>
+<li>G 表示内存中 Graphics 占用的空间。</li>
+<li>N 表示内存中 Native 占用的空间。</li>
+<li>序号 0 表示，未使用图片时的情况。</li>
+<li>实验基于屏幕密度 540dpi 的设备。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">目录</th>
+<th align="center">分辨率</th>
+<th align="center">宽度</th>
+<th align="center">B</th>
+<th align="center">G</th>
+<th align="center">N</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">1.8m</td>
+<td align="center">7.8m</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">asset</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">14.6m</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">asset</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">14.7m</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">asset</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">5.49m</td>
+<td align="center">8.6m</td>
+<td align="center">13.2m</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">asset</td>
+<td align="center">800x450</td>
+<td align="center">wrap</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.3m</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">asset</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.2m</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">asset</td>
+<td align="center">800x450</td>
+<td align="center">w160</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.3m</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">asset</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.2m</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">asset</td>
+<td align="center">400x225</td>
+<td align="center">w280</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.2m</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">asset</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.2m</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">27.8m</td>
+<td align="center">37.1m</td>
+<td align="center">37.3m</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">27.8m</td>
+<td align="center">37.1m</td>
+<td align="center">31.7m</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">27.8m</td>
+<td align="center">31.7m</td>
+<td align="center">36.9m</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">hdpi</td>
+<td align="center">800x450</td>
+<td align="center">wrap</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">14.9m</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">hdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">14.8m</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">hdpi</td>
+<td align="center">800x450</td>
+<td align="center">w160</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">15.3m</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="center">hdpi</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">9.9m</td>
+</tr>
+<tr>
+<td align="center">17</td>
+<td align="center">hdpi</td>
+<td align="center">400x225</td>
+<td align="center">w280</td>
+<td align="center">1.73m</td>
+<td align="center">4m</td>
+<td align="center">9.7m</td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td align="center">hdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">10.1m</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">15.6m</td>
+<td align="center">18.9m</td>
+<td align="center">24.9m</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">15.6m</td>
+<td align="center">18.9m</td>
+<td align="center">24.7m</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">15.6m</td>
+<td align="center">18.9m</td>
+<td align="center">24.7m</td>
+</tr>
+<tr>
+<td align="center">22</td>
+<td align="center">xhdpi</td>
+<td align="center">800x450</td>
+<td align="center">wrap</td>
+<td align="center">3.9m</td>
+<td align="center">6.3m</td>
+<td align="center">12.4m</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td align="center">xhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">3.9m</td>
+<td align="center">6.3m</td>
+<td align="center">11.5m</td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td align="center">xhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w160</td>
+<td align="center">3.9m</td>
+<td align="center">6.3m</td>
+<td align="center">12.2m</td>
+</tr>
+<tr>
+<td align="center">25</td>
+<td align="center">xhdpi</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">0.97m</td>
+<td align="center">3.2m</td>
+<td align="center">9m</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td align="center">xhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w280</td>
+<td align="center">0.97m</td>
+<td align="center">3.2m</td>
+<td align="center">8.8m</td>
+</tr>
+<tr>
+<td align="center">27</td>
+<td align="center">xhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.97m</td>
+<td align="center">3.2m</td>
+<td align="center">9.1m</td>
+</tr>
+<tr>
+<td align="center">28</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16.7m</td>
+</tr>
+<tr>
+<td align="center">29</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16m</td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16m</td>
+</tr>
+<tr>
+<td align="center">31</td>
+<td align="center">xxhdpi</td>
+<td align="center">800x450</td>
+<td align="center">wrap</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">9.7m</td>
+</tr>
+<tr>
+<td align="center">32</td>
+<td align="center">xxhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">9.7m</td>
+</tr>
+<tr>
+<td align="center">33</td>
+<td align="center">xxhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w160</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">9.6m</td>
+</tr>
+<tr>
+<td align="center">34</td>
+<td align="center">xxhdpi</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">0.43m</td>
+<td align="center">2.6m</td>
+<td align="center">8.4m</td>
+</tr>
+<tr>
+<td align="center">35</td>
+<td align="center">xxhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w280</td>
+<td align="center">0.43m</td>
+<td align="center">2.6m</td>
+<td align="center">8.4m</td>
+</tr>
+<tr>
+<td align="center">36</td>
+<td align="center">xxhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.43m</td>
+<td align="center">2.6m</td>
+<td align="center">8.7m</td>
+</tr>
+</tbody></table>
+<p>结果分析：</p>
+<ol>
+<li>使用的图片越大，越耗内存。实验数据：1&#x2F;4&#x2F;7。</li>
+<li>图片内存与其显示大小无关。实验数据：1&#x2F;2&#x2F;3,4&#x2F;5&#x2F;6,7&#x2F;8&#x2F;9。<strong>误区1：图片显示区域越大，越耗内存。</strong></li>
+<li>加载 asset 目录的图片，图片占用内存等于实际大小，实验数据：1&#x2F;2&#x2F;3,4&#x2F;5&#x2F;6,7&#x2F;8&#x2F;9。计算方式：l x w x 4，<strong>长乘宽乘 4 （每个像素点占用 4 字节）。</strong></li>
+<li>加载 drawable 目录的图片，图片占用内存存在缩放。如：large 占用内存 5.49m , hdpi 对应 240 dpi 。因此图片实际占用内存 5.49 x (540&#x2F;240)^2 &#x3D; 27.79m 。<strong>误区2：5.49 x (540&#x2F;240) &#x3D; 12.35m。</strong></li>
+</ol>
+<p><strong>关于 B&#x2F;G&#x2F;N 之间的关系还未研究透彻，如有了解还请告知。</strong></p>
+<p>第二组实验基于屏幕密度 360dpi 的设备，排除多数无用项。</p>
+<table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">目录</th>
+<th align="center">分辨率</th>
+<th align="center">宽度</th>
+<th align="center">B</th>
+<th align="center">G</th>
+<th align="center">N</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">37</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">1.8m</td>
+<td align="center">7.4m</td>
+</tr>
+<tr>
+<td align="center">38</td>
+<td align="center">asset</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">14.7m</td>
+</tr>
+<tr>
+<td align="center">39</td>
+<td align="center">asset</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.3m</td>
+</tr>
+<tr>
+<td align="center">40</td>
+<td align="center">asset</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.3m</td>
+</tr>
+<tr>
+<td align="center">41</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">12.3m</td>
+<td align="center">15.4m</td>
+<td align="center">21.4m</td>
+</tr>
+<tr>
+<td align="center">41</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">12.3m</td>
+<td align="center">15.4m</td>
+<td align="center">21.3m</td>
+</tr>
+<tr>
+<td align="center">42</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">12.3m</td>
+<td align="center">15.4m</td>
+<td align="center">21.4m</td>
+</tr>
+<tr>
+<td align="center">43</td>
+<td align="center">hdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">3.08m</td>
+<td align="center">5.9m</td>
+<td align="center">11m</td>
+</tr>
+<tr>
+<td align="center">44</td>
+<td align="center">hdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.77m</td>
+<td align="center">3m</td>
+<td align="center">8.8m</td>
+</tr>
+<tr>
+<td align="center">45</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16m</td>
+</tr>
+<tr>
+<td align="center">46</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16.1m</td>
+</tr>
+<tr>
+<td align="center">47</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">6.95m</td>
+<td align="center">9.7m</td>
+<td align="center">16.1m</td>
+</tr>
+<tr>
+<td align="center">48</td>
+<td align="center">xhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">1.73m</td>
+<td align="center">4.1m</td>
+<td align="center">9.7m</td>
+</tr>
+<tr>
+<td align="center">49</td>
+<td align="center">xhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.43m</td>
+<td align="center">2.6m</td>
+<td align="center">8.3m</td>
+</tr>
+<tr>
+<td align="center">50</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">3.08m</td>
+<td align="center">5.9m</td>
+<td align="center">12.3m</td>
+</tr>
+<tr>
+<td align="center">51</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">3.08m</td>
+<td align="center">5.9m</td>
+<td align="center">12.4m</td>
+</tr>
+<tr>
+<td align="center">52</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">3.08m</td>
+<td align="center">5.9m</td>
+<td align="center">12.2m</td>
+</tr>
+<tr>
+<td align="center">53</td>
+<td align="center">xxhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">0.77m</td>
+<td align="center">3m</td>
+<td align="center">8.7m</td>
+</tr>
+<tr>
+<td align="center">54</td>
+<td align="center">xxhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.19m</td>
+<td align="center">2.4m</td>
+<td align="center">8.1m</td>
+</tr>
+</tbody></table>
+<p>结果分析：</p>
+<ol start="5">
+<li>图片内存与屏幕密度无关。</li>
+</ol>
+<p>第三组实验基于屏幕密度 540 dpi 的设备，使用 setImageResource 方式加载图片。</p>
+<table>
+<thead>
+<tr>
+<th align="center">序号</th>
+<th align="center">目录</th>
+<th align="center">分辨率</th>
+<th align="center">宽度</th>
+<th align="center">B</th>
+<th align="center">G</th>
+<th align="center">N</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">55</td>
+<td align="center">hdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w160</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">19m</td>
+</tr>
+<tr>
+<td align="center">56</td>
+<td align="center">hdpi</td>
+<td align="center">800x450</td>
+<td align="center">wrap</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.3m</td>
+</tr>
+<tr>
+<td align="center">57</td>
+<td align="center">hdpi</td>
+<td align="center">400x225</td>
+<td align="center">w280</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.2m</td>
+</tr>
+<tr>
+<td align="center">58</td>
+<td align="center">xhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">w280</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">19.9m</td>
+</tr>
+<tr>
+<td align="center">59</td>
+<td align="center">xhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w160</td>
+<td align="center">1.37m</td>
+<td align="center">3.8m</td>
+<td align="center">9.3m</td>
+</tr>
+<tr>
+<td align="center">60</td>
+<td align="center">xhdpi</td>
+<td align="center">400x225</td>
+<td align="center">wrap</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.6m</td>
+</tr>
+<tr>
+<td align="center">61</td>
+<td align="center">xxhdpi</td>
+<td align="center">1600x900</td>
+<td align="center">wrap</td>
+<td align="center">5.49m</td>
+<td align="center">8.7m</td>
+<td align="center">14.6m</td>
+</tr>
+<tr>
+<td align="center">62</td>
+<td align="center">xxhdpi</td>
+<td align="center">800x450</td>
+<td align="center">w280</td>
+<td align="center">1.37m</td>
+<td align="center">3.9m</td>
+<td align="center">9.6m</td>
+</tr>
+<tr>
+<td align="center">63</td>
+<td align="center">xxhdpi</td>
+<td align="center">400x225</td>
+<td align="center">w160</td>
+<td align="center">0.34m</td>
+<td align="center">2.6m</td>
+<td align="center">8.3m</td>
+</tr>
+</tbody></table>
+<p>结果分析：</p>
+<ol start="6">
+<li>使用 setImageResource 加载图片，没有对图片进行缩放。实验数据：55&#x2F;58&#x2F;61。<strong>误区3：使用不同屏幕密度下的图片存在缩放情况。</strong></li>
+</ol>
+<p><strong>实验的最后发现，在布局用使用 android:src 引用图片时，图片内存也不缩放。因此，没有列出实验数据。</strong></p>
+<h2 id="3-源码分析"><a href="#3-源码分析" class="headerlink" title="3. 源码分析"></a>3. 源码分析</h2><p>基于以上结果，通过分析源码，得以验证。</p>
+<ol>
+<li>asset 目录下图片占用内存是图片实际大小。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过流的方式解析图片。</span></span><br><span class="line">bitmap = BitmapFactory.decodeStream(getAssets().open(<span class="string">&quot;test.jpg&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeStream</span><span class="params">(InputStream is)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> decodeStream(is, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实际执行到下面的代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeStream</span><span class="params">(<span class="meta">@Nullable</span> InputStream is, <span class="meta">@Nullable</span> Rect outPadding,</span></span><br><span class="line"><span class="params">        <span class="meta">@Nullable</span> Options opts)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="type">Bitmap</span> <span class="variable">bm</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    Trace.traceBegin(Trace.TRACE_TAG_GRAPHICS, <span class="string">&quot;decodeBitmap&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (is <span class="keyword">instanceof</span> AssetManager.AssetInputStream) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">long</span> <span class="variable">asset</span> <span class="operator">=</span> ((AssetManager.AssetInputStream) is).getNativeAsset();</span><br><span class="line">            <span class="comment">// 解析 asset 目录下的 文件，opts == null ,所以按照设备的 density 解析。</span></span><br><span class="line">            bm = nativeDecodeAsset(asset, outPadding, opts);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 解密普通的文件流</span></span><br><span class="line">            bm = decodeStreamInternal(is, outPadding, opts);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bm == <span class="literal">null</span> &amp;&amp; opts != <span class="literal">null</span> &amp;&amp; opts.inBitmap != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Problem decoding into existing bitmap&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新 bitmap 的 density </span></span><br><span class="line">        setDensityFromOptions(bm, opts);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_GRAPHICS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bm;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setDensityFromOptions</span><span class="params">(Bitmap outputBitmap, Options opts)</span> &#123;</span><br><span class="line">    <span class="comment">// opts==null，因此未做处理。</span></span><br><span class="line">    <span class="keyword">if</span> (outputBitmap == <span class="literal">null</span> || opts == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>drawable 目录下图片占用内存被缩放。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只有在使用下面的方式获取 bitmap 会缩放。</span></span><br><span class="line">bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeResource</span><span class="params">(Resources res, <span class="type">int</span> id)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> decodeResource(res, id, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeResource</span><span class="params">(Resources res, <span class="type">int</span> id, Options opts)</span> &#123;</span><br><span class="line">    validate(opts);</span><br><span class="line">    <span class="type">Bitmap</span> <span class="variable">bm</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">is</span> <span class="operator">=</span> <span class="literal">null</span>; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">TypedValue</span> <span class="variable">value</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TypedValue</span>();</span><br><span class="line">        <span class="comment">// 根据 id 得到文件流，AssetInputStream</span></span><br><span class="line">        is = res.openRawResource(id, value);</span><br><span class="line">        <span class="comment">// 根据流得到 bitmap</span></span><br><span class="line">        bm = decodeResourceStream(res, value, is, <span class="literal">null</span>, opts);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    ......</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bm;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeResourceStream</span><span class="params">(<span class="meta">@Nullable</span> Resources res, <span class="meta">@Nullable</span> TypedValue value,</span></span><br><span class="line"><span class="params">        <span class="meta">@Nullable</span> InputStream is, <span class="meta">@Nullable</span> Rect pad, <span class="meta">@Nullable</span> Options opts)</span> &#123;</span><br><span class="line">    validate(opts);</span><br><span class="line">    <span class="keyword">if</span> (opts == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 生成 Option </span></span><br><span class="line">        opts = <span class="keyword">new</span> <span class="title class_">Options</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 以 设备 320dpi ,图片在 xxhdpi 为例</span></span><br><span class="line">    <span class="keyword">if</span> (opts.inDensity == <span class="number">0</span> &amp;&amp; value != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">density</span> <span class="operator">=</span> value.density; <span class="comment">// density = 480</span></span><br><span class="line">        <span class="keyword">if</span> (density == TypedValue.DENSITY_DEFAULT) &#123;</span><br><span class="line">            opts.inDensity = DisplayMetrics.DENSITY_DEFAULT;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (density != TypedValue.DENSITY_NONE) &#123;</span><br><span class="line">            opts.inDensity = density;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (opts.inTargetDensity == <span class="number">0</span> &amp;&amp; res != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// res.getDisplayMetrics().densityDpi = 320</span></span><br><span class="line">        opts.inTargetDensity = res.getDisplayMetrics().densityDpi;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> decodeStream(is, pad, opts);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title function_">decodeStream</span><span class="params">(<span class="meta">@Nullable</span> InputStream is, <span class="meta">@Nullable</span> Rect outPadding,</span></span><br><span class="line"><span class="params">        <span class="meta">@Nullable</span> Options opts)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    Trace.traceBegin(Trace.TRACE_TAG_GRAPHICS, <span class="string">&quot;decodeBitmap&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (is <span class="keyword">instanceof</span> AssetManager.AssetInputStream) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">long</span> <span class="variable">asset</span> <span class="operator">=</span> ((AssetManager.AssetInputStream) is).getNativeAsset();</span><br><span class="line">            <span class="comment">// opts inDensity 480 ，inTargetDensity 320 ，因此需要缩放。</span></span><br><span class="line">            bm = nativeDecodeAsset(asset, outPadding, opts);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            bm = decodeStreamInternal(is, outPadding, opts);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bm == <span class="literal">null</span> &amp;&amp; opts != <span class="literal">null</span> &amp;&amp; opts.inBitmap != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Problem decoding into existing bitmap&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 根据 opts 设置图片的 density </span></span><br><span class="line">        setDensityFromOptions(bm, opts);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_GRAPHICS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bm;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setDensityFromOptions</span><span class="params">(Bitmap outputBitmap, Options opts)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (outputBitmap == <span class="literal">null</span> || opts == <span class="literal">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> <span class="variable">density</span> <span class="operator">=</span> opts.inDensity;</span><br><span class="line">    <span class="keyword">if</span> (density != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// 先设置成 480</span></span><br><span class="line">        outputBitmap.setDensity(density);</span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">targetDensity</span> <span class="operator">=</span> opts.inTargetDensity;</span><br><span class="line">        <span class="keyword">if</span> (targetDensity == <span class="number">0</span> || density == targetDensity || density == opts.inScreenDensity) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] np = outputBitmap.getNinePatchChunk();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">boolean</span> <span class="variable">isNinePatch</span> <span class="operator">=</span> np != <span class="literal">null</span> &amp;&amp; NinePatch.isNinePatchChunk(np);</span><br><span class="line">        <span class="comment">// 由于支持缩放，再设置成 320 </span></span><br><span class="line">        <span class="keyword">if</span> (opts.inScaled || isNinePatch) &#123;</span><br><span class="line">            outputBitmap.setDensity(targetDensity);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (opts.inBitmap != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// bitmap was reused, ensure density is reset</span></span><br><span class="line">        outputBitmap.setDensity(Bitmap.getDefaultDensity());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>通过 setImageResource，或布局引用，图片不缩放。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 布局引用时，在 ImageView 的构造函数中加载图片</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ImageView</span><span class="params">(Context context, <span class="meta">@Nullable</span> AttributeSet attrs, <span class="type">int</span> defStyleAttr,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> defStyleRes)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(context, attrs, defStyleAttr, defStyleRes);</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">final</span> <span class="type">TypedArray</span> <span class="variable">a</span> <span class="operator">=</span> context.obtainStyledAttributes(</span><br><span class="line">            attrs, R.styleable.ImageView, defStyleAttr, defStyleRes);</span><br><span class="line">    <span class="comment">// 得到 Drawable 对象，如果使用 png 或 jpg 等图片，则是 BitmapDrawable </span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">Drawable</span> <span class="variable">d</span> <span class="operator">=</span> a.getDrawable(R.styleable.ImageView_src);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TypedArray 类</span></span><br><span class="line"><span class="keyword">public</span> Drawable <span class="title function_">getDrawable</span><span class="params">(<span class="meta">@StyleableRes</span> <span class="type">int</span> index)</span> &#123;</span><br><span class="line">    <span class="comment">// 注意此处的 density 是 0</span></span><br><span class="line">    <span class="keyword">return</span> getDrawableForDensity(index, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Drawable <span class="title function_">getDrawableForDensity</span><span class="params">(<span class="meta">@StyleableRes</span> <span class="type">int</span> index, <span class="type">int</span> density)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (mRecycled) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Cannot make calls to a recycled instance!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">TypedValue</span> <span class="variable">value</span> <span class="operator">=</span> mValue;</span><br><span class="line">    <span class="keyword">if</span> (getValueAt(index * STYLE_NUM_ENTRIES, value)) &#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="comment">// density = 0 ，执行下面代码</span></span><br><span class="line">        <span class="keyword">return</span> mResources.loadDrawable(value, value.resourceId, density, mTheme);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ResourcesImpl 类</span></span><br><span class="line">Drawable <span class="title function_">loadDrawable</span><span class="params">(<span class="meta">@NonNull</span> Resources wrapper, <span class="meta">@NonNull</span> TypedValue value, <span class="type">int</span> id,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> density, <span class="meta">@Nullable</span> Resources.Theme theme)</span></span><br><span class="line">        <span class="keyword">throws</span> NotFoundException &#123;</span><br><span class="line">    <span class="comment">// useCache = true，后面的代码忽略</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">boolean</span> <span class="variable">useCache</span> <span class="operator">=</span> density == <span class="number">0</span> || value.density == mMetrics.densityDpi;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读加载过的 BitmapDrawable</span></span><br><span class="line">        <span class="keyword">if</span> (!mPreloading &amp;&amp; useCache) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">Drawable</span> <span class="variable">cachedDrawable</span> <span class="operator">=</span> caches.getInstance(key, wrapper, theme);</span><br><span class="line">            <span class="keyword">if</span> (cachedDrawable != <span class="literal">null</span>) &#123;</span><br><span class="line">                cachedDrawable.setChangingConfigurations(value.changingConfigurations);</span><br><span class="line">                <span class="keyword">return</span> cachedDrawable;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> Drawable.ConstantState cs;</span><br><span class="line">        <span class="keyword">if</span> (isColorDrawable) &#123;</span><br><span class="line">            cs = sPreloadedColorDrawables.get(key);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cs = sPreloadedDrawables[mConfiguration.getLayoutDirection()].get(key);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Drawable dr;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">needsNewDrawableAfterCache</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (cs != <span class="literal">null</span>) &#123;</span><br><span class="line">            ......</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isColorDrawable) &#123;</span><br><span class="line">            dr = <span class="keyword">new</span> <span class="title class_">ColorDrawable</span>(value.data);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 最终执行到此处加载图片</span></span><br><span class="line">            dr = loadDrawableForCookie(wrapper, value, id, density);</span><br><span class="line">        &#125;</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">return</span> dr;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Drawable <span class="title function_">loadDrawableForCookie</span><span class="params">(<span class="meta">@NonNull</span> Resources wrapper, <span class="meta">@NonNull</span> TypedValue value,</span></span><br><span class="line"><span class="params">            <span class="type">int</span> id, <span class="type">int</span> density)</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">final</span> Drawable dr;</span><br><span class="line">    Trace.traceBegin(Trace.TRACE_TAG_RESOURCES, file);</span><br><span class="line">    <span class="type">LookupStack</span> <span class="variable">stack</span> <span class="operator">=</span> mLookupStack.get();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Perform a linear search to check if we have already referenced this resource before.</span></span><br><span class="line">        <span class="keyword">if</span> (stack.contains(id)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;Recursive reference in drawable&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        stack.push(id);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 处理使用 shape selector 等 使用 xml 生成的资源文件</span></span><br><span class="line">            <span class="keyword">if</span> (file.endsWith(<span class="string">&quot;.xml&quot;</span>)) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">XmlResourceParser</span> <span class="variable">rp</span> <span class="operator">=</span> loadXmlResourceParser(</span><br><span class="line">                        file, id, value.assetCookie, <span class="string">&quot;drawable&quot;</span>);</span><br><span class="line">                dr = Drawable.createFromXmlForDensity(wrapper, rp, density, <span class="literal">null</span>);</span><br><span class="line">                rp.close();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 通过 asset 的方式读取资源  file:///res/drawable-xhdpi/test.jpg</span></span><br><span class="line">                <span class="keyword">final</span> <span class="type">InputStream</span> <span class="variable">is</span> <span class="operator">=</span> mAssets.openNonAsset(</span><br><span class="line">                        value.assetCookie, file, AssetManager.ACCESS_STREAMING);</span><br><span class="line">                <span class="type">AssetInputStream</span> <span class="variable">ais</span> <span class="operator">=</span> (AssetInputStream) is;</span><br><span class="line">                <span class="comment">// 解析得到 BitmapDrawable</span></span><br><span class="line">                dr = decodeImageDrawable(ais, wrapper, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception | StackOverflowError e) &#123;</span><br><span class="line">        Trace.traceEnd(Trace.TRACE_TAG_RESOURCES);</span><br><span class="line">        <span class="keyword">final</span> <span class="type">NotFoundException</span> <span class="variable">rnf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NotFoundException</span>(</span><br><span class="line">                <span class="string">&quot;File &quot;</span> + file + <span class="string">&quot; from drawable resource ID #0x&quot;</span> + Integer.toHexString(id));</span><br><span class="line">        rnf.initCause(e);</span><br><span class="line">        <span class="keyword">throw</span> rnf;</span><br><span class="line">    &#125;</span><br><span class="line">    Trace.traceEnd(Trace.TRACE_TAG_RESOURCES);</span><br><span class="line">    .......</span><br><span class="line">    <span class="keyword">return</span> dr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用 setImageResource 方式同布局引用一致。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setImageResource</span><span class="params">(<span class="meta">@DrawableRes</span> <span class="type">int</span> resId)</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    resolveUri();</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">resolveUri</span><span class="params">()</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (mResource != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 读取 Drawable</span></span><br><span class="line">            d = mContext.getDrawable(mResource);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            Log.w(LOG_TAG, <span class="string">&quot;Unable to find resource: &quot;</span> + mResource, e);</span><br><span class="line">            <span class="comment">// Don&#x27;t try again.</span></span><br><span class="line">            mResource = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mUri != <span class="literal">null</span>) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    updateDrawable(d);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Context 类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Drawable <span class="title function_">getDrawable</span><span class="params">(<span class="meta">@DrawableRes</span> <span class="type">int</span> id)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> getResources().getDrawable(id, getTheme());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Resources 类 </span></span><br><span class="line"><span class="keyword">public</span> Drawable <span class="title function_">getDrawable</span><span class="params">(<span class="meta">@DrawableRes</span> <span class="type">int</span> id, <span class="meta">@Nullable</span> Theme theme)</span></span><br><span class="line">        <span class="keyword">throws</span> NotFoundException &#123;</span><br><span class="line">    <span class="keyword">return</span> getDrawableForDensity(id, <span class="number">0</span>, theme);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Drawable <span class="title function_">getDrawableForDensity</span><span class="params">(<span class="meta">@DrawableRes</span> <span class="type">int</span> id, <span class="type">int</span> density, <span class="meta">@Nullable</span> Theme theme)</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">TypedValue</span> <span class="variable">value</span> <span class="operator">=</span> obtainTempTypedValue();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">ResourcesImpl</span> <span class="variable">impl</span> <span class="operator">=</span> mResourcesImpl;</span><br><span class="line">        impl.getValueForDensity(id, density, value, <span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 依然执行到 ResourcesImpl.loadDrawable 且 density = 0</span></span><br><span class="line">        <span class="keyword">return</span> impl.loadDrawable(<span class="built_in">this</span>, value, id, density, theme);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        releaseTempTypedValue(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>经过上述实践验证，建议在使用图片时，控制好图片尺寸。避免直接根据 resId 转化成 bitmap 对象。如需实时释放 bitmap 对象，建议通过 BitmapDrawable 取到 bitmap 引用再释放。</p>
+<p>另外，以前存在的三个误区请避免。</p>
+<ol>
+<li>图片占用的内存只与图片大小有关。非图片文件大小。</li>
+<li>图片缩放计算，长<em>scale</em>款<em>scale &#x3D; 长</em>宽*scale^2。</li>
+<li>布局中引用的图片以及 setImageResource 方式使用图片，图片不会根据密度缩放。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/flueky/Flueky-Sample/tree/master/picadapt-sample">源码地址</a></p>
+<p><strong>觉得有用？那打赏一个呗。<a target="_blank" rel="noopener" href="https://flueky.github.io/donate/">去打赏</a></strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">flueky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/030/">http://example.com/030/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/103/"><i class="fa fa-chevron-left">  </i><span>Arch 安装教程</span></a></div><div class="next-post pull-right"><a href="/029/"><span>Android 线程间通信</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2016 - 2024 By flueky</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

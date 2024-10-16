@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="[&quot;zh-CN&quot;,&quot;en&quot;,&quot;default&quot;]"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Android开发必备技能——修改debug签名"><meta name="keywords" content=""><meta name="author" content="flueky"><meta name="copyright" content="flueky"><title>Android开发必备技能——修改debug签名 | Flueky 技术小站</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E6%96%87%E4%BB%B6%EF%BC%88keystore%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">签名文件（keystore）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%AD%BE%E5%90%8D%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">修改签名文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E5%A4%A7%E7%9A%84AndroidStudio"><span class="toc-number">3.</span> <span class="toc-text">强大的AndroidStudio</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">flueky</div><div class="author-info__description text-center">小飞哥的个人博客主页</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">71</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">13</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Flueky 技术小站</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Android开发必备技能——修改debug签名</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-04</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Android/">Android</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>从事Android开发的小伙伴们，想必都会遇到这样的问题。当你的应用中需要集成百度地图、极光推送等第三方平台时，会去申请一个叫做AppKey的东西。与此同时，你得提供下应用签名信息的MD5或SHA1。然后就悲催的发现，只有用指定的签名文件打包时，该功能才能正常使用。如果你用的是开发工具的debug keystore签名信息，直接run一下就好，如果你用的是APP发布时候的keystore，每次测试时都得export 一个apk。心中一万只草泥马在奔腾的有木有？</p>
+<span id="more"></span>
+
+<p>楼主之前的小伎俩就是，去申请两个AppKey，分别对应debug keystore 和 release keystore。然后在心中默默地为自己的机智点个赞。然而一些比楼主更聪明的小伙伴发现，eclipse里面可以替换签名文件。于是满怀欣喜的去指定一个keystore，期待这样的画面（<strong>注意我此处的md5和sha1</strong>）：</p>
+<img src="../../pic/218/1.png" width="400"/>
+
+<p>然而看到的是这样的：</p>
+<img src="../../pic/218/2.png" width="400"/>
+
+<p>小伙伴的内心应该是崩溃的。</p>
+<h1 id="签名文件（keystore）"><a href="#签名文件（keystore）" class="headerlink" title="签名文件（keystore）"></a>签名文件（keystore）</h1><p>在生成签名文件时候，输入的最重要的三条信息是：<strong>store password</strong>、<strong>key alias</strong>、<strong>key password</strong>。有过用eclipse export apk 经验的童鞋应该很清楚这三个信息的作用。</p>
+<p>此时应该很好理解之前的错误了，因为指定debug keystore时，eclipse根本没让输入以上三个信息。我也就呵呵一笑了……再看默认的debug keystore，会有一种错觉，该签名文件没有密码。</p>
+<p>然而，事实并不是如我们所想的那样。默认的debug keystore的三个信息如下：</p>
+<ol>
+<li>store password：android</li>
+<li>key alias：androiddebugkey</li>
+<li>key password：android</li>
+</ol>
+<p><strong>并且，eclipse 的debug keystore只认含有这三个信息的keystore。</strong></p>
+<h1 id="修改签名文件"><a href="#修改签名文件" class="headerlink" title="修改签名文件"></a>修改签名文件</h1><p>已经知道了错误原因，那么接下来的解决方案只能尝试着去修改keystore里的这三个信息了。总不能去重新生成一个包含这个三个信息的keystore吧？然并卵……</p>
+<p>修改之前，先查看一下keystore里的信息：</p>
+<img src="../../pic/218/3.png" width="400"/>
+
+<p><strong>注意此处的MD5和SHA1与之前截图的一致。</strong></p>
+<blockquote>
+<p>查看keystore信息：keytool -list -v -keystore “keystore 文件” -storepass “keystore 密码”</p>
+</blockquote>
+<p>将上述三个信息，分三步修改。比较坑爹的是，此处只能用命令玩了（<strong>修改之前，记得将原有的签名文件备份</strong>）。</p>
+<ol>
+<li>修改store password。</li>
+</ol>
+<img src="../../pic/218/4.png" width="400"/>
+
+<blockquote>
+<p>命令：keytool -storepasswd -keystore “keystore 文件”。<br/><br>会提示输入旧的密码，再输入两次新密码，此时将新密码改成android。</p>
+</blockquote>
+<ol start="2">
+<li>修改key alias。</li>
+</ol>
+ <img src="../../pic/218/5.png" width="400"/>
+
+<blockquote>
+<p>命令：keytool -changealias -keystore “keystore 文件” -alias “keystore 别名” -destalias “目的别名”。<br/><br>将目的别名改成：androiddebugkey，会提示输入第一个密码，就是第一步改过的android，第二个密码是之前的key password。</p>
+</blockquote>
+<ol start="3">
+<li>修改key password。</li>
+</ol>
+ <img src="../../pic/218/6.png" width="400"/>
+
+<blockquote>
+<p>命令：keytool -keypasswd -keystore “keystore 文件” -alias “指定修改密码的别名”。<br/><br>由于，一个keystore中，可以存储多个alias，因此此处需要指定修改密码的alias（这里应当是androiddebugkey），然后需要输入store password：android（修改后的）。再输入旧的key password（之前只是修改了alias ：androiddebugkey）。最后输入两次新的key password：android。</p>
+</blockquote>
+<p>最后，再次查看签名文件信息：</p>
+<img src="../../pic/218/7.png" width="400"/>
+
+<blockquote>
+<p>输入的密钥库口令，已经是修改之后的android，alias 也已经修改成androiddebugkey。现在就可以放在eclipse里面替换了。</p>
+</blockquote>
+<h1 id="强大的AndroidStudio"><a href="#强大的AndroidStudio" class="headerlink" title="强大的AndroidStudio"></a>强大的AndroidStudio</h1><p>看到这里，心很累了有木有？感觉eclipse是无比的坑爹。很好奇，AndroidStudio是怎么实现这个功能的，那么接下来的操作，也许会让你惊呆。</p>
+<p>第一步，添加一个签名文件配置信息。选择keystore，并输入store password、key alias，key password。</p>
+<img src="../../pic/218/8.png" width="450"/>
+
+<p>第二步，在debug模式中，选择之前添加的签名文件配置信息。</p>
+<img src="../../pic/218/9.png" width="300"/>
+
+<p>也可以直接在gradle中配置。</p>
+<img src="../../pic/218/10.png" width="600"/>
+
+<p>然后，就没然后了。对Studio 只有一个评价，android开发神器。没有之一……</p>
+<p>不说了，我去卸载eclipse。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">flueky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/218/">http://example.com/218/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/219s/"><i class="fa fa-chevron-left">  </i><span>分分钟修改Android keystore</span></a></div><div class="next-post pull-right"><a href="/217/"><span>JSON格式数据解析（Java版）</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2016 - 2024 By flueky</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
