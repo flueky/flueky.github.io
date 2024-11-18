@@ -3,7 +3,7 @@
   <id>https://vuepress-theme-hope.github.io/</id>
   <title>Flueky&amp;apos;s 技术小站</title>
   <icon>https://vuepress-theme-hope.github.io/favicon.ico</icon>
-  <updated>2024-11-17T16:25:28.210Z</updated>
+  <updated>2024-11-18T16:37:37.999Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://vuepress-theme-hope.github.io/atom.xml"/>
   <link rel="alternate" href="https://vuepress-theme-hope.github.io/"/>
@@ -41,7 +41,7 @@
     <title type="text">C/C++</title>
     <id>https://vuepress-theme-hope.github.io/vscode/c.html</id>
     <link href="https://vuepress-theme-hope.github.io/vscode/c.html"/>
-    <updated>2024-11-17T16:22:40.000Z</updated>
+    <updated>2024-11-18T16:35:37.000Z</updated>
     <summary type="html"><![CDATA[<h2>编译器</h2>
 <h3>Windows</h3>
 <p>如已安装 <code>Visual Studio</code>，可直接使用 <code>MSVC</code> 。亦可以单独下载第三方编译器 MinGW <a href="https://github.com/niXman/mingw-builds-binaries/releases" target="_blank" rel="noopener noreferrer">下载地址</a>。</p>
@@ -199,6 +199,13 @@
 <p>最后在底部终端看到如图所示的输出。</p>
 <figure><figcaption></figcaption></figure>
 <p>此时并没有看到 Hello, World!, 是因为这个 Task 之做了编译操作，没有执行。</p>
+<h2>完整配置</h2>
+<p>在 <code>C/C++</code> 插件安装并启用后，同时电脑上已安装编译器、调试器，即可在 <code>VSCode</code> 中生成全部的配置文件。</p>
+<ul>
+<li>tasks.json : 运行编译任务。</li>
+<li>launch.json ： 执行、调试程序。</li>
+</ul>
+
 ]]></content>
     <category term="VSCode"/>
     <published>2024-11-17T16:22:40.000Z</published>

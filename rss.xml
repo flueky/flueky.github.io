@@ -6,8 +6,8 @@
     <link>https://vuepress-theme-hope.github.io/</link>
     <description></description>
     <language>zh-CN</language>
-    <pubDate>Sun, 17 Nov 2024 16:25:28 GMT</pubDate>
-    <lastBuildDate>Sun, 17 Nov 2024 16:25:28 GMT</lastBuildDate>
+    <pubDate>Mon, 18 Nov 2024 16:37:37 GMT</pubDate>
+    <lastBuildDate>Mon, 18 Nov 2024 16:37:37 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>VSCode</category>
@@ -200,6 +200,13 @@
 <p>最后在底部终端看到如图所示的输出。</p>
 <figure><figcaption></figcaption></figure>
 <p>此时并没有看到 Hello, World!, 是因为这个 Task 之做了编译操作，没有执行。</p>
+<h2>完整配置</h2>
+<p>在 <code>C/C++</code> 插件安装并启用后，同时电脑上已安装编译器、调试器，即可在 <code>VSCode</code> 中生成全部的配置文件。</p>
+<ul>
+<li>tasks.json : 运行编译任务。</li>
+<li>launch.json ： 执行、调试程序。</li>
+</ul>
+
 ]]></content:encoded>
     </item>
     <item>
