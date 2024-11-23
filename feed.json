@@ -6,6 +6,35 @@
   "favicon": "https://vuepress-theme-hope.github.io/favicon.ico",
   "items": [
     {
+      "title": "VirtualBox 虚拟机",
+      "url": "https://vuepress-theme-hope.github.io/virtualbox.html",
+      "id": "https://vuepress-theme-hope.github.io/virtualbox.html",
+      "summary": "虚拟机，模拟器，Docker 是 PC 端比较常见的虚拟化软件。使用户可以在 Windows/Mac/Linux 等系统的机器上运行其他类型的系统，甚至 Android。 Docker 与前两着有些差异，因为它不是虚拟化出一个完整的 OS 。将在 Docker 专栏中介绍",
+      "content_html": "<p>虚拟机，模拟器，Docker 是 PC 端比较常见的虚拟化软件。使用户可以在 Windows/Mac/Linux 等系统的机器上运行其他类型的系统，甚至 Android。 Docker 与前两着有些差异，因为它不是虚拟化出一个完整的 OS 。将在 Docker 专栏中介绍</p>\n<!-- more -->\n<h2>下载安装</h2>\n<p>Virtual Box <a href=\"https://www.virtualbox.org/\" target=\"_blank\" rel=\"noopener noreferrer\">官网</a></p>\n<ul>\n<li>Windows <a href=\"https://download.virtualbox.org/virtualbox/7.1.4/VirtualBox-7.1.4-165100-Win.exe\" target=\"_blank\" rel=\"noopener noreferrer\">下载地址</a></li>\n<li>Mac Intel Chip <a href=\"https://download.virtualbox.org/virtualbox/7.1.4/VirtualBox-7.1.4-165100-OSX.dmg\" target=\"_blank\" rel=\"noopener noreferrer\">下载地址</a></li>\n<li>Mac Apple Chip <a href=\"https://download.virtualbox.org/virtualbox/7.1.4/VirtualBox-7.1.4-165100-macOSArm64.dmg\" target=\"_blank\" rel=\"noopener noreferrer\">下载地址</a></li>\n<li>Ubuntu <a href=\"https://download.virtualbox.org/virtualbox/7.1.4/virtualbox-7.1_7.1.4-165100~Ubuntu~noble_amd64.deb\" target=\"_blank\" rel=\"noopener noreferrer\">下载地址</a></li>\n</ul>\n<blockquote>\n<p>以上下载地址，均接截止于 2024-11-23 <code>7.1.4</code>。Linux 发行版本比较多，可点此 <a href=\"https://www.virtualbox.org/wiki/Linux_Downloads\" target=\"_blank\" rel=\"noopener noreferrer\">跳转</a>。如需下载最新版，见官方 <a href=\"https://www.virtualbox.org/wiki/Downloads\" target=\"_blank\" rel=\"noopener noreferrer\">下载页面</a>。</p>\n</blockquote>\n<h2>新建虚拟机</h2>\n<figure><img src=\"/assets/image/virtualbox/01.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<p>点击新建，首先配置虚拟机名称和系统。从上到下，一依次是：</p>\n<ul>\n<li>设置虚拟机名称</li>\n<li>设置虚拟系统存储位置</li>\n<li>选择系统安装镜像文件，通常是 iso 格式。Mac 系统镜像文件需要转换成 iso。</li>\n<li>选择系统类型，支持 Windows Mac Linux 等众多主流系统。</li>\n<li>选择发行版本，主要用于 Linux 系统。支持 Ubuntu Debian Fedora 等等。</li>\n<li>选择系统版本，windows 支持全部历史版本，Mac 只能兼容到 10.13.</li>\n</ul>\n<p><img src=\"/assets/image/virtualbox/02.png\" alt=\"\" loading=\"lazy\"><br>\n<img src=\"/assets/image/virtualbox/03.png\" alt=\"\" loading=\"lazy\"></p>\n<p>以上完成系统选择，接下载还需要配置硬件参数。</p>\n<figure><img src=\"/assets/image/virtualbox/04.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<p>设置 CPU 核数和内存，建议按照目标系统的需求分配。如， Linux 系统 4 核 2G 内存即可。Windows 建议至少 8G 内存。但是也不能分配太大，可能导致宿主系统卡死。</p>\n<figure><img src=\"/assets/image/virtualbox/05.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<p>设置硬盘大小，对应到宿主系统中是一个 vdi 为后缀的文件。默认设置下，文件占用硬盘空间会动态增加，并不会占用你实际分配大小的空间。</p>\n<h2>配置虚拟机</h2>\n<p>配置界面，区分基础模式和专家模式。作为新手，基本模式下的配置已经够用。</p>\n<h3>常规</h3>\n<figure><img src=\"/assets/image/virtualbox/06.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<p>这个配置在新建虚拟机的时候已经设置过，此时主要是确认。</p>\n<figure><img src=\"/assets/image/virtualbox/07.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<ul>\n<li>共享剪贴板，可在宿主机和虚拟机之间共享剪贴板数据。</li>\n<li>拖放，这个配置一直没用过，可能是两个系统之间传递文件。</li>\n</ul>\n<h3>系统</h3>\n<figure><img src=\"/assets/image/virtualbox/08.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<ul>\n<li>内存：在新建虚拟机时已经配置过，此处可调整。</li>\n<li>启动顺序：依次是硬盘、光驱、软驱、网络。 之前的 iso 镜像文件存在虚拟光驱中。安装系统时，需要先从光驱启动，等安装成功后，再从硬盘启动。</li>\n<li>鼠标设备: 默认选项，因为 VirtualBox 支持光标无缝切换。</li>\n</ul>\n<figure><img src=\"/assets/image/virtualbox/09.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<ul>\n<li>处理器：在新建虚拟机时已经配置过，此处可调整。</li>\n</ul>\n<h3>显示</h3>\n<figure><img src=\"/assets/image/virtualbox/10.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<ul>\n<li>显存：不知道其原理，建议直接拉满</li>\n<li>显示器数量： 默认一。</li>\n<li>缩放比例：不建议修改。</li>\n</ul>\n<h3>存储</h3>\n<p><img src=\"/assets/image/virtualbox/11.png\" alt=\"\" loading=\"lazy\"><br>\n<img src=\"/assets/image/virtualbox/12.png\" alt=\"\" loading=\"lazy\"><br>\n<img src=\"/assets/image/virtualbox/13.png\" alt=\"\" loading=\"lazy\"><br>\n<img src=\"/assets/image/virtualbox/14.png\" alt=\"\" loading=\"lazy\"></p>\n<p>以上配置，建议用默认选项。控制器相当于多块硬盘，多个 vdi 文件相当于硬盘分区。</p>\n<h3>音频</h3>\n<figure><img src=\"/assets/image/virtualbox/15.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<h3>网络</h3>\n<figure><img src=\"/assets/image/virtualbox/16.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<ul>\n<li>NAT 模式：网络地址转换，共享主机 ip 访问外网。</li>\n<li>桥接模式：直接连接物理网络，从路由器中单独获取一个 ip ，可被整个局域网内设备访问到。</li>\n</ul>\n<h3>USB</h3>\n<figure><img src=\"/assets/image/virtualbox/17.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<h3>共享目录</h3>\n<figure><img src=\"/assets/image/virtualbox/18.png\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<p>将宿主机中的文件目录共享到虚拟机中。</p>\n<h2>增强功能</h2>\n<p>包括共享目录等部分功能，需要虚拟机中安装驱动，即增强功能。</p>\n<p><code>C:\\Program Files\\Oracle\\VirtualBox\\VBoxGuestAdditions.iso</code> 挂载到虚拟光驱。</p>\n",
+      "image": "https://vuepress-theme-hope.github.io/assets/image/virtualbox/01.png",
+      "date_published": "2024-11-23T13:41:26.000Z",
+      "date_modified": "2024-11-23T15:24:58.000Z",
+      "authors": [],
+      "tags": [
+        "虚拟机"
+      ]
+    },
+    {
+      "title": "安装 Proxmox VE",
+      "url": "https://vuepress-theme-hope.github.io/nas/pve/install.html",
+      "id": "https://vuepress-theme-hope.github.io/nas/pve/install.html",
+      "summary": "下载镜像 目前最新版本 8.3 制作引导盘 推荐使用 Ventoy, 这是我目前见过最轻量，兼容性最好的 制作 USB 启动盘的共工具。 可同时将多个系统的镜像文件拷入 Ventoy 制作好的启动盘中。 盗用一张来自官网的图片。 安装 PVE 虚拟机 如果还不熟悉 PVE 系统的安装与使用，可先通过 VirtualBox 虚拟机练手。关于怎样使用 Vi...",
+      "content_html": "<h2>下载镜像</h2>\n<p>目前最新版本 <a href=\"https://enterprise.proxmox.com/iso/proxmox-ve_8.3-1.iso\" target=\"_blank\" rel=\"noopener noreferrer\">8.3</a></p>\n<h2>制作引导盘</h2>\n<p>推荐使用 <a href=\"https://www.ventoy.net/\" target=\"_blank\" rel=\"noopener noreferrer\">Ventoy</a>, 这是我目前见过最轻量，兼容性最好的 制作 USB 启动盘的共工具。</p>\n<p>可同时将多个系统的镜像文件拷入 Ventoy 制作好的启动盘中。 盗用一张来自官网的图片。</p>\n<figure><img src=\"https://www.ventoy.net/static/img/screen/screen_uefi_cn.png?v=4\" alt=\"\" tabindex=\"0\" loading=\"lazy\"><figcaption></figcaption></figure>\n<h2>安装 PVE</h2>\n<h3>虚拟机</h3>\n<p>如果还不熟悉 PVE 系统的安装与使用，可先通过 VirtualBox 虚拟机练手。关于怎样使用 VirtualBox，见 <a href=\"/virtualbox.html\" target=\"_blank\">此文档</a>。</p>\n<p><br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n</p>\n<p>做好以上配置后，即可启动虚拟机。</p>\n<h3>实体机</h3>\n<p>将 U 盘插入机器中，并选择从 U 盘系统。选择 proxmox iso 文件后，进入安装页面。</p>\n<p>下面的安装步骤和界面，虚拟机与实体机完全一致。</p>\n<p><br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n</p>\n<h2>启动 PVE</h2>\n<p>成功进入系统后，在屏幕上显示出了访问地址。后续操作和配置均可通过浏览器远程访问。</p>\n<figure><figcaption></figcaption></figure>\n<p>登录 PVE 系统，要求输入用户： root， 密码： 安装系统时设置的。</p>\n<figure><figcaption></figcaption></figure>\n<p>最后看到完整管理界面如图</p>\n<figure><figcaption></figcaption></figure>\n",
+      "image": "https://www.ventoy.net/static/img/screen/screen_uefi_cn.png?v=4",
+      "date_published": "2024-11-20T16:05:41.000Z",
+      "date_modified": "2024-11-23T15:24:58.000Z",
+      "authors": [],
+      "tags": [
+        "nas",
+        "pve"
+      ]
+    },
+    {
       "title": "VS Code 手册",
       "url": "https://vuepress-theme-hope.github.io/vscode/",
       "id": "https://vuepress-theme-hope.github.io/vscode/",
@@ -653,6 +682,20 @@
       "authors": [],
       "tags": [
         "Note"
+      ]
+    },
+    {
+      "title": "Proxmox VE",
+      "url": "https://vuepress-theme-hope.github.io/nas/pve/",
+      "id": "https://vuepress-theme-hope.github.io/nas/pve/",
+      "summary": "介绍 Proxmox VE 系统的使用。",
+      "content_html": "<p>介绍 Proxmox VE 系统的使用。</p>\n<!-- more -->\n",
+      "date_published": "2024-10-04T14:18:23.000Z",
+      "date_modified": "2024-11-23T15:24:58.000Z",
+      "authors": [],
+      "tags": [
+        "nas",
+        "pve"
       ]
     },
     {
