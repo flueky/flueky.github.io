@@ -3,12 +3,13 @@
   <id>https://vuepress-theme-hope.github.io/</id>
   <title>Flueky&amp;apos;s 技术小站</title>
   <icon>https://vuepress-theme-hope.github.io/favicon.ico</icon>
-  <updated>2024-11-23T15:29:06.896Z</updated>
+  <updated>2024-11-24T09:00:37.318Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://vuepress-theme-hope.github.io/atom.xml"/>
   <link rel="alternate" href="https://vuepress-theme-hope.github.io/"/>
-  <category term="虚拟机"/>
   <category term="nas"/>
+  <category term="fnos"/>
+  <category term="虚拟机"/>
   <category term="pve"/>
   <category term="VSCode"/>
   <category term="Note"/>
@@ -26,6 +27,137 @@
   <category term="Hexo"/>
   <category term="字节处理"/>
   <category term="Linux"/>
+  <entry>
+    <title type="text">NAS</title>
+    <id>https://vuepress-theme-hope.github.io/nas/</id>
+    <link href="https://vuepress-theme-hope.github.io/nas/"/>
+    <updated>2024-11-24T08:38:42.000Z</updated>
+    <summary type="html"><![CDATA[<p>NAS （Network Attached Storage），最初只是作为一种网络存储服务器使用。随着业务发展至今，更多的是当作私有云服务器中的一个存储功能。</p>
+]]></summary>
+    <content type="html"><![CDATA[<p>NAS （Network Attached Storage），最初只是作为一种网络存储服务器使用。随着业务发展至今，更多的是当作私有云服务器中的一个存储功能。</p>
+<!-- more -->
+<p>一台私有云服务器包括的功能不限于以下这些：</p>
+<ul>
+<li>照片存储</li>
+<li>家庭影音</li>
+<li>智能家居</li>
+<li>虚拟终端</li>
+</ul>
+<p>以及基于 Docker 运行的各种服务应用。</p>
+]]></content>
+    <published>2024-11-24T08:38:42.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">硬件配置</title>
+    <id>https://vuepress-theme-hope.github.io/nas/hardware.html</id>
+    <link href="https://vuepress-theme-hope.github.io/nas/hardware.html"/>
+    <updated>2024-11-24T08:38:42.000Z</updated>
+    <summary type="html"><![CDATA[<p>组建 NAS 的机器，配置不用太高。需获得更好的使用体验，2.5G 网卡，支持 SATA 3.0 协议的硬盘是必选项。如需支持更多的业务场景，使用一台性能比较好的主机，是个明智的选择。</p>
+]]></summary>
+    <content type="html"><![CDATA[<p>组建 NAS 的机器，配置不用太高。需获得更好的使用体验，2.5G 网卡，支持 SATA 3.0 协议的硬盘是必选项。如需支持更多的业务场景，使用一台性能比较好的主机，是个明智的选择。</p>
+<!-- more -->
+<h2></h2>
+]]></content>
+    <category term="nas"/>
+    <published>2024-11-24T08:38:42.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">安装飞牛私有云</title>
+    <id>https://vuepress-theme-hope.github.io/nas/fnos/install.html</id>
+    <link href="https://vuepress-theme-hope.github.io/nas/fnos/install.html"/>
+    <updated>2024-11-24T06:02:00.000Z</updated>
+    <summary type="html"><![CDATA[<h2>下载镜像</h2>
+<p>目前最新版本 <a href="https://download.liveupdate.fnnas.com/x86_64/trim/fnos.0.8.24-469.iso" target="_blank" rel="noopener noreferrer">0.8.4</a>。</p>
+<h2>制作引导盘</h2>
+<p>推荐使用 Ventoy ，详细使用见此文档。</p>
+<h2>安装 FnOS</h2>
+<h3>虚拟机</h3>
+<p>如果是研究或练习使用 飞牛私有云， 建议先通过 VirtualBox 安装使用。关于怎样使用 VirtualBox 见此文档。</p>]]></summary>
+    <content type="html"><![CDATA[<h2>下载镜像</h2>
+<p>目前最新版本 <a href="https://download.liveupdate.fnnas.com/x86_64/trim/fnos.0.8.24-469.iso" target="_blank" rel="noopener noreferrer">0.8.4</a>。</p>
+<h2>制作引导盘</h2>
+<p>推荐使用 Ventoy ，详细使用见此文档。</p>
+<h2>安装 FnOS</h2>
+<h3>虚拟机</h3>
+<p>如果是研究或练习使用 飞牛私有云， 建议先通过 VirtualBox 安装使用。关于怎样使用 VirtualBox 见此文档。</p>
+<h4>新建虚拟机</h4>
+<ul>
+<li>选择需要的镜像文件和系统类型， FnOS 是基于 Debian 开发的，因此此处可选 Debian。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>设置硬件信息， 最低 2 核 4G 内存可确保系统稳定运行。 1核 2G 也可。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>创建虚拟硬盘，建议 200G。将根据实际文件大小，动态分配硬盘空间。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>基本配置完成后，结果如下图所示。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<h4>配置虚拟机</h4>
+<ul>
+<li>修改引导顺序，硬盘第一，光驱第二，软驱不用选。 未安装系统时，将按照顺位从光驱启动。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>设置网络未桥接模式，这样局域网内其他设备也可访问此虚拟机。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<h3>实体机</h3>
+<p>将 U 盘插入机器中，并选择从 U 盘启动。选择 fnos iso 文件后，进入安装页面。</p>
+<p>下面的安装步骤和界面，虚拟机与实体机完全一致。</p>
+<ul>
+<li>选择需要安装的硬盘</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>系统分区和交换空间，建议使用默认值。如需要在 FnOS中装很多应用服务，建议分配更大空间。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>格式化硬盘确认，此处慎重。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>执行安装步骤。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>系统安装完成。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>选择网卡，通常只能插上网线。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>提示网络保存成功。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>安装完成后进入系统。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>根据提示的地址，在浏览器中打开。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>设置好 root 账户和密码。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<ul>
+<li>提示创建存储空间。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+]]></content>
+    <category term="nas"/>
+    <category term="fnos"/>
+    <published>2024-11-24T06:02:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">VirtualBox 虚拟机</title>
     <id>https://vuepress-theme-hope.github.io/virtualbox.html</id>
@@ -9239,17 +9371,27 @@ base64 MUFh<br></p>
     <published>2024-10-05T04:23:00.000Z</published>
   </entry>
   <entry>
+    <title type="text">飞牛私有云</title>
+    <id>https://vuepress-theme-hope.github.io/nas/fnos/</id>
+    <link href="https://vuepress-theme-hope.github.io/nas/fnos/"/>
+    <updated>2024-11-24T08:38:42.000Z</updated>
+    <summary type="html"><![CDATA[<p>介绍介绍飞牛私有云系统的使用。</p>
+]]></summary>
+    <content type="html"><![CDATA[<p>介绍介绍飞牛私有云系统的使用。</p>
+<!-- more -->
+]]></content>
+    <published>2024-10-04T14:18:23.000Z</published>
+  </entry>
+  <entry>
     <title type="text">Proxmox VE</title>
     <id>https://vuepress-theme-hope.github.io/nas/pve/</id>
     <link href="https://vuepress-theme-hope.github.io/nas/pve/"/>
-    <updated>2024-11-23T15:24:58.000Z</updated>
+    <updated>2024-11-24T08:56:32.000Z</updated>
     <summary type="html"><![CDATA[<p>介绍 Proxmox VE 系统的使用。</p>
 ]]></summary>
     <content type="html"><![CDATA[<p>介绍 Proxmox VE 系统的使用。</p>
 <!-- more -->
 ]]></content>
-    <category term="nas"/>
-    <category term="pve"/>
     <published>2024-10-04T14:18:23.000Z</published>
   </entry>
   <entry>
