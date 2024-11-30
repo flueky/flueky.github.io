@@ -3,10 +3,11 @@
   <id>https://vuepress-theme-hope.github.io/</id>
   <title>Flueky&amp;apos;s 技术小站</title>
   <icon>https://vuepress-theme-hope.github.io/favicon.ico</icon>
-  <updated>2024-11-27T01:01:18.338Z</updated>
+  <updated>2024-11-30T15:57:13.702Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://vuepress-theme-hope.github.io/atom.xml"/>
   <link rel="alternate" href="https://vuepress-theme-hope.github.io/"/>
+  <category term="Windows"/>
   <category term="nas"/>
   <category term="pve"/>
   <category term="fnos"/>
@@ -27,6 +28,48 @@
   <category term="Hexo"/>
   <category term="字节处理"/>
   <category term="Linux"/>
+  <entry>
+    <title type="text">启用 SSH 功能</title>
+    <id>https://vuepress-theme-hope.github.io/windows/ssh.html</id>
+    <link href="https://vuepress-theme-hope.github.io/windows/ssh.html"/>
+    <updated>2024-11-30T15:31:04.000Z</updated>
+    <summary type="html"><![CDATA[<p>安全外壳协议（Secure Shell，简称SSH）是一种在不安全网络上用于安全远程登录和其他安全网络服务的协议（摘自百科）。</p>
+]]></summary>
+    <content type="html"><![CDATA[<p>安全外壳协议（Secure Shell，简称SSH）是一种在不安全网络上用于安全远程登录和其他安全网络服务的协议（摘自百科）。</p>
+<!-- more -->
+<p>此处启用 SSH 功能，主要是开启服务端的功能，使得其他设备可通过网络访问当前主机。</p>
+<h2>安装程序</h2>
+<p>推荐使用 Windows 内置程序安装 SSH 服务端。支持如下两种方式找到安装界面。</p>
+<p>在搜索工具栏中输入 <code>可选功能</code></p>
+<figure><figcaption></figcaption></figure>
+<p>或者打开设置页面，应用栏中，找到<code>可选功能</code>，打开。</p>
+<figure><figcaption></figcaption></figure>
+<p>先检查，已安装的功能中，是否已经包含了 SSH 服务端程序。需要安装的话，点击右上角，添加功能，然后输入 <code>ssh</code> ， 查找程序。</p>
+<figure><figcaption></figcaption></figure>
+<p>输入 <code>ssh</code> 找到 <code>openssh</code> 服务端程序。</p>
+<figure><figcaption></figcaption></figure>
+<p>选中后安装。</p>
+<figure><figcaption></figcaption></figure>
+<p>安装完成后，如图。</p>
+<figure><figcaption></figcaption></figure>
+<h2>设置防火墙</h2>
+<p>在搜索工具栏中输入 <code>防火墙</code> 。</p>
+<figure><figcaption></figcaption></figure>
+<p>选择 <code>允许应用通过防火墙</code> 。</p>
+<figure><figcaption></figcaption></figure>
+<p>编辑设置，找到 <code>OpenSSH Server</code> 。 检查两个选项是否都勾选上。</p>
+<figure><figcaption></figcaption></figure>
+<h2>配置服务</h2>
+<p>在搜索工具栏中输入 <code>服务</code> 。</p>
+<figure><figcaption></figcaption></figure>
+<p>找到 <code>OpenSSH SSH Server</code> ， 右键然后选择属性。</p>
+<figure><figcaption></figcaption></figure>
+<p>启动类型选择 <code>自动(延时启动)</code> ，同时 <code>启动</code> 服务。</p>
+<figure><figcaption></figcaption></figure>
+]]></content>
+    <category term="Windows"/>
+    <published>2024-11-30T15:31:04.000Z</published>
+  </entry>
   <entry>
     <title type="text">配置 Proxmox VE</title>
     <id>https://vuepress-theme-hope.github.io/nas/pve/config.html</id>
@@ -90,7 +133,7 @@
     <title type="text">硬件配置</title>
     <id>https://vuepress-theme-hope.github.io/nas/hardware.html</id>
     <link href="https://vuepress-theme-hope.github.io/nas/hardware.html"/>
-    <updated>2024-11-26T16:42:39.000Z</updated>
+    <updated>2024-11-30T15:55:32.000Z</updated>
     <summary type="html"><![CDATA[<p>组建 NAS 的机器，配置不用太高。需获得更好的使用体验，2.5G 网卡，支持 SATA 3.0 协议的硬盘是必选项。如需支持更多的业务场景，使用一台性能比较好的主机，是个明智的选择。</p>
 ]]></summary>
     <content type="html"><![CDATA[<p>组建 NAS 的机器，配置不用太高。需获得更好的使用体验，2.5G 网卡，支持 SATA 3.0 协议的硬盘是必选项。如需支持更多的业务场景，使用一台性能比较好的主机，是个明智的选择。</p>
@@ -116,7 +159,7 @@
 <p>目前现状：</p>
 <ul>
 <li>三星笔记本，光驱位换成 2T 2.5寸 HDD，运行飞牛系统，简单做个照片备份。百兆网口，速度慢点。</li>
-<li>MBP 准备参照多数 M4 mini做云主机的方案。</li>
+<li>MBP 准备参照多数 M4 mini 做云主机的方案。</li>
 </ul>
 <h2>想法</h2>
 <p>本着物尽其用的原则，一方面懒得把这些东西往二手市场挂，一方面也不喜欢淘二手用品，担心质量问题。</p>
@@ -136,7 +179,7 @@
 <ul>
 <li>复用台式机 U 和内存。</li>
 <li>配一个 pcie 转 2.5G 网卡。</li>
-<li>M-atx 主板 300左右，z390 主板虽然支持超频，但偏贵。H310 只支持 PCIe2.0 不考虑。选择 H370 或 360。</li>
+<li>M-atx 主板 300左右，Z390 主板虽然支持超频，但偏贵。H310 只支持 PCIe2.0 不考虑。选择 H370 或 360。</li>
 <li>4盘位以上机箱 300-500。</li>
 <li>机箱可能容不下 165mm 风扇，得另买。</li>
 <li>2060显卡按需接入。</li>
@@ -162,8 +205,8 @@
 <li>定预算，主要体现在板和 U。比如上面 11000 的电脑，板 U 约 4300。</li>
 <li>Intel 和 AMD CPU 对主板也有不同的要求，简称互不兼容。以及在选购CPU是会看到如下数字：
 <ul>
-<li>LGA 1151 6-7 8-9代 U，DDR3L/DDR4 内存 PCIe 3.0</li>
-<li>LGA 1200 10-11 代 U，DDR4 内存 10代 兼容 PCIe 3.0 11代 兼容 PCIe 4.0</li>
+<li>LGA 1151 6-7 8-9代 U，DDR3L/DDR4 内存， PCIe 3.0</li>
+<li>LGA 1200 10-11 代 U，DDR4 内存， 10代 兼容 PCIe 3.0 11代 兼容 PCIe 4.0</li>
 <li>LGA 1700 12-13 代 U, DDR4/DDR5 内存，PCIe 3.0/4.0</li>
 </ul>
 </li>
@@ -171,7 +214,7 @@
 <ul>
 <li>ATX 305mm x 244mm</li>
 <li>m-ATX 244mm x 210mm</li>
-<li>ITX 170mm x1 170mm</li>
+<li>ITX 170mm x 170mm</li>
 </ul>
 </li>
 <li>机箱越大，空间越大，散热越好。同时越笨重。选配机箱，需要同时考虑如下参数：
@@ -189,7 +232,7 @@
 <li>PCIe 转 SATA，插 SSD 或 HDD</li>
 </ul>
 </li>
-<li>主板同时会限定兼容的内存频率 DDR3-5， M.2 盘长度。 SATA 口个数。和兼容的 CPU 型号。</li>
+<li>主板同时会限定兼容的内存频率 DDR3-DDR5， M.2 盘长度。 SATA 口个数。和兼容的 CPU 型号。</li>
 <li>内存建议双通道，即两根起。坊间传闻，套条批次接近，兼容更好。
 <ul>
 <li>选购时见 16Gx2 这样的信息，而不是 16G内存的商品选两件。价格可能比单买两内存稍贵。</li>
@@ -201,10 +244,13 @@
 <li>电源需根据机箱预留的电源仓尺寸选择。ATX SFX SFX-L TFX 以及 DC 电源。
 <ul>
 <li>功耗选择：CPU + 显卡 + 150W 左右，最佳。如接硬盘阵列，每块盘 +10W。</li>
-<li>电源最好大牌，输出稳定性很重要。烧坏 CPU 和显卡则得不偿失。</li>
+<li>电源最好大牌，输出稳定性很重要。烧坏 CPU 和显卡就不好了。</li>
 </ul>
 </li>
 </ul>
+<h2>入坑清单</h2>
+<p>|序号|名称|用途|价格|<br>
+|:</p>
 ]]></content>
     <category term="nas"/>
     <published>2024-11-24T08:38:42.000Z</published>
