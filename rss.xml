@@ -6,12 +6,12 @@
     <link>https://vuepress-theme-hope.github.io/</link>
     <description></description>
     <language>zh-CN</language>
-    <pubDate>Tue, 17 Dec 2024 02:51:27 GMT</pubDate>
-    <lastBuildDate>Tue, 17 Dec 2024 02:51:27 GMT</lastBuildDate>
+    <pubDate>Mon, 23 Dec 2024 16:16:22 GMT</pubDate>
+    <lastBuildDate>Mon, 23 Dec 2024 16:16:22 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
-    <category>nas</category>
     <category>pve</category>
+    <category>nas</category>
     <category>Windows</category>
     <category>fnos</category>
     <category>虚拟机</category>
@@ -31,6 +31,40 @@
     <category>Hexo</category>
     <category>字节处理</category>
     <category>Linux</category>
+    <item>
+      <title>OpenWrt</title>
+      <link>https://vuepress-theme-hope.github.io/nas/pve/os/openwrt.html</link>
+      <guid>https://vuepress-theme-hope.github.io/nas/pve/os/openwrt.html</guid>
+      <source url="https://vuepress-theme-hope.github.io/rss.xml">OpenWrt</source>
+      <description>准备工作 下载文件 从 官网 下载比较纯净的系统文件，不到 200 MB。为加快下载速度，可选国内镜像站点。 只有基本的旁路由功能。需要单独安装一些插件，如 VPN 。 GitHub 上也有大佬提供了功能更全的安装文件。 固件每天定时自动编译，以确保获得最新体验 集成部分常用有线、无线、3G / 4G 网卡驱动 集成中文版 netdata 实时监控插件...</description>
+      <category>pve</category>
+      <pubDate>Mon, 23 Dec 2024 16:10:39 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>准备工作</h2>
+<h3>下载文件</h3>
+<ul>
+<li>从 <a href="https://openwrt.org/downloads" target="_blank" rel="noopener noreferrer">官网</a> 下载比较纯净的系统文件，不到 200 MB。为加快下载速度，可选国内镜像站点。</li>
+</ul>
+<figure><figcaption></figcaption></figure>
+<p>只有基本的旁路由功能。需要单独安装一些插件，如 VPN 。</p>
+<ul>
+<li>
+<p><a href="https://github.com/haiibo/OpenWrt" target="_blank" rel="noopener noreferrer">GitHub</a> 上也有大佬提供了功能更全的安装文件。</p>
+<ul>
+<li>固件每天定时自动编译，以确保获得最新体验</li>
+<li>集成部分常用有线、无线、3G / 4G 网卡驱动</li>
+<li>集成中文版 netdata 实时监控插件，小白也能轻松看懂系统概况</li>
+<li>集成 iStore 应用商店，可根据自己需求自由安装所需插件</li>
+<li>集成 Docker 服务，可在 OpenWrt 内自由部署 Docker 应用</li>
+<li>集成应用过滤插件，支持游戏、视频、聊天、下载等 APP 过滤</li>
+<li>集成在线用户插件，可查看所有在线用户 IP 地址与实时速率等</li>
+<li>ARMv8 系列固件内置晶晨宝盒，支持在线更新固件及内核等</li>
+</ul>
+</li>
+</ul>
+<p>| 平台+设备名称 | 固件编译状态 | 配置文件 | 固件下载 |<br>
+| :</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>网络配置</title>
       <link>https://vuepress-theme-hope.github.io/nas/network.html</link>
@@ -90,12 +124,12 @@
       <link>https://vuepress-theme-hope.github.io/nas/pve/os/</link>
       <guid>https://vuepress-theme-hope.github.io/nas/pve/os/</guid>
       <source url="https://vuepress-theme-hope.github.io/rss.xml">安装系统</source>
-      <description>准备工作 https://fedorapeople.org/groups/virt/virt/virtio-win/direct-downloads/archive-virtio/</description>
+      <description>在 Proxmox VE 安装各类系统。</description>
       <category>nas</category>
       <category>pve</category>
       <pubDate>Thu, 12 Dec 2024 16:53:13 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>准备工作</h2>
-<p><a href="https://fedorapeople.org/groups/virt/virt/virtio-win/direct-downloads/archive-virtio/" target="_blank" rel="noopener noreferrer">https://fedorapeople.org/groups/virt/virt/virtio-win/direct-downloads/archive-virtio/</a></p>
+      <content:encoded><![CDATA[<p>在 Proxmox VE 安装各类系统。</p>
+<!-- more -->
 ]]></content:encoded>
     </item>
     <item>
